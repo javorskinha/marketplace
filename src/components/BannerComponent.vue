@@ -1,18 +1,25 @@
 <template>
-    <div>
+    <div class="banner">
         <div>
-            <h2>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-            </h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt quis dolorum aliquid sed quibusdam a saepe enim doloribus molestias cumque. Voluptate blanditiis ut beatae facere delectus tempore enim error omnis.</p>
-                </div>
+            <div v-for="categorie in allCategories" :key="categorie.id">
+                <p>{{ categorie.name }}</p>
+            </div>
         </div>
-        <div>
-            <ButtonComponent text="Shop Now" style="yellow"/>
-            <ButtonComponent />
-        </div>
+    </div>
 </template>
 
 <script setup>
-import ButtonComponent from '@/src/components/ButtonComponent.vue';
+import { getCategories } from "@/services/HttpService.js";
+import { onMounted, ref } from "vue";
+
+const allCategories = ref([]);
+
+async function getAllCategories() {
+    const result = await getCategories()
+    console.log(result)
+
+    allCategories.value = result;
+}
+
+onMounted(getAllCategories)
 </script>
