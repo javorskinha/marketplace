@@ -2,7 +2,7 @@
     <div class="header">
         <div class="header-section">
             <div class="section section-one">
-                <div id="hamburguer-menu">
+                <div id="hamburguer-menu" @click="openClose">
                     <img src="../../public/images/hamburguer-menu.png" alt="">
                 </div>
                 <h2>S+mart</h2>
@@ -16,11 +16,12 @@
                 </a>
             </nav>
         </div>
-        <div class="header-section-menu">
+        <div class="header-section-menu" :class="menuOpened ? 'menu-open' : 'menu-close'">
             <div>
                 <div class="section-menu">
                     <img src="../../public/images/logo.png" alt="" class="logo">
-                    <h2>S+mark</h2>
+                    <h2>S+mart</h2>
+                    <img id="x" src="../../public/images/exit.png" alt="" @click="openClose">
                 </div>
                 <input type="text" placeholder="Search">
                 <ul class="options">
@@ -39,7 +40,14 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import ButtonComponent from './ButtonComponent.vue';
+
+const menuOpened = ref(false);
+
+function openClose(){
+    menuOpened.value = !menuOpened.value;
+}
 </script>
 
 <style scoped>
@@ -66,12 +74,6 @@ import ButtonComponent from './ButtonComponent.vue';
 
     .section-two{
         width: 5em;
-    }
-
-    h2{
-        font-family: var(--font-main);
-        font-weight: 600;
-        font-size: 1.5em;
     }
 
     .header img {
@@ -102,15 +104,31 @@ import ButtonComponent from './ButtonComponent.vue';
         position: absolute;
         left: 0;
         top: 0;
-        width: 55%;
+        width: 70vw;
         height: 100vh;
+    }
+
+    .menu-close{
+        transform: translateX(-100%);
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .menu-open{
+        transform: translateX(0);
+        transition: transform 0.5s ease-in-out;
     }
 
     .section-menu{
         display: flex;
         margin: 1.5em;
-        width: 10em;
+        width: 13em;
         justify-content: space-around;
+        align-items: center;
+    }
+
+    #x{
+        width: 15px;
+        height: 15px;
     }
 
     .header-section-menu input {
@@ -120,7 +138,7 @@ import ButtonComponent from './ButtonComponent.vue';
         font-size: 1em;
         border: solid 2px var(--color-light-purple);
         border-radius: 15px;
-        margin-left: 30px;
+        margin: 10px;
     }
 
     .header-section-menu input::placeholder{
@@ -136,6 +154,11 @@ import ButtonComponent from './ButtonComponent.vue';
         padding: 1em;
         font-family: var(--font-main);
         border-bottom: solid 1px var(--color-super-light-purple);
+        cursor: pointer;
+    }
+
+    li:hover{
+        color: var(--color-light-purple);
     }
 
     .options img{
@@ -152,4 +175,5 @@ import ButtonComponent from './ButtonComponent.vue';
         place-self: center;
         margin: 5px;
     }
+
 </style>
