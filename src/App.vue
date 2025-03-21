@@ -1,13 +1,13 @@
 <template>
   <div>
     <HeaderComponent />
-    <BannerComponent />
+    <RouterView />
   </div>
 </template>
 
 <script setup>
 import HeaderComponent from './components/HeaderComponent.vue'
-import BannerComponent from './components/BannerComponent.vue'
+import { RouterView } from 'vue-router';
 </script>
 
 <style scoped>
