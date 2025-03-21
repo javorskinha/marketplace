@@ -25,6 +25,9 @@ import ButtonComponent from "./ButtonComponent.vue";
 
     .banner-content{
         padding: 3em 1em;
+    }
+
+    h2, p{
         color: var(--color-white);
     }
 
@@ -39,9 +42,5 @@ import ButtonComponent from "./ButtonComponent.vue";
         display: block;
         place-self: center;
         width: 90%;
-    }
-
-    .button{
-        margin: 3px;
     }
 </style>
