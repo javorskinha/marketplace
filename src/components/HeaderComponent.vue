@@ -23,9 +23,9 @@
                     <div class="section-menu">
                         <img src="../../public/images/logo.png" alt="" class="logo">
                         <h2>S+mart</h2>
-                        <img id="x" src="../../public/images/exit.png" alt="" @click="openClose">
+                        <i id="x" class="pi pi-times" @click="openClose"></i>
                     </div>
-                    <input type="text" placeholder="Search">
+                    <InputComponent type="text" placeholder="Search" />
                 </div>
                 <ul class="options">
                     <li>Shop <i class="pi pi-chevron-right"></i></li>
@@ -45,6 +45,7 @@
 <script setup>
 import { ref } from 'vue';
 import ButtonComponent from './ButtonComponent.vue';
+import InputComponent from './InputComponent.vue';
 
 const menuOpened = ref(false);
 
@@ -138,18 +139,7 @@ function openClose(){
         height: 15px;
     }
 
-    .header-section-menu input {
-        width: 85%;
-        height: 3em;
-        font-family: var(--font-secondary);
-        font-size: 1em;
-        border: solid 2px var(--color-super-light-purple);
-        border-radius: 5px;
-        margin: 10px;
-    }
-
     .header-section-menu input::placeholder{
-        padding: 0 15px 0 15px;
         background-image: url('../../public/images/lupa.png');
         background-repeat: no-repeat;
         background-position: 95% ;
@@ -233,7 +223,7 @@ function openClose(){
         }
 
         .header-section-menu input{
-            height: 2em;
+            border-color: var(--color-super-light-purple);
         }
         }
 </style>
