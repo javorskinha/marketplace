@@ -5,10 +5,14 @@
                 <h2>Lorem ipsum dolor sit amet consectetur.</h2>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam laudantium vel.</p>
             </div>
-            <img src="../../public/images/image-example.jpeg" alt="">
-            <div class="buttons">
-                <ButtonComponent text="Shop Now >" class="yellow button"/>
-                <ButtonComponent text="See Category" class="white button"/>
+            <div class="product">
+                <div class="img">
+                    <img src="../../public/images/image-example.jpeg" alt="">
+                </div>
+                <div class="buttons">
+                    <ButtonComponent text="Shop Now >" class="yellow button"/>
+                    <ButtonComponent text="See Category" class="white button"/>
+                </div>
             </div>
         </div>
     </div>
@@ -42,5 +46,28 @@ import ButtonComponent from "./ButtonComponent.vue";
         display: block;
         place-self: center;
         width: 90%;
+    }
+
+    @media screen and (min-width: 600px) {
+        .product{
+            display: flex;
+            width: 100%;
+        }
+
+        .img{
+            width: 60%;
+        }
+
+        .banner-content{
+            padding: 1em;
+        }
+
+        .banner-content img{
+            border: 2px solid var(--color-light-purple);
+        }
+
+        .buttons{
+            width: 40%;
+        }
     }
 </style>

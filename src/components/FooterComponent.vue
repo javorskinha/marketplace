@@ -102,4 +102,14 @@
         justify-content: space-around;
         margin-top: 20px;
     }
+
+    @media screen and (min-width: 600px) {
+        .logo-content, .social{
+            width: 30%;
+        }
+
+        .terms ul{
+            padding: 0 15%;
+        }
+    }
 </style>

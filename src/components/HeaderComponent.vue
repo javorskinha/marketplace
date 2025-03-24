@@ -14,6 +14,7 @@
                 <a href="#favoritos">
                     <i class="pi pi-cart-plus"></i>
                 </a>
+                <a class="account" href="#">Account</a>
             </nav>
         </div>
         <div class="header-section-menu" :class="menuOpened ? 'menu-open' : 'menu-close'">
@@ -76,6 +77,10 @@ function openClose(){
 
     .section-two{
         width: 3em;
+    }
+
+    .account{
+        display: none;
     }
 
     .header img {
@@ -198,8 +203,13 @@ function openClose(){
             margin: 1em;
         }
 
+        .account{
+            display: block;
+            color: var(--color-purple);
+        }
+
         .header-section{
-            width: 15%;
+            width: 25%;
             padding: 0;
         }
 
