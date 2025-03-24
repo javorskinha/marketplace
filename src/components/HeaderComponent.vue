@@ -3,32 +3,34 @@
         <div class="header-section">
             <div class="section section-one">
                 <div id="hamburguer-menu" @click="openClose">
-                    <img src="../../public/images/hamburguer-menu.png" alt="">
+                    <i class="pi pi-bars"></i>
                 </div>
                 <h2>S+mart</h2>
             </div>
             <nav class="section section-two">
                 <a href="#favoritos">
-                    <img src="../../public/images/favorites.png" alt="">
+                    <i class="pi pi-heart-fill"></i>
                 </a>
                 <a href="#favoritos">
-                    <img src="../../public/images/cart.png" alt="">
+                    <i class="pi pi-cart-plus"></i>
                 </a>
             </nav>
         </div>
         <div class="header-section-menu" :class="menuOpened ? 'menu-open' : 'menu-close'">
             <div>
-                <div class="section-menu">
-                    <img src="../../public/images/logo.png" alt="" class="logo">
-                    <h2>S+mart</h2>
-                    <img id="x" src="../../public/images/exit.png" alt="" @click="openClose">
+                <div class="header-search">
+                    <div class="section-menu">
+                        <img src="../../public/images/logo.png" alt="" class="logo">
+                        <h2>S+mart</h2>
+                        <img id="x" src="../../public/images/exit.png" alt="" @click="openClose">
+                    </div>
+                    <input type="text" placeholder="Search">
                 </div>
-                <input type="text" placeholder="Search">
                 <ul class="options">
-                    <li>Shop<img src="../../public/images/right.png" alt=""></li>
-                    <li>Categories<img src="../../public/images/right.png" alt=""></li>
-                    <li>Account<img src="../../public/images/right.png" alt=""></li>
-                    <li>About<img src="../../public/images/right.png" alt=""></li>
+                    <li>Shop <i class="pi pi-chevron-right"></i></li>
+                    <li>Categories <i class="pi pi-chevron-right"></i></li>
+                    <li>Account <i class="pi pi-chevron-right"></i></li>
+                    <li>About <i class="pi pi-chevron-right"></i></li>
                 </ul>
             </div>
             <div class="section-menu-log">
@@ -73,7 +75,7 @@ function openClose(){
     }
 
     .section-two{
-        width: 5em;
+        width: 3em;
     }
 
     .header img {
@@ -136,8 +138,8 @@ function openClose(){
         height: 3em;
         font-family: var(--font-secondary);
         font-size: 1em;
-        border: solid 2px var(--color-light-purple);
-        border-radius: 15px;
+        border: solid 2px var(--color-super-light-purple);
+        border-radius: 5px;
         margin: 10px;
     }
 
@@ -176,4 +178,52 @@ function openClose(){
         margin: 5px;
     }
 
+    @media screen and (min-width: 600px) {
+        .section-one, .section-menu-log, #x, .options{
+            display: none;
+        }
+
+        .header{
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-around;
+        }
+
+        .section-two i{
+            font-size: 1.3em;
+        }
+
+        .section-two{
+            width: 100%;
+            margin: 1em;
+        }
+
+        .header-section{
+            width: 15%;
+            padding: 0;
+        }
+
+        .header-section-menu{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: var(--color-white);
+            position: relative;
+            left: 0;
+            top: 0;
+            width: 80vw;
+            height: 15vh;
+        }
+
+        .menu-open, .menu-close{transform: translateX(0);}
+
+        .header-search{
+            display: flex;
+            align-items: center;
+        }
+
+        .header-section-menu input{
+            height: 2em;
+        }
+        }
 </style>
