@@ -14,7 +14,7 @@
                 <a href="#favoritos">
                     <i class="pi pi-cart-plus"></i>
                 </a>
-                <a class="account" href="#">Account</a>
+                <a class="account" href="/account">Account</a>
             </nav>
         </div>
         <div class="header-section-menu" :class="menuOpened ? 'menu-open' : 'menu-close'">
