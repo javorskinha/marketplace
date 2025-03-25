@@ -20,9 +20,7 @@ const props = defineProps({
         border: solid 2px var(--color-light-purple);
         border-radius: 5px;
         margin: 10px;
+        padding: 5px 15px 5px 10px;
     }
 
-    input::placeholder{
-        padding: 0 15px 0 15px;
-    }
 </style>

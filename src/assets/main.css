@@ -10,8 +10,8 @@
   text-decoration: none;
   }
 
-  h2, p{
-    font-family: var(--font-main);
+  h2, p, a{
+    font-family: var(--font-secondary);
     color: var(--color-purple);
 }
 
