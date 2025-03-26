@@ -14,9 +14,19 @@ const api = axios.create({
 export async function getCategories() {
     try {
         const response = await api.get('/categories');
-        return response.data
+        return response.data;
     } catch (error){
         console.error('erro ao pegar categorias', error);
+        throw error;
+    }
+}
+
+export async function getLogin() {
+    try{
+        const response = await api.get('/login');
+        return response.data;
+    } catch (error){
+        console.error('erro ao acessar área de login', error);
         throw error;
     }
 }

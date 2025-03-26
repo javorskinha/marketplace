@@ -1,7 +1,7 @@
 <template>
     <div class="login-register">
         <div :class="{'active' : active}" class="container">
-            <div class="form-box login" :class="{hidden: active}">
+            <div class="form-box login">
                 <form action="">
                     <h1>Login</h1>
                     <div class="input-box">
@@ -24,7 +24,7 @@
                     </div>
                 </form>
             </div>
-            <div class="form-box register" :class="{hidden: !active}">
+            <div class="form-box register">
                 <form action="">
                     <h1>Registration</h1>
                     <div class="input-box">
@@ -65,15 +65,25 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import ButtonComponent from './ButtonComponent.vue';
 import InputComponent from './InputComponent.vue';
+import { getLogin } from "@/services/HttpService.js";
 
 const active = ref(false);
+const logData = ref({})
 
 function changeActive(){
     active.value = !active.value;
 }
+
+async function doLogin(){
+    const result = await getLogin();
+    console.log(result);
+    logData.value = result;
+}
+
+onMounted(doLogin)
 </script>
 
 <style scoped>
@@ -101,7 +111,7 @@ function changeActive(){
     .form-box {
         position: absolute;
         top: 25%;
-        left: 1;
+        left: 2.5;
         width: 90%;
         height: 70%;
         display: flex;
@@ -109,10 +119,28 @@ function changeActive(){
         text-align: center;
         padding: 0.5em;
         z-index: 1;
+        transition: opacity 2s ease, transform 3s ease;
+    }
+
+    .login{
+        opacity: 1;
+        transform: translateX(0);
     }
 
     .register{
         top: 0;
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    .active .login {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+
+    .active .register {
+        opacity: 1;
+        transform: translateX(0);
     }
 
     form{
@@ -218,7 +246,4 @@ function changeActive(){
         width: 40%;
     }
 
-    .hidden{
-        display: none;
-        }
 </style>

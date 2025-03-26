@@ -5,7 +5,9 @@
                 <div id="hamburguer-menu" @click="openClose">
                     <i class="pi pi-bars"></i>
                 </div>
-                <h2>S+mart</h2>
+                <a href="/">
+                    <h2>S+mart</h2>
+                </a>
             </div>
             <nav class="section section-two">
                 <a href="#favoritos">
@@ -21,8 +23,10 @@
             <div>
                 <div class="header-search">
                     <div class="section-menu">
-                        <img src="../../public/images/logo.png" alt="" class="logo">
-                        <h2>S+mart</h2>
+                        <a href="/">
+                            <img src="../../public/images/logo.png" alt="" class="logo">
+                            <h2>S+mart</h2>
+                        </a>
                         <i id="x" class="pi pi-times" @click="openClose"></i>
                     </div>
                     <InputComponent type="text" placeholder="Search" />
@@ -35,8 +39,10 @@
                 </ul>
             </div>
             <div class="section-menu-log">
-                <ButtonComponent text="Sign In" class="purple button"/>
-                <ButtonComponent text="Create Account" class="white button"/>
+                <a href="/account">
+                    <ButtonComponent text="Sign In" class="purple button"/>
+                    <ButtonComponent text="Create Account" class="white button"/>
+                </a>
             </div>
         </div>
     </div>
@@ -114,6 +120,7 @@ function openClose(){
         top: 0;
         width: 70vw;
         height: 100vh;
+        z-index: 4;
     }
 
     .menu-close{
@@ -128,10 +135,16 @@ function openClose(){
 
     .section-menu{
         display: flex;
-        margin: 1.5em;
-        width: 13em;
-        justify-content: space-around;
+        margin: 1.5em 0.5em;
+        width: 17em;
+        justify-content: space-between;
         align-items: center;
+    }
+
+    .section-menu a{
+        display: flex;
+        width: 8em;
+        justify-content: space-around;
     }
 
     #x{
@@ -142,7 +155,7 @@ function openClose(){
     .header-section-menu input::placeholder{
         background-image: url('../../public/images/lupa.png');
         background-repeat: no-repeat;
-        background-position: 95% ;
+        background-position: right;
     }
 
     li {
