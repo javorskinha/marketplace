@@ -1,5 +1,5 @@
 <template>
-    <button @click="event" :class="style">{{ text }}</button>
+    <button :type="type" :class="style">{{ text }}</button>
 </template>
 
 <script setup>
@@ -8,7 +8,7 @@ import { defineProps } from 'vue';
 const props = defineProps({
     text: String,
     style: String,
-    event: String
+    type: String
 })
 </script>
 

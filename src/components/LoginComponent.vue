@@ -2,20 +2,21 @@
     <div class="login-register">
         <div :class="{'active' : active}" class="container">
             <div class="form-box login">
-                <form action="">
+                <form @submit.prevent="hadleLogin">
                     <h1>Login</h1>
                     <div class="input-box">
-                        <InputComponent type="text" placeholder="Username" required class="input"/>
-                        <i class="pi pi-user"></i>
+                        <InputComponent v-model="email" type="email" placeholder="Email" required class="input"/>
+                        <i class="pi pi-envelope"></i>
                     </div>
                     <div class="input-box">
-                        <InputComponent type="password" placeholder="Password" required class="input"/>
+                        <InputComponent v-model="password" type="password" placeholder="Password" required class="input"/>
                         <i class="pi pi-lock"></i>
                     </div>
                     <div class="forgot-link">
                         <a href="#">Forgot password?</a>
                     </div>
                     <ButtonComponent text="Login" class="yellow" type="submit"/>
+                    <!--<p v-if="errorMessage" class="error">{{ errorMessage }}</p>-->
                     <p>Or login with social platforms</p>
                     <div class="social-icons">
                         <a href=""><i class="pi pi-google"></i></a>
@@ -55,7 +56,7 @@
                     <ButtonComponent text="Register" class="purple btn" @click="changeActive()"/>
                 </div>
                 <div class="toggle-panel toggle-bottom" :class="{'active' : active}">
-                    <h1>Welcome Back!</h1>
+                    <h1>Welcome!</h1>
                     <p>Already have an account?</p>
                     <ButtonComponent text="Login" class="purple btn" @click="changeActive()"/>
                 </div>
@@ -65,25 +66,40 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import ButtonComponent from './ButtonComponent.vue';
 import InputComponent from './InputComponent.vue';
-import { getLogin } from "@/services/HttpService.js";
+import { useAuthStore } from "@/stores/AuthStore";
+import { useRouter } from "vue-router";
 
 const active = ref(false);
-const logData = ref({})
+const authStore = useAuthStore();
+const router = useRouter();
+
+const email = ref('');
+const password = ref('');
+const errorMessage = ref('');
 
 function changeActive(){
     active.value = !active.value;
 }
 
-async function doLogin(){
-    const result = await getLogin();
-    console.log(result);
-    logData.value = result;
+async function hadleLogin() {
+    try{
+
+
+        console.log("Enviando dados para login:", { email: email.value, password: password.value });
+
+
+        await authStore.login({ email: email.value, password: password.value});
+        router.push('/dashboard')
+        window.alert('Login realizado com sucesso')
+    } catch (error){
+        errorMessage.value = 'Não foi possível fazer login. Verifique os dados inseridos.'
+        window.alert('Não foi possível fazer login. Verifique os dados inseridos.')
+    }
 }
 
-onMounted(doLogin)
 </script>
 
 <style scoped>

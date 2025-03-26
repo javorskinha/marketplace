@@ -1,14 +1,17 @@
 <template>
-    <input :type="type" :placeholder="placeholder">
+    <input :type="type" :placeholder="placeholder" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)">
 </template>
 
 <script setup>
 import { defineProps } from 'vue';
 
 const props = defineProps({
+    modelValue: String,
     type: String,
     placeholder: String
 })
+
+defineEmits(['update:modelValue'])
 </script>
 
 <style scoped>
