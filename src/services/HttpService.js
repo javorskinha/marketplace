@@ -5,7 +5,7 @@ const baseURL = 'http://34.138.111.33:8000/';
 const api = axios.create({
     baseURL: baseURL,
     headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
     }
 });
 
@@ -32,6 +32,19 @@ export async function postRegister(userData) {
         return response.data;
     } catch(error){
         console.error('erro ao realizar registro', error);
+        throw error;
+    }
+}
+
+export async function getUser(token) {
+    try {
+        const response = await api.get('/users/me',
+            {headers: {
+                Authorization: `Bearer ${token}`
+            }});
+        return response.data;
+    } catch (error){
+        console.error('erro ao recuperar dados do usuário', error);
         throw error;
     }
 }

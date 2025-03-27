@@ -1,17 +1,33 @@
 <template>
     <div>
-        <h1>aqui está a dashboard</h1>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Praesentium illum at in numquam dolorum deleniti ex rerum, deserunt laudantium doloremque placeat facilis incidunt debitis tempore, nihil ipsa, cupiditate quis asperiores</p>
+        <div v-if="userStore.user">
+            <p>{{ userStore.user.name }}</p>
+            <p>{{ userStore.user.id }}</p>
+            <p>{{ userStore.user.email }}</p>
+            <p>{{ userStore.user.role }}</p>
+        </div>
         <button @click="handleLogout">logout</button>
+        <button @click="showUserData">user</button>
     </div>
 </template>
 
 <script setup>
+import { onMounted } from "vue";
 import { useAuthStore } from "@/stores/AuthStore";
+import { useUserStore } from "@/stores/UserStore";
 
 const authStore = useAuthStore();
+const userStore = useUserStore();
 
 const handleLogout = ()=>{
     authStore.logout();
 }
+
+async function showUserData(){
+    await userStore.userData(authStore.token);
+
+    console.log('dados carregados:',userStore.user);
+}
+
+onMounted(showUserData);
 </script>
