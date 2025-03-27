@@ -17,7 +17,7 @@ const props = defineProps({
         font-family: var(--font-main);
         font-weight: 600;
         border-radius: 5px;
-        width: 90%;
+        width: 91%;
         height: 40px;
     }
 
