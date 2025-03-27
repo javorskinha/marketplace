@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { postLogin } from "@/services/HttpService";
+import { postRegister } from "@/services/HttpService";
 import { computed, ref } from "vue";
 
 export const useAuthStore = defineStore('auth', ()=>{
@@ -19,11 +20,22 @@ export const useAuthStore = defineStore('auth', ()=>{
         };
     };
 
+    async function register(userData) {
+        try{
+            const response = await postRegister(userData);
+            user.value = response.data;
+            await login({ email: userData.email, password: userData.password });
+        } catch (error){
+            console.error('Não foi possivel realizar o cadastro, tente novamente.', error);
+            throw error;
+        }
+    };
+
     async function logout(){
         token.value = null;
         user.value = null;
         localStorage.removeItem('token')
     };
 
-    return{ token, user, isAuthenticated, login, logout};
+    return{ token, user, isAuthenticated, login, register, logout};
 })

@@ -9,17 +9,6 @@ const api = axios.create({
     }
 });
 
-/*api.interceptors.request.use(
-    (config) => {
-        const token = localStorage.getItem('token');
-        if(token){
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-        return config;
-    },
-    (error) => Promise.reject(error)
-)*/
-
 export async function postLogin(credentials) {
     try{
         const response = await api.post('/login', {
@@ -29,6 +18,20 @@ export async function postLogin(credentials) {
         return response.data;
     } catch (error){
         console.error('erro fazer login', error);
+        throw error;
+    }
+}
+
+export async function postRegister(userData) {
+    try{
+        const response = await api.post('/register', {
+            name: userData.name,
+            email: userData.email,
+            password: userData.password
+        });
+        return response.data;
+    } catch(error){
+        console.error('erro ao realizar registro', error);
         throw error;
     }
 }

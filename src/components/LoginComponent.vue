@@ -16,7 +16,6 @@
                         <a href="#">Forgot password?</a>
                     </div>
                     <ButtonComponent text="Login" class="yellow" type="submit"/>
-                    <!--<p v-if="errorMessage" class="error">{{ errorMessage }}</p>-->
                     <p>Or login with social platforms</p>
                     <div class="social-icons">
                         <a href=""><i class="pi pi-google"></i></a>
@@ -26,18 +25,18 @@
                 </form>
             </div>
             <div class="form-box register">
-                <form action="">
+                <form @submit.prevent="hadleRegister">
                     <h1>Registration</h1>
                     <div class="input-box">
-                        <InputComponent type="text" placeholder="Username" required class="input"/>
+                        <InputComponent v-model="name" type="text" placeholder="Username" required class="input"/>
                         <i class="pi pi-user"></i>
                     </div>
                     <div class="input-box">
-                        <InputComponent type="email" placeholder="Email" required class="input"/>
+                        <InputComponent v-model="email" type="email" placeholder="Email" required class="input"/>
                         <i class="pi pi-envelope"></i>
                     </div>
                     <div class="input-box">
-                        <InputComponent type="password" placeholder="Password" required class="input"/>
+                        <InputComponent v-model="password" type="password" placeholder="Password" required class="input"/>
                         <i class="pi pi-lock"></i>
                     </div>
                     <ButtonComponent text="Register" class="yellow" type="submit"/>
@@ -70,12 +69,11 @@ import { ref } from 'vue';
 import ButtonComponent from './ButtonComponent.vue';
 import InputComponent from './InputComponent.vue';
 import { useAuthStore } from "@/stores/AuthStore";
-import { useRouter } from "vue-router";
 
 const active = ref(false);
 const authStore = useAuthStore();
-const router = useRouter();
 
+const name = ref('');
 const email = ref('');
 const password = ref('');
 const errorMessage = ref('');
@@ -87,16 +85,27 @@ function changeActive(){
 async function hadleLogin() {
     try{
 
-
         console.log("Enviando dados para login:", { email: email.value, password: password.value });
 
-
         await authStore.login({ email: email.value, password: password.value});
-        router.push('/dashboard')
         window.alert('Login realizado com sucesso')
     } catch (error){
         errorMessage.value = 'Não foi possível fazer login. Verifique os dados inseridos.'
         window.alert('Não foi possível fazer login. Verifique os dados inseridos.')
+    }
+}
+
+async function hadleRegister() {
+    try{
+
+        console.log("Enviando dados para registro:", { name: name.value, email: email.value, password: password.value });
+
+        await authStore.register({ name: name.value, email: email.value, password: password.value});
+        window.alert('Registro realizado com sucesso')
+    } catch (error){
+        console.error("Erro no registro:", error.response ? error.response.data : error);
+        errorMessage.value = 'Não foi possível fazer cadastro. Verifique os dados inseridos.'
+        window.alert('Não foi possível fazer cadastro. Verifique os dados inseridos.')
     }
 }
 
