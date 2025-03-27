@@ -13,7 +13,7 @@
                 <a href="#favoritos">
                     <i class="pi pi-heart-fill"></i>
                 </a>
-                <a href="#favoritos">
+                <a href="#carrinho">
                     <i class="pi pi-cart-plus"></i>
                 </a>
                 <a class="account" href="/account">Account</a>
@@ -133,10 +133,13 @@ function openClose(){
         transition: transform 0.5s ease-in-out;
     }
 
+    .header-search{
+        width: 95%;
+    }
+
     .section-menu{
         display: flex;
         margin: 1.5em 0.5em;
-        width: 17em;
         justify-content: space-between;
         align-items: center;
     }
@@ -145,11 +148,6 @@ function openClose(){
         display: flex;
         width: 8em;
         justify-content: space-around;
-    }
-
-    #x{
-        width: 15px;
-        height: 15px;
     }
 
     .header-section-menu input::placeholder{

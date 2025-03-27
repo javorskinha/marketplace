@@ -10,6 +10,10 @@
   text-decoration: none;
   }
 
+  html, body{
+    width: 100vw;
+  }
+
   h2, p, a{
     font-family: var(--font-secondary);
     color: var(--color-purple);

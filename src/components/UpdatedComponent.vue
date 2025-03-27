@@ -5,7 +5,7 @@
             <p>Subscribe to our newsletter for exclusive offers, new arrivals, and insider-only discounts.</p>
         </div>
         <div class="subscribe">
-            <InputComponent type="text" placeholder="Enter your email" />
+            <InputComponent type="text" placeholder="Enter your email"/>
             <ButtonComponent text="Subscribe" class="yellow button"/>
         </div>
         <p class="terms">By subscribing, you agree to our Terms of Service and Privacy Policy.</p>
@@ -29,13 +29,15 @@ import ButtonComponent from './ButtonComponent.vue';
         font-size: 0.6em;
     }
 
-    .button{
-        width: 87%;
-    }
-
     @media screen and (min-width: 600px) {
         .subscribe{
             margin: 0 20%;
+        }
+    }
+
+    @media screen and (min-width: 1200px) {
+        .subscribe{
+            margin: 0 35%;
         }
     }
 </style>

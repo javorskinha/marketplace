@@ -2,16 +2,18 @@
     <div>
         <div class="footer-content">
             <div>
-                <div class="logo-content">
-                    <img src="../../public/images/logo.png" alt="">
-                    <h2>S+mart</h2>
+                <div>
+                    <div class="logo-content">
+                        <img src="../../public/images/logo.png" alt="">
+                        <h2>S+mart</h2>
+                    </div>
+                    <p class="logo-text">Your destination for premium products and exceptional shopping experiences.</p>
                 </div>
-                <p class="logo-text">Your destination for premium products and exceptional shopping experiences.</p>
-            </div>
-            <div class="social">
-                <i class="pi pi-whatsapp"></i>
-                <i class="pi pi-facebook"></i>
-                <i class="pi pi-instagram"></i>
+                <div class="social">
+                    <i class="pi pi-whatsapp"></i>
+                    <i class="pi pi-facebook"></i>
+                    <i class="pi pi-instagram"></i>
+                </div>
             </div>
             <div class="about">
                 <div class="list">
@@ -83,7 +85,7 @@
         display: flex;
         justify-content: space-between;
         margin: 30px 10px 60px 10px;
-        max-width: 400px;
+        width: 400px;
     }
 
     .list{
@@ -113,8 +115,36 @@
     }
 
     @media screen and (min-width: 600px) {
+        .footer-content{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .social{
+            width: 8em;
+        }
+
         .terms ul{
             padding: 0 25%;
+        }
+    }
+
+    @media screen and (min-width: 1200px) {
+        .footer-content{
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: baseline;
+            padding: 0 10%;
+        }
+
+        .social{
+            align-items: center;
+            font-size: 1.3em;
+        }
+
+        .terms ul {
+            padding: 0 30%;
         }
     }
 </style>
