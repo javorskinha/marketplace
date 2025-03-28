@@ -36,6 +36,16 @@ export async function postRegister(userData) {
     }
 }
 
+export async function postRenewToken(token) {
+    try{
+        const response = await api.post('/renew-token',token);
+        return response.data;
+    } catch(error){
+        console.error('erro ao renovar token', error);
+        throw error;
+    }
+}
+
 export async function getUser(token) {
     try {
         const response = await api.get('/users/me',
@@ -45,6 +55,32 @@ export async function getUser(token) {
         return response.data;
     } catch (error){
         console.error('erro ao recuperar dados do usuário', error);
+        throw error;
+    }
+}
+
+export async function putUser(token, userData) {
+    try {
+        const response = await api.put('/users/me', userData,
+            {headers: {
+                Authorization: `Bearer ${token}`
+            }});
+        return response.data;
+    } catch (error){
+        console.error('erro ao alterar dados de usuário', error);
+        throw error;
+    }
+}
+
+export async function deleteUser(token) {
+    try {
+        const response = await api.delete('/users/me',
+            {headers: {
+                Authorization: `Bearer ${token}`
+            }});
+        return response.data;
+    } catch (error){
+        console.error('erro ao deletar usuário', error);
         throw error;
     }
 }
