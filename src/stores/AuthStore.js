@@ -7,6 +7,8 @@ export const useAuthStore = defineStore('auth', ()=>{
     const user = ref(null);
     const isAuthenticated = computed(()=> !!token.value);
 
+    //authentication 
+    
     async function login(credentials) {
         try{
             const response = await postLogin(credentials);
