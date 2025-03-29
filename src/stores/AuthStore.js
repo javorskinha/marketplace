@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { postLogin, postRegister, postRenewToken } from "@/services/HttpService";
+import { postLogin, postRegister } from "@/services/HttpService";
 import { computed, ref } from "vue";
 
 export const useAuthStore = defineStore('auth', ()=>{
@@ -8,7 +8,7 @@ export const useAuthStore = defineStore('auth', ()=>{
     const isAuthenticated = computed(()=> !!token.value);
 
     //authentication 
-    
+
     async function login(credentials) {
         try{
             const response = await postLogin(credentials);
