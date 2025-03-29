@@ -8,9 +8,9 @@ export const useUserStore = defineStore('user', ()=>{
 
     // user data
 
-    async function userData(token) {
+    async function userData() {
         try{
-            const result = await getUser(token);
+            const result = await getUser();
             user.value = result;
         } catch (error){
             console.error('Erro ao buscar dados', error);
@@ -18,7 +18,7 @@ export const useUserStore = defineStore('user', ()=>{
         };
     }
 
-    async function changeUserData(token, userData) {
+    async function changeUserData(userData) {
         try{
             console.log('novos dados:', userData)
             const result = await putUser(token, userData);
@@ -30,10 +30,10 @@ export const useUserStore = defineStore('user', ()=>{
         };
     }
 
-    async function delUser(token) {
+    async function delUser() {
         try{
             console.log('dados sendo deletados...')
-            await deleteUser(token);
+            await deleteUser();
             user.value = null;
             addresses.value = [];
         } catch (error){
