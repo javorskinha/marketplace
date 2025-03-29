@@ -9,6 +9,8 @@ const api = axios.create({
     }
 });
 
+//authentication requests
+
 export async function postLogin(credentials) {
     try{
         const response = await api.post('/login', {
@@ -45,6 +47,10 @@ export async function postRegister(userData) {
 //         throw error;
 //     }
 // }
+
+//verify-token
+
+// user data requests
 
 export async function getUser(token) {
     try {
@@ -84,6 +90,57 @@ export async function deleteUser(token) {
         throw error;
     }
 }
+
+//users/created-moderator
+
+// user addresses requests
+
+export async function getAddresses(addressId = null) {
+    try {
+        let url = '/addresses';
+
+        if(addressId){
+            url = `/addresses/${addressId}`;
+        }
+        const response = await api.get(url);
+        return response.data;
+    } catch (error){
+        console.error('erro ao recuperar endereço', error);
+        throw error;
+    }
+}
+
+export async function postAddresses(addressData) {
+    try {
+        const response = await api.post('/addresses', addressData);
+        return response.data;
+    } catch (error){
+        console.error('erro ao registrar endereço', error.response);
+        throw error;
+    }
+}
+
+export async function putAddress(id, updatedData) {
+    try {
+        const response = await api.put(`/addresses/${id}`, updatedData);
+        return response.data;
+    } catch (error){
+        console.error('erro ao alterar endereço', error.response);
+        throw error;
+    }
+}
+
+export async function deleteAddress(id) {
+    try {
+        const response = await api.delete(`/addresses/${id}`);
+        return response.data;
+    } catch (error){
+        console.error('erro ao deletar endereço', error.response);
+        throw error;
+    }
+}
+
+// categories requests
 
 export async function getCategories() {
     try {
