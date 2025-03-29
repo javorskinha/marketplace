@@ -9,13 +9,13 @@
         <div>
             <form @submit.prevent="alterUserData">
                 <div class="input-box">
-                        <InputComponent v-model="name" type="text" placeholder="Username" required class="input"/>
-                        <i class="pi pi-user"></i>
-                    </div>
-                    <div class="input-box">
-                        <InputComponent v-model="email" type="email" placeholder="Email" required class="input"/>
-                        <i class="pi pi-envelope"></i>
-                    </div>
+                    <InputComponent v-model="name" type="text" placeholder="Username" required class="input"/>
+                    <i class="pi pi-user"></i>
+                </div>
+                <div class="input-box">
+                    <InputComponent v-model="email" type="email" placeholder="Email" required class="input"/>
+                    <i class="pi pi-envelope"></i>
+                </div>
                 <ButtonComponent type="submit" text="Alterar" class="yellow"></ButtonComponent>
             </form>
         </div>
@@ -24,6 +24,7 @@
 
 <script setup>
 import InputComponent from "./InputComponent.vue";
+import ButtonComponent from "./ButtonComponent.vue";
 import { useAuthStore } from "@/stores/AuthStore";
 import { useUserStore } from "@/stores/UserStore";
 import { onMounted, ref } from "vue";
