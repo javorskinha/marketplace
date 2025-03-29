@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = 'http://34.138.111.33:8000/';
+const baseURL = 'http://35.196.79.227:8000/';
 
 const api = axios.create({
     baseURL: baseURL,
@@ -36,15 +36,15 @@ export async function postRegister(userData) {
     }
 }
 
-export async function postRenewToken(token) {
-    try{
-        const response = await api.post('/renew-token',token);
-        return response.data;
-    } catch(error){
-        console.error('erro ao renovar token', error);
-        throw error;
-    }
-}
+// export async function postRenewToken() {
+//     try{
+//         const response = await api.post('/renew-token',);
+//         return response.data;
+//     } catch(error){
+//         console.error('erro ao renovar token', error);
+//         throw error;
+//     }
+// }
 
 export async function getUser(token) {
     try {

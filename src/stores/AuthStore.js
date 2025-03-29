@@ -30,17 +30,16 @@ export const useAuthStore = defineStore('auth', ()=>{
         }
     };
 
-    async function renewToken(token) {
-        try{
-            const response = await postRenewToken(token);
-            token.value = response.token;
-            localStorage.setItem('token', response.token);
-            user.value = response.user;
-        } catch (error){
-            console.error('Erro ao renovar token', error);
-            throw error;
-        };
-    };
+    // async function renewToken() {
+    //     try{
+    //         const response = await postRenewToken(token.value);
+    //         token.value = response.token;
+    //         localStorage.setItem('token', response.token);
+    //     } catch (error){
+    //         console.error('Erro ao renovar token', error);
+    //         throw error;
+    //     };
+    // };
 
 
     async function logout(){
