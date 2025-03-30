@@ -4,7 +4,6 @@
             <div>
                 <div>
                     <div class="logo-content">
-                        <img src="../../public/images/logo.png" alt="">
                         <h2>S+mart</h2>
                     </div>
                     <p class="logo-text">Your destination for premium products and exceptional shopping experiences.</p>

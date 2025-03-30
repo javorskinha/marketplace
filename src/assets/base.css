@@ -1,19 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 @import 'primeicons/primeicons.css';
 
 :root {
-  --color-purple: #5b21b6;
-  --color-medium-purple: #7c3aed;
-  --color-light-purple: #a78bfa;
-  --color-super-light-purple: #ede9fe;
-  --color-yellow: #eab308;
-  --color-medium-yellow: #fde047;
-  --color-light-yellow: #fef08a;
-  --color-super-light-yellow: #fef9c3;
+  --color-purple: #2C3E50;
+  --color-medium-purple: #4B4F54;
+  --color-light-purple: #EAE0D5;
+  --color-super-light-purple: #F5F5F5;
+  --color-yellow: #5c90b3;
   --color-black: #000;
   --color-white: #fff;
 
-  --font-main: "Poppins", sans-serif;
-  --font-secondary: "Nunito Sans", sans-serif;
+  --font-main: "Mona Sans", sans-serif;
+  --font-secondary: "Roboto", sans-serif;
 }

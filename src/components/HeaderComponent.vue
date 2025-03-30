@@ -24,7 +24,6 @@
                 <div class="header-search">
                     <div class="section-menu">
                         <a href="/">
-                            <img src="../../public/images/logo.png" alt="" class="logo">
                             <h2>S+mart</h2>
                         </a>
                         <i id="x" class="pi pi-times" @click="openClose"></i>

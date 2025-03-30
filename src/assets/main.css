@@ -14,8 +14,8 @@
     width: 100vw;
   }
 
-  h2, p, a{
-    font-family: var(--font-secondary);
+  h2, a{
+    font-family: var(--font-main);
     color: var(--color-purple);
 }
 
@@ -24,7 +24,8 @@
     font-size: 1.5em;
   }
 
-  p{
+  p, li{
+    font-family: var(--font-secondary);
     font-weight: 400;
     font-size: 0.9em;
   }
