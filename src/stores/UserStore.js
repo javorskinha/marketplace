@@ -42,6 +42,8 @@ export const useUserStore = defineStore('user', ()=>{
         };
     }
 
+    //create-moderator
+
     // user addresses
 
     async function userAddresses(id) {
@@ -52,21 +54,24 @@ export const useUserStore = defineStore('user', ()=>{
             console.error('Erro ao exibir endereços', error);
             throw error;
         };
+
+        console.log('array dos endereços na store', addresses)
     }
 
     async function postAddress(addressData) {
             try{
                 const response = await postAddresses(addressData);
+                console.log('dados na store:', response)
                 addresses.value.push(response);
             } catch (error){
-                console.error('Não foi possivel cadastrar o endereço tente novamente.', error);
+                console.log('Não foi possivel cadastrar o endereço tente novamente.', error);
                 throw error;
             }
         };
 
     async function changeAddressData(id, updatedData) {
+        console.log('USER STORE id do endereço', id, 'novos dados:', updatedData);
         try{
-            console.log('novos dados:', updatedData)
             const result = await putAddress(id, updatedData);
             console.log('dados recebidos',result);
 
@@ -76,12 +81,13 @@ export const useUserStore = defineStore('user', ()=>{
             };
 
         } catch (error){
-            console.error('Erro ao alterar dados', error);
+            console.error('Erro ao alterar dados user store', error);
             throw error;
         };
     }
 
     async function delAddress(id) {
+        console.log('USERSTORE id do endereço', id);
         try{
             console.log('dados sendo deletados...')
             await deleteAddress(id);

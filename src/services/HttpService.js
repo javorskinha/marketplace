@@ -126,6 +126,7 @@ export async function getAddresses(addressId = null) {
 export async function postAddresses(addressData) {
     try {
         const response = await api.post('/addresses', addressData);
+        console.log('dados de entrada:', response.data)
         return response.data;
     } catch (error){
         console.error('erro ao registrar endereço', error.response);
@@ -134,16 +135,18 @@ export async function postAddresses(addressData) {
 }
 
 export async function putAddress(id, updatedData) {
+    console.log('HTTP id do endereço', id, 'novos dados:', updatedData);
     try {
         const response = await api.put(`/addresses/${id}`, updatedData);
         return response.data;
     } catch (error){
-        console.error('erro ao alterar endereço', error.response);
+        console.error('erro ao alterar endereço http', error.response);
         throw error;
     }
 }
 
 export async function deleteAddress(id) {
+    console.log('HTTP id do endereço', id);
     try {
         const response = await api.delete(`/addresses/${id}`);
         return response.data;

@@ -43,6 +43,8 @@ export const useAuthStore = defineStore('auth', ()=>{
     //     };
     // };
 
+    //verify-token
+
 
     async function logout(){
         token.value = null;
