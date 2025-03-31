@@ -55,9 +55,8 @@
 
 <style scoped>
     .logo-content{
-        display: flex;
-        max-width: 130px;
-        margin: 0.5em;
+        max-width: 100px;
+        margin: 2em 0.7em 0.5em;
         margin-top: 2em;
         align-items: center;
         justify-content: space-around;

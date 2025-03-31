@@ -28,7 +28,10 @@
                         </a>
                         <i id="x" class="pi pi-times" @click="openClose"></i>
                     </div>
-                    <InputComponent type="text" placeholder="Search" />
+                    <div class="search-box">
+                        <InputComponent type="text" placeholder="Search" />
+                        <i class="pi pi-search"></i>
+                    </div>
                 </div>
                 <ul class="options">
                     <li>Shop <i class="pi pi-chevron-right"></i></li>
@@ -89,11 +92,6 @@ function openClose(){
         display: none;
     }
 
-    .header img {
-        width: 2em;
-        height: 2em;
-    }
-
     #hamburguer-menu{
         display: flex;
         justify-content: center;
@@ -101,12 +99,8 @@ function openClose(){
         background-color: var(--color-super-light-purple);
         width: 3em;
         height: 3em;
-        border-radius: 5px;
+        border-radius: 3px;
         cursor: pointer;
-    }
-
-    #hamburguer-menu img{
-        width: 1.7em;
     }
 
     .header-section-menu{
@@ -149,10 +143,14 @@ function openClose(){
         justify-content: space-around;
     }
 
-    .header-section-menu input::placeholder{
-        background-image: url('../../public/images/lupa.png');
-        background-repeat: no-repeat;
-        background-position: right;
+    .search-box{
+        position: relative;
+    }
+
+    .pi-search{
+        position: absolute;
+        right: 15px;
+        top: 25px;
     }
 
     li {

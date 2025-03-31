@@ -12,7 +12,7 @@
                 <ButtonComponent @click="deletAdress(addr.id)" text="excluir endereço" class="white"/>
             </div>
         </div>
-        <div>
+        <div ref="formSection">
             <form @submit.prevent="saveAddress">
                 <h3>{{ isEditing? 'alterar endereço existente' : 'Adicionar novo endereço' }}</h3>
                 <div class="input-box">
@@ -62,13 +62,21 @@ const editedAddress = ref({
 
 const isEditing = ref(false);
 
+const formSection = ref(null);
+
 async function showUserAddresses() {
     const result =  await userStore.userAddresses();
     addresses.value = result;
 }
 
+function scrollToForm(){
+    if(formSection.value) {
+        formSection.value.scrollIntoView({ behavior:'smooth', block: 'start'})
+    }
+}
+
 async function saveAddress() {
-    console.log('COMPONENTE Entrando em saveAddress', isEditing.value);
+    console.log('COMPONENTE Entrando em saveAddress', isEditing.value, 'addresses data:', addresses.value);
     if(isEditing.value){
         console.log('COMPONENTE Editando endereço, id do endereço:', editedAddress.value.id, 'dados do endereço:', editedAddress.value);
         await userStore.changeAddressData(editedAddress.value.id, editedAddress.value);
@@ -86,25 +94,28 @@ async function saveAddress() {
 function editAddress(addr){
     editedAddress.value = { ...addr};
     isEditing.value = true;
+    scrollToForm();
 }
 
- function resetForm() {
-     editedAddress.value = {
-         street: '',
-         number: null,
-         zip: '',
-         city: '',
-         state: '',
-         country: ''
-     };
-     isEditing.value = false;
- }
+function resetForm() {
+    editedAddress.value = {
+        street: '',
+        number: null,
+        zip: '',
+        city: '',
+        state: '',
+        country: ''
+    };
+    isEditing.value = false;
+}
 
- async function deletAdress(id) {
+async function deletAdress(id) {
     console.log('COMPONENTE id do endereço', id);
     await userStore.delAddress(id);
     window.alert('endereço deletado');
- }
+}
 
-onMounted (showUserAddresses);
+onMounted (()=>{
+    showUserAddresses()
+});
 </script>

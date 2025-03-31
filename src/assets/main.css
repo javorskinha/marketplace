@@ -14,20 +14,20 @@
     width: 100vw;
   }
 
-  h2, a{
+  h2, h3, a{
     font-family: var(--font-main);
     color: var(--color-purple);
 }
 
   h2{
-    font-weight: 600;
+    font-weight: 700;
     font-size: 1.5em;
   }
 
   p, li{
     font-family: var(--font-secondary);
-    font-weight: 400;
-    font-size: 0.9em;
+    font-size: 0.8em;
+    font-weight: 600;
   }
 
   .button{

@@ -16,7 +16,7 @@ const props = defineProps({
     button{
         font-family: var(--font-main);
         font-weight: 600;
-        border-radius: 5px;
+        box-shadow: 1px 1px 1px rgb(158, 151, 151);
         width: 91%;
         height: 40px;
     }

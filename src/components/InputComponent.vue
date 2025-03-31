@@ -21,9 +21,9 @@ defineEmits(['update:modelValue'])
         font-family: var(--font-secondary);
         font-size: 1em;
         border: solid 2px var(--color-light-purple);
-        border-radius: 5px;
         margin: 10px;
         padding: 5px 15px 5px 10px;
+        box-shadow: 1px 1px 1px rgb(158, 151, 151);
     }
 
 </style>

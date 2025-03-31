@@ -1,9 +1,14 @@
 <template>
-    <div>
-        <ButtonComponent @click="handleLogout" text="logout" class="white"></ButtonComponent>
-        <UserDataComponent />
-        <ButtonComponent @click="excludeAccount" text="Excluir conta" class="purple"></ButtonComponent>
-        <AddressesComponent />
+    <div class="dashboard">
+        <div class="dashboard-content">
+            <div class="dashboard-header">
+                <h2>Perfil de Usuário</h2>
+                <div @click="handleLogout"><i class="pi pi-sign-out"></i></div>
+            </div>
+            <UserDataComponent />
+            <AddressesComponent />
+            <ButtonComponent @click="excludeAccount" text="EXCLUIR CONTA" class="red"></ButtonComponent>
+        </div>
     </div>
 </template>
 
@@ -30,6 +35,33 @@ async function excludeAccount(){
 }
 </script>
 
-<style>
+<style scoped>
+    .dashboard{
+        background-color: var(--color-super-light-purple);
+        padding: 1em 1em;
+    }
 
+    .dashboard-content{
+        background-color: var(--color-white);
+        border-radius: 15px;
+        padding: 1em;
+    }
+
+    .dashboard-header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .pi-sign-out{
+        font-size: 1.5em;
+    }
+
+    .red{
+        width: 90px;
+        height: 20px;
+        font-size: 10px;
+        border-radius: 2px;
+        background-color: red;
+    }
 </style>
