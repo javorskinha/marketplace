@@ -21,7 +21,7 @@ export const useUserStore = defineStore('user', ()=>{
     async function changeUserData(userData) {
         try{
             console.log('novos dados:', userData)
-            const result = await putUser(token, userData);
+            const result = await putUser(userData);
             console.log('dados recebidos',result);
             user.value = result;
         } catch (error){

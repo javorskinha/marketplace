@@ -63,51 +63,25 @@ export async function postRegister(userData) {
 
 //verify-token
 
+//função auxiliar
+async function request(method, url, data = null) {
+    try {
+        const response = await api({ method, url, data });
+        return response.data;
+    } catch (error) {
+        console.error(`HTTP Erro em ${method}`, error.response || error);
+        throw error;
+    }
+}
+
 // user data requests
-
-export async function getUser(token) {
-    try {
-        const response = await api.get('/users/me',
-            {headers: {
-                Authorization: `Bearer ${token}`
-            }});
-        return response.data;
-    } catch (error){
-        console.error('erro ao recuperar dados do usuário', error);
-        throw error;
-    }
-}
-
-export async function putUser(token, userData) {
-    try {
-        const response = await api.put('/users/me', userData,
-            {headers: {
-                Authorization: `Bearer ${token}`
-            }});
-        return response.data;
-    } catch (error){
-        console.error('erro ao alterar dados de usuário', error);
-        throw error;
-    }
-}
-
-export async function deleteUser(token) {
-    try {
-        const response = await api.delete('/users/me',
-            {headers: {
-                Authorization: `Bearer ${token}`
-            }});
-        return response.data;
-    } catch (error){
-        console.error('erro ao deletar usuário', error);
-        throw error;
-    }
-}
+export const getUser = () => request("get", "/users/me");
+export const putUser = (userData) => request("put", "/users/me", userData);
+export const deleteUser = () => request("delete", "/users/me");
 
 //users/created-moderator
 
 // user addresses requests
-
 export async function getAddresses(addressId = null) {
     try {
         let url = '/addresses';
@@ -157,15 +131,17 @@ export async function deleteAddress(id) {
 }
 
 // categories requests
+export async function getCategories(userId = null, categoryId = null) {
+    let url = '/categories';
 
-export async function getCategories() {
-    try {
-        const response = await api.get('/categories');
-        return response.data;
-    } catch (error){
-        console.error('erro ao pegar categorias', error);
-        throw error;
-    }
+    if(userId && !categoryId) url += `/user/${userId}`;
+    else if(!userId && categoryId) url += `/${categoryId}`;
+
+    return request('get', url);
 }
+
+export const postCategory = (categoryData) => request("post", "/categories", categoryData);
+export const putCategory = (id, updatedCategory) => request("put", `/categories/${id}`, updatedCategory);
+export const deleteCategory = (id) => request("delete", `/categories/${id}`);
 
 export default api;

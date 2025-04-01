@@ -70,7 +70,7 @@ async function alterUserData() {
         email: email.value,
     }
 
-    await userStore.changeUserData(authStore.token, updatedUser);
+    await userStore.changeUserData(updatedUser);
     console.log('dados alterados',userStore.user)
 
     alter.value = false;
