@@ -7,7 +7,9 @@
             </div>
             <UserDataComponent />
             <AddressesComponent />
-            <ButtonComponent @click="excludeAccount" text="EXCLUIR CONTA" class="red"></ButtonComponent>
+            <div class="button">
+                <ButtonComponent @click="excludeAccount" text="EXCLUIR CONTA" class="red"></ButtonComponent>
+            </div>
         </div>
     </div>
 </template>
@@ -27,8 +29,13 @@ const handleLogout = ()=>{
 }
 
 async function excludeAccount(){
+    const confirmation = window.confirm('Tem certesa que deseja excluir sua conta? Esta ação não pode ser desfeita.');
+
+    if(!confirmation){
+        return;
+    }
+
     await userStore.delUser(authStore.token);
-    
     handleLogout();
 
     window.alert('Conta deletada');
@@ -55,6 +62,11 @@ async function excludeAccount(){
 
     .pi-sign-out{
         font-size: 1.5em;
+    }
+
+    .button{
+        display: flex;
+        flex-direction: row-reverse;
     }
 
     .red{

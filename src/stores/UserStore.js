@@ -55,7 +55,7 @@ export const useUserStore = defineStore('user', ()=>{
             throw error;
         };
 
-        console.log('array dos endereços na store', addresses)
+        return addresses.value;
     }
 
     async function postAddress(addressData) {

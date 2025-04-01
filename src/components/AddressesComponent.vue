@@ -1,39 +1,53 @@
 <template>
-    <div>
+    <div class="addresses">
         <div>
             <h3>Endereços Registrados</h3>
-            <div v-for="addr in addresses" :key="addr.id">
-                <p>{{ addr.street }}</p>
-                <p>{{ addr.number }}</p>
-                <p>{{ addr.city }}</p>
-                <p>{{ addr.state }}</p>
-                <p>{{ addr.country }}</p>
-                <ButtonComponent @click="editAddress(addr)" text="Editar" class="purple"/>
-                <ButtonComponent @click="deletAdress(addr.id)" text="excluir endereço" class="white"/>
+            <div v-if="addresses.length > 0">
+                <div v-for="addr in addresses" :key="addr.id" class="address-container">
+                    <div class="text">
+                        <div class="block-one">
+                            <p>{{ addr.street }}</p>
+                            <p>, {{ addr.number }}</p>
+                        </div>
+                        <div class="block-two">
+                            <p>{{ addr.city }}</p>
+                            <p>/{{ addr.state }}</p>
+                            <p>- {{ addr.country }}</p>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <ButtonComponent @click="editAddress(addr)" text="Editar" class="purple button"/>
+                        <ButtonComponent @click="deletAdress(addr.id)" text="Excluir" class="white button"/>
+                    </div>
+                </div>
+            </div>
+            <div v-else>
+                <p class="no-adress">Você não possui nenhum endereço cadastrado <i class="pi pi-home"></i>
+                </p>
             </div>
         </div>
         <div ref="formSection">
+            <h3>{{ isEditing? 'Alterar Endereço Registrado' : 'Adicionar Novo Endereço' }}</h3>
             <form @submit.prevent="saveAddress">
-                <h3>{{ isEditing? 'alterar endereço existente' : 'Adicionar novo endereço' }}</h3>
                 <div class="input-box">
-                    <InputComponent v-model="editedAddress.street" type="text" placeholder="Street" required class="input"/>
+                    <InputComponent v-model="editedAddress.street" type="text" placeholder="Rua" required class="input"/>
                 </div>
                 <div class="input-box">
-                    <InputComponent v-model="editedAddress.number" type="number" placeholder="Number" required class="input"/>
+                    <InputComponent v-model="editedAddress.number" type="number" placeholder="Número" required class="input"/>
                 </div>
                 <div class="input-box">
-                    <InputComponent v-model="editedAddress.zip" type="text" placeholder="Zip" required class="input"/>
+                    <InputComponent v-model="editedAddress.zip" type="text" placeholder="CEP" required class="input"/>
                 </div>
                 <div class="input-box">
-                    <InputComponent v-model="editedAddress.city" type="text" placeholder="City" required class="input"/>
+                    <InputComponent v-model="editedAddress.city" type="text" placeholder="Cidade" required class="input"/>
                 </div>
                 <div class="input-box">
-                    <InputComponent v-model="editedAddress.state" type="text" placeholder="State" required class="input"/>
+                    <InputComponent v-model="editedAddress.state" type="text" placeholder="Estado" required class="input"/>
                 </div>
                 <div class="input-box">
-                    <InputComponent v-model="editedAddress.country" type="text" placeholder="Country" required class="input"/>
+                    <InputComponent v-model="editedAddress.country" type="text" placeholder="País" required class="input"/>
                 </div>
-                <ButtonComponent type="submit" :text="isEditing? 'Alterar' : 'Adicionar'" class="yellow"></ButtonComponent>
+                <ButtonComponent type="submit" :text="isEditing? 'ALTERAR' : 'ADICIONAR'" class="yellow"></ButtonComponent>
             </form> 
         </div>
     </div>
@@ -43,11 +57,11 @@
 import InputComponent from "./InputComponent.vue";
 import ButtonComponent from "./ButtonComponent.vue";
 import { useUserStore } from "@/stores/UserStore";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 const userStore = useUserStore();
 
-const addresses = userStore.addresses;
+const addresses = computed (() => userStore.addresses);
 
 console.log('array dos endereços no componente', addresses.value)
 
@@ -65,8 +79,7 @@ const isEditing = ref(false);
 const formSection = ref(null);
 
 async function showUserAddresses() {
-    const result =  await userStore.userAddresses();
-    addresses.value = result;
+    await userStore.userAddresses();
 }
 
 function scrollToForm(){
@@ -89,6 +102,7 @@ async function saveAddress() {
     };
 
     resetForm();
+    await userStore.userAddresses();
 }
 
 function editAddress(addr){
@@ -113,9 +127,70 @@ async function deletAdress(id) {
     console.log('COMPONENTE id do endereço', id);
     await userStore.delAddress(id);
     window.alert('endereço deletado');
+    await userStore.userAddresses();
 }
 
 onMounted (()=>{
     showUserAddresses()
 });
 </script>
+
+<style scoped>
+    .addresses{
+        margin: 2em 0 1em 0;
+        padding: 0.5em 0;
+        border: solid 1px var(--color-light-purple);
+    }
+
+    .address-container{
+        margin: 1em;
+        padding: 0.5em;
+        border: solid 1px var(--color-light-purple);
+    }
+
+    .text{
+        font-size: 1.1em;
+        letter-spacing: 1px;
+        margin-bottom: 0.5em;
+    }
+
+    .block-one{
+        display: flex;
+    }
+
+    .block-two{
+        display: flex;
+        color: var(--color-medium-purple);
+    }
+
+    .buttons{
+        display: flex;
+    }
+
+    .button{
+        height: 25px;
+    }
+
+    .no-adress{
+        font-size: 1.2em;
+        font-weight: 200;
+        color: var(--color-medium-purple);
+        text-align: center;
+        margin: 2em;
+    }
+
+    h3{
+        margin-left: 0.6em;
+    }
+
+    form{
+        margin: 0.5em;
+    }
+
+    .yellow{
+        display: block;
+        place-self: center;
+        width: 94%;
+        height: 30px;
+    }
+</style>
