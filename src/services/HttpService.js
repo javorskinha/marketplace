@@ -63,7 +63,7 @@ export async function postRegister(userData) {
 
 //verify-token
 
-//função auxiliar
+//função auxiliar para realizar as requisições
 async function request(method, url, data = null) {
     try {
         const response = await api({ method, url, data });
@@ -83,52 +83,12 @@ export const deleteUser = () => request("delete", "/users/me");
 
 // user addresses requests
 export async function getAddresses(addressId = null) {
-    try {
-        let url = '/addresses';
-
-        if(addressId){
-            url = `/addresses/${addressId}`;
-        }
-        const response = await api.get(url);
-        return response.data;
-    } catch (error){
-        console.error('erro ao recuperar endereço', error);
-        throw error;
-    }
+    request('get', addressId? `/addresses/${addressId}` : '/addresses')
 }
 
-export async function postAddresses(addressData) {
-    try {
-        const response = await api.post('/addresses', addressData);
-        console.log('dados de entrada:', response.data)
-        return response.data;
-    } catch (error){
-        console.error('erro ao registrar endereço', error.response);
-        throw error;
-    }
-}
-
-export async function putAddress(id, updatedData) {
-    console.log('HTTP id do endereço', id, 'novos dados:', updatedData);
-    try {
-        const response = await api.put(`/addresses/${id}`, updatedData);
-        return response.data;
-    } catch (error){
-        console.error('erro ao alterar endereço http', error.response);
-        throw error;
-    }
-}
-
-export async function deleteAddress(id) {
-    console.log('HTTP id do endereço', id);
-    try {
-        const response = await api.delete(`/addresses/${id}`);
-        return response.data;
-    } catch (error){
-        console.error('erro ao deletar endereço', error.response);
-        throw error;
-    }
-}
+export const postAddresses = (addressData) => request("post", "/addresses", addressData);
+export const putAddress = (id, updatedData) => request("put", `/addresses/${id}`, updatedData);
+export const deleteAddress = (id) => request("delete", `/addresses/${id}`);
 
 // categories requests
 export async function getCategories(userId = null, categoryId = null) {
