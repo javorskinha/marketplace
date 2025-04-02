@@ -7,6 +7,7 @@
         <div class="cards">
             <div v-for="category in allCategories" :key="category.id" class="card">
                 <p>{{ category.name }}</p>
+                <img :src="getImageUrl(category.image_path)" alt="">
             </div>
         </div>
     </div>
@@ -14,19 +15,23 @@
 
 <script setup>
 import { useProductsStore } from "@/stores/ProductsStore";
-import { onMounted, ref } from "vue";
+import { onMounted, computed } from "vue";
+import { baseURL } from "@/services/HttpService";
 
 const productsStore = useProductsStore();
-const allCategories = ref([]);
+const allCategories = computed (()=> productsStore.categories);
 
 async function getAllCategories() {
-    const result = productsStore.categories;
-    console.log(result)
-
-    allCategories.value = result;
+    await productsStore.fetchCategories();
 }
 
-onMounted(getAllCategories)
+const getImageUrl = (path) => {
+    return `${baseURL}${path.replace(/^\/+/, '')}`
+};
+
+onMounted(() =>{
+    getAllCategories();
+})
 </script>
 
 <style scoped>
@@ -48,11 +53,17 @@ onMounted(getAllCategories)
 
     .card{
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         background-color: var(--color-white);
         border-radius: 8px;
         margin: 10px;
-        height: 3em;
+        height: 8em;
+    }
+
+    img{
+        width: 5em;
+        height: 5em;
     }
 </style>
