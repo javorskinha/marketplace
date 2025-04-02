@@ -1,25 +1,27 @@
 <template>
     <div class="categories">
         <div class="text">
-            <h2>Shop By Categories</h2>
-            <p>Explore our wide range of categories to find exactly what you're looking for.</p>
+            <h2>Comprar por Categorias</h2>
+            <p>Navegue por nossas categorias e encontre o que você precisa.</p>
         </div>
         <div class="cards">
-            <div v-for="categorie in allCategories" :key="categorie.id" class="card">
-                <p>{{ categorie.name }}</p>
+            <div v-for="category in allCategories" :key="category.id" class="card">
+                <p>{{ category.name }}</p>
+                <img :src="category.image_path" alt="">
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { getCategories } from "@/services/HttpService.js";
+import { useProductsStore } from "@/stores/ProductsStore";
 import { onMounted, ref } from "vue";
 
+const productsStore = useProductsStore();
 const allCategories = ref([]);
 
 async function getAllCategories() {
-    const result = await getCategories()
+    const result = productsStore.categories;
     console.log(result)
 
     allCategories.value = result;

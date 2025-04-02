@@ -7,7 +7,6 @@ export const useUserStore = defineStore('user', ()=>{
     const addresses = ref([]);
 
     // user data
-
     async function userData() {
         try{
             const result = await getUser();
@@ -45,7 +44,6 @@ export const useUserStore = defineStore('user', ()=>{
     //create-moderator
 
     // user addresses
-
     async function userAddresses(id) {
         try{
             const result = await getAddresses(id);
