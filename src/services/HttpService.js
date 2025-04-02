@@ -136,12 +136,12 @@ export const deleteProduct = (id) => request("delete", `/products/${id}`);
 export async function getCart(cartItems = false) {
     return request('get', cartItems? '/cart/items' : '/cart')
 }
-export async function postCart(cartIten = false) {
-    return request('post', cartIten? '/cart/items' : '/cart')
+export async function postCart(itemData) {
+    return request('post', itemData? '/cart/items' : '/cart')
 }
 export const putCart = (id, newQuantity) => request("put", '/cart/items', {id, newQuantity});
-export async function deleteCart(deleteItem = false) {
-    return request('delete', deleteItem? '/cart/items' : '/cart/clear')
+export async function deleteCart(itemId) {
+    return request('delete', itemId? '/cart/items' : '/cart/clear')
 }
 
 // orders requests
