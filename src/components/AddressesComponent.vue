@@ -16,7 +16,7 @@
                         </div>
                     </div>
                     <div class="buttons">
-                        <ButtonComponent @click="editAddress(addr)" text="Editar" class="purple button"/>
+                        <ButtonComponent @click="editAddress(addr)" text="Editar" class="gray button"/>
                         <ButtonComponent @click="deletAdress(addr.id)" text="Excluir" class="white button"/>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                 <div class="input-box">
                     <InputComponent v-model="editedAddress.country" type="text" placeholder="País" required class="input"/>
                 </div>
-                <ButtonComponent type="submit" :text="isEditing? 'ALTERAR' : 'ADICIONAR'" class="yellow"></ButtonComponent>
+                <ButtonComponent type="submit" :text="isEditing? 'ALTERAR' : 'ADICIONAR'" class="blue"></ButtonComponent>
             </form> 
         </div>
     </div>
@@ -139,13 +139,13 @@ onMounted (()=>{
     .addresses{
         margin: 2em 0 1em 0;
         padding: 0.5em 0;
-        border: solid 1px var(--color-light-purple);
+        border: solid 1px var(--color-light-beige);
     }
 
     .address-container{
         margin: 1em;
         padding: 0.5em;
-        border: solid 1px var(--color-light-purple);
+        border: solid 1px var(--color-light-beige);
     }
 
     .text{
@@ -160,7 +160,7 @@ onMounted (()=>{
 
     .block-two{
         display: flex;
-        color: var(--color-medium-purple);
+        color: var(--color-gray);
     }
 
     .buttons{
@@ -174,7 +174,7 @@ onMounted (()=>{
     .no-adress{
         font-size: 1.2em;
         font-weight: 200;
-        color: var(--color-medium-purple);
+        color: var(--color-gray);
         text-align: center;
         margin: 2em;
     }
@@ -187,7 +187,7 @@ onMounted (()=>{
         margin: 0.5em;
     }
 
-    .yellow{
+    .blue{
         display: block;
         place-self: center;
         width: 94%;

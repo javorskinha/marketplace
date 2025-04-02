@@ -44,7 +44,7 @@ async function excludeAccount(){
 
 <style scoped>
     .dashboard{
-        background-color: var(--color-super-light-purple);
+        background-color: var(--color-light-gray);
         padding: 1em 1em;
     }
 

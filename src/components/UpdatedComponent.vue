@@ -1,14 +1,14 @@
 <template>
     <div class="updated">
         <div>
-            <h2>Stay Updated</h2>
-            <p>Subscribe to our newsletter for exclusive offers, new arrivals, and insider-only discounts.</p>
+            <h2>Não perca nenhuma novidade! </h2>
+            <p>Receba em primeira mão ofertas especiais, novos produtos e descontos especiais para inscritos!</p>
         </div>
         <div class="subscribe">
-            <InputComponent type="text" placeholder="Enter your email"/>
-            <ButtonComponent text="Subscribe" class="yellow button"/>
+            <InputComponent type="text" placeholder="Cadastre seu email"/>
+            <ButtonComponent text="Inscrever" class="blue button"/>
         </div>
-        <p class="terms">By subscribing, you agree to our Terms of Service and Privacy Policy.</p>
+        <p class="terms">Ao assinar, você concorda com nossos Termos de Serviço e Política de Privacidade.</p>
     </div>
 </template>
 
@@ -19,7 +19,7 @@ import ButtonComponent from './ButtonComponent.vue';
 
 <style scoped>
     .updated{
-        background-color: var(--color-super-light-purple);
+        background-color: var(--color-light-gray);
         text-align: center;
         padding: 3em 0;
         margin: 2em 0;

@@ -1,7 +1,7 @@
 <template>
     <div class="preview">
         <CardComponent />
-        <ButtonComponent text="View All Products >" class="yellow button"/>
+        <ButtonComponent text="View All Products >" class="blue button"/>
     </div>
 </template>
 

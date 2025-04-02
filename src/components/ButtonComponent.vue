@@ -21,19 +21,19 @@ const props = defineProps({
         height: 40px;
     }
 
-    .purple{
+    .gray{
         color: var(--color-white);
-        background-color: var(--color-medium-purple);
+        background-color: var(--color-gray);
     }
 
     .white{
-        color: var(--color-medium-purple);
-        border: solid 2px var(--color-light-purple);
+        color: var(--color-gray);
+        border: solid 2px var(--color-light-beige);
         background-color: var(--color-white);
     }
 
-    .yellow{
-        color: var(--color-purple);
-        background-color: var(--color-yellow);
+    .blue{
+        color: var(--color-dark-blue);
+        background-color: var(--color-blue);
     }
 </style>

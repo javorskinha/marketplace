@@ -30,7 +30,7 @@ onMounted(getAllCategories)
 
 <style scoped>
     .categories{
-        background-color: var(--color-super-light-purple);
+        background-color: var(--color-light-gray);
         border-radius: 10px;
         margin: 0.5em;
         text-align: center;

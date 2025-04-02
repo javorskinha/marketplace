@@ -6,7 +6,7 @@
                     <div class="logo-content">
                         <h2>S+mart</h2>
                     </div>
-                    <p class="logo-text">Your destination for premium products and exceptional shopping experiences.</p>
+                    <p class="logo-text">O seu ponto de referência para produtos exclusivos e uma jornada de compras incrível.</p>
                 </div>
                 <div class="social">
                     <i class="pi pi-whatsapp"></i>
@@ -16,38 +16,38 @@
             </div>
             <div class="about">
                 <div class="list">
-                    <h3>Shop</h3>
+                    <h3>Compras</h3>
                     <ul>
-                        <li>All Products</li>
-                        <li>New Arrivals</li>
-                        <li>Sale Items</li>
+                        <li>Todos os Produtos</li>
+                        <li>Novidades</li>
+                        <li>Promoções</li>
                     </ul>
                 </div>
                 <div class="list">
-                    <h3>Company</h3>
+                    <h3>Companhia</h3>
                     <ul>
-                        <li>About Us</li>
-                        <li>Careers</li>
-                        <li>Affiliates</li>
+                        <li>Sobre</li>
+                        <li>Afiliados</li>
+                        <li>Sustentabilidade</li>
                     </ul>
                 </div>
                 <div class="list">
-                    <h3>Support</h3>
+                    <h3>Suporte</h3>
                     <ul>
-                        <li>Contact Us</li>
-                        <li>FAQs</li>
-                        <li>Returns</li>
+                        <li>Fale Conosco</li>
+                        <li>Solução de problemas</li>
+                        <li>Segurança</li>
                     </ul>
                 </div>
             </div>
         </div>
         <hr>
         <div class="terms">
-            <p>© 2023 Marketplace. All rights reserved.</p>
+            <p>© 2023 Marketplace. Diretos Reservados.</p>
             <ul>
-                <li>Privacy Policy</li>
-                <li>Terms of Service</li>
-                <li>Cookie Policy</li>
+                <li>Politica de Privacidade</li>
+                <li>Termos de Serviço</li>
+                <li>Politica de Cookies</li>
             </ul>
         </div>
     </div>
@@ -79,7 +79,7 @@
     }
 
     .about{
-        color: var(--color-medium-purple);
+        color: var(--color-gray);
         display: flex;
         justify-content: space-between;
         margin: 30px 10px 60px 10px;
@@ -102,12 +102,12 @@
         text-align: center;
         height: 4em;
         padding: 3em 0;
-        background-color: var(--color-super-light-purple);
+        background-color: var(--color-light-gray);
     }
 
     .terms ul{
         display: flex;
-        color: var(--color-medium-purple);
+        color: var(--color-gray);
         justify-content: space-around;
         margin-top: 20px;
     }

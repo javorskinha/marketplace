@@ -29,7 +29,7 @@
                         <InputComponent v-model="email" type="email" placeholder="Email" required class="input"/>
                         <i class="pi pi-pen-to-square"></i>
                     </div>
-                    <ButtonComponent type="submit" text="ALTERAR" class="yellow"></ButtonComponent>
+                    <ButtonComponent type="submit" text="ALTERAR" class="blue"></ButtonComponent>
                 </form>
             </div>
         </div>
@@ -91,7 +91,7 @@ onMounted(showUserData);
     .data{
         display: flex;
         margin: 0.9em 2em 0.9em 0.2em;
-        border-bottom: solid 1px var(--color-light-purple);
+        border-bottom: solid 1px var(--color-light-beige);
     }
 
     .data-name{
@@ -103,7 +103,7 @@ onMounted(showUserData);
     }
 
     .form{
-        border: solid 1px var(--color-light-purple);
+        border: solid 1px var(--color-light-beige);
         border-radius: 5px;
         margin: 1em 0;
         padding: 1em ;

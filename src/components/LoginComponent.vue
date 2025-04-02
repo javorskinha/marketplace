@@ -15,7 +15,7 @@
                     <div class="forgot-link">
                         <a href="#">Forgot password?</a>
                     </div>
-                    <ButtonComponent text="Login" class="yellow" type="submit"/>
+                    <ButtonComponent text="Login" class="blue" type="submit"/>
                     <p>Or login with social platforms</p>
                     <div class="social-icons">
                         <a href=""><i class="pi pi-google"></i></a>
@@ -39,7 +39,7 @@
                         <InputComponent v-model="password" type="password" placeholder="Password" required class="input"/>
                         <i class="pi pi-lock"></i>
                     </div>
-                    <ButtonComponent text="Register" class="yellow" type="submit"/>
+                    <ButtonComponent text="Register" class="blue" type="submit"/>
                     <p>Or register with social platforms</p>
                     <div class="social-icons">
                         <a href=""><i class="pi pi-google"></i></a>
@@ -52,12 +52,12 @@
                 <div class="toggle-panel toggle-top" :class="{'active' : active}">
                     <h1>Hello, Welcome!</h1>
                     <p>Don't have an account?</p>
-                    <ButtonComponent text="Register" class="purple btn" @click="changeActive()"/>
+                    <ButtonComponent text="Register" class="gray btn" @click="changeActive()"/>
                 </div>
                 <div class="toggle-panel toggle-bottom" :class="{'active' : active}">
                     <h1>Welcome!</h1>
                     <p>Already have an account?</p>
-                    <ButtonComponent text="Login" class="purple btn" @click="changeActive()"/>
+                    <ButtonComponent text="Login" class="gray btn" @click="changeActive()"/>
                 </div>
             </div>
         </div>
@@ -117,7 +117,7 @@ async function hadleRegister() {
         justify-content: center;
         align-items: center;
         min-height: 85vh;
-        background: linear-gradient(90deg, var(--color-super-light-purple), var(--color-light-purple));
+        background: linear-gradient(90deg, var(--color-light-gray), var(--color-light-beige));
     }
 
     .container{
@@ -194,7 +194,7 @@ async function hadleRegister() {
     }
 
     .forgot-link a{
-        color: var(--color-purple);
+        color: var(--color-dark-blue);
     }
 
     form p{
@@ -205,7 +205,7 @@ async function hadleRegister() {
         display: inline-flex;
         padding: 5px;
         font-size: 1.5em;
-        border: 2px solid var(--color-light-purple);
+        border: 2px solid var(--color-light-beige);
         border-radius: 8px;
         margin: 0 8px;
     }
@@ -222,7 +222,7 @@ async function hadleRegister() {
         top: -275%;
         width: 100%;
         height: 300%;
-        background-color: var(--color-light-purple);
+        background-color: var(--color-light-beige);
         border-radius: 70px;
         z-index: 2;
         transition: 1.5s ease-in-out;

@@ -5,7 +5,7 @@
         <!--avaliação-->
         <p>{{ description }}</p>
         <p>{{ costs }}</p>
-        <ButtonComponent text="Add to Cart" class="purple button"/>
+        <ButtonComponent text="Add to Cart" class="gray button"/>
         <ButtonComponent text="Buy Now" class="white button"/>
     </div>
 </template>

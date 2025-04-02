@@ -3,11 +3,11 @@
 @import 'primeicons/primeicons.css';
 
 :root {
-  --color-purple: #2C3E50;
-  --color-medium-purple: #4B4F54;
-  --color-light-purple: #EAE0D5;
-  --color-super-light-purple: #F5F5F5;
-  --color-yellow: #5c90b3;
+  --color-dark-blue: #2C3E50;
+  --color-gray: #4B4F54;
+  --color-light-beige: #EAE0D5;
+  --color-light-gray: #F5F5F5;
+  --color-blue: #5c90b3;
   --color-black: #000;
   --color-white: #fff;
 

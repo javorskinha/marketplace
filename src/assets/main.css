@@ -16,7 +16,7 @@
 
   h2, h3, a{
     font-family: var(--font-main);
-    color: var(--color-purple);
+    color: var(--color-dark-blue);
 }
 
   h2{
@@ -35,7 +35,7 @@
 }
 
 .pi {
-  color: var(--color-purple);
+  color: var(--color-dark-blue);
 }
 
 

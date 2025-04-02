@@ -29,21 +29,22 @@
                         <i id="x" class="pi pi-times" @click="openClose"></i>
                     </div>
                     <div class="search-box">
-                        <InputComponent type="text" placeholder="Search" />
+                        <InputComponent type="text" placeholder="Buscar" />
                         <i class="pi pi-search"></i>
                     </div>
                 </div>
                 <ul class="options">
-                    <li>Shop <i class="pi pi-chevron-right"></i></li>
-                    <li>Categories <i class="pi pi-chevron-right"></i></li>
-                    <li>Account <i class="pi pi-chevron-right"></i></li>
-                    <li>About <i class="pi pi-chevron-right"></i></li>
+                    <li>Categorias <i class="pi pi-chevron-right"></i></li>
+                    <li>Cupons <i class="pi pi-chevron-right"></i></li>
+                    <li>Ofertas <i class="pi pi-chevron-right"></i></li>
+                    <li>Minhas Compras <i class="pi pi-chevron-right"></i></li>
+                    <li>Minha Conta <i class="pi pi-chevron-right"></i></li>
                 </ul>
             </div>
             <div class="section-menu-log">
                 <a href="/account">
-                    <ButtonComponent text="Sign In" class="purple button"/>
-                    <ButtonComponent text="Create Account" class="white button"/>
+                    <ButtonComponent text="Entrar" class="gray button"/>
+                    <ButtonComponent text="Criar Conta" class="white button"/>
                 </a>
             </div>
         </div>
@@ -96,7 +97,7 @@ function openClose(){
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: var(--color-super-light-purple);
+        background-color: var(--color-light-gray);
         width: 3em;
         height: 3em;
         border-radius: 3px;
@@ -107,7 +108,7 @@ function openClose(){
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        background-color: var(--color-super-light-purple);
+        background-color: var(--color-light-gray);
         position: absolute;
         left: 0;
         top: 0;
@@ -158,12 +159,12 @@ function openClose(){
         justify-content: space-between;
         padding: 1em;
         font-family: var(--font-main);
-        border-bottom: solid 1px var(--color-super-light-purple);
+        border-bottom: solid 1px var(--color-light-gray);
         cursor: pointer;
     }
 
     li:hover{
-        color: var(--color-light-purple);
+        color: var(--color-light-beige);
     }
 
     .options img{
@@ -203,7 +204,7 @@ function openClose(){
 
         .account{
             display: block;
-            color: var(--color-purple);
+            color: var(--color-dark-blue);
         }
 
         .header-section{
@@ -231,7 +232,7 @@ function openClose(){
         }
 
         .header-section-menu input{
-            border-color: var(--color-super-light-purple);
+            border-color: var(--color-light-gray);
         }
         }
 </style>

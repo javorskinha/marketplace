@@ -10,7 +10,7 @@
                     <img src="../../public/images/image-example.jpeg" alt="">
                 </div>
                 <div class="buttons">
-                    <ButtonComponent text="Shop Now >" class="yellow button"/>
+                    <ButtonComponent text="Shop Now >" class="blue button"/>
                     <ButtonComponent text="See Category" class="white button"/>
                 </div>
             </div>
@@ -24,7 +24,7 @@ import ButtonComponent from "./ButtonComponent.vue";
 
 <style scoped>
     .banner{
-        background-color: var(--color-purple);
+        background-color: var(--color-dark-blue);
     }
 
     .banner-content{
@@ -63,7 +63,7 @@ import ButtonComponent from "./ButtonComponent.vue";
         }
 
         .banner-content img{
-            border: 2px solid var(--color-light-purple);
+            border: 2px solid var(--color-light-beige);
         }
 
         .buttons{
