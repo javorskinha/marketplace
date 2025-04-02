@@ -1,5 +1,5 @@
-import { getCategories, getProducts } from "@/services/HttpService";
 import { defineStore } from "pinia";
+import { getCategories, getProducts } from "@/services/HttpService";
 import { ref } from "vue";
 
 export const useProductsStore = defineStore('products', ()=>{
