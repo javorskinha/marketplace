@@ -24,10 +24,16 @@ const props = defineProps({
 
 <style scoped>
     .card{
-        display: grid;
+        width: 25em;
+        height: 45em;
+
     }
 
     .button{
         margin: 5px 10px;
+    }
+
+    img{
+        width: 100%;
     }
 </style>
