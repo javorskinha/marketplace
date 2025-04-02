@@ -7,7 +7,6 @@
         <div class="cards">
             <div v-for="category in allCategories" :key="category.id" class="card">
                 <p>{{ category.name }}</p>
-                <img :src="category.image_path" alt="">
             </div>
         </div>
     </div>

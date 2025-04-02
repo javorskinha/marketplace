@@ -19,7 +19,7 @@ export const useProductsStore = defineStore('products', ()=>{
 
     // criar post, put e delete para admin e moderador.
 
-    async function fetchProducts(userId, categoryId, productId) {
+    async function fetchProducts(userId = null, categoryId = null, productId = null) {
         try{
             const result = await getProducts(userId, categoryId, productId);
             products.value = result;
@@ -29,5 +29,5 @@ export const useProductsStore = defineStore('products', ()=>{
         }
     }
 
-    return {categories, fetchCategories, fetchProducts}
+    return {categories, products, fetchCategories, fetchProducts}
 })

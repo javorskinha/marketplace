@@ -1,7 +1,9 @@
 <template>
     <div class="preview">
         <CardComponent />
-        <ButtonComponent text="View All Products >" class="blue button"/>
+        <a href="/categories">
+            <ButtonComponent text="Ver Todos os Produtos >" class="blue button"/>
+        </a>
     </div>
 </template>
 
