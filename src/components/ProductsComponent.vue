@@ -18,7 +18,6 @@ import { useProductsStore } from '@/stores/ProductsStore';
 import { computed, onMounted } from 'vue';
 import { baseURL } from "@/services/HttpService";
 import { useOrdersStore } from '@/stores/OrdersStore';
-import { parse } from 'vue/compiler-sfc';
 
 const productsStore = useProductsStore();
 const orderStore = useOrdersStore();

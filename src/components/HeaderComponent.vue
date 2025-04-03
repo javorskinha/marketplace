@@ -13,7 +13,7 @@
                 <a href="#favoritos">
                     <i class="pi pi-heart-fill"></i>
                 </a>
-                <a href="#carrinho">
+                <a href="/cart">
                     <i class="pi pi-cart-plus"></i>
                 </a>
                 <a class="account" href="/account">Account</a>

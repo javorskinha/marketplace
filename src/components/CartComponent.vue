@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-for="item in items" :key="item.id">
+        <div v-for="item in intItem" :key="item.id">
             <CardComponent
             :src="getImageUrl(item.image_path)"
             :name="item.name"
@@ -14,14 +14,27 @@
 <script setup>
 import { useOrdersStore } from '@/stores/OrdersStore';
 import CardComponent from './CardComponent.vue';
-import { computed, onMounted } from 'vue';
-import { baseURL } from "@/services/HttpService";
+import { computed, onMounted, ref } from 'vue';
+import { baseURL, getProducts } from "@/services/HttpService";
 
 const orderStore = useOrdersStore();
-const items = computed (()=> orderStore.cart);
+const intItem = ref([]);
 
 async function showCartItems() {
     await orderStore.fetchCart();
+    console.log("Itens do carrinho:", orderStore.cart);
+    
+    const products = await Promise.all(orderStore.cart.items.map(async (item) => {
+        try{
+            const product = await getProducts(null, null, item.product_id);
+            return{...item, ...product};
+        } catch (error){
+            console.error(`erro ao buscar produto ID ${item.product_id}`)
+        }
+    }))
+
+    intItem.value = products;
+    console.log("Itens detalhados:", intItem.value);
 }
 
 const getImageUrl = (path) => {
@@ -33,8 +46,4 @@ onMounted(()=>{
 })
 </script>
 
-{
-	"user_id": 17,
-	"id": 7,
-	"created_at": "2025-04-03T17:25:02.885616"
-}
+const items = computed (()=> orderStore.cart);
