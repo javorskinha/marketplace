@@ -1,11 +1,12 @@
 import { defineStore } from "pinia";
-import { getCart, postCart, deleteCart, getOrders } from "@/services/HttpService";
+import { getCart, postCart, deleteCart, getOrders, putCart } from "@/services/HttpService";
 import { ref } from "vue";
 
 export const useOrdersStore = defineStore ('orders', ()=> {
     const cart = ref([]);
     const order = ref([]);
 
+    //carrinho
     async function fetchCart(cartItems = true) {
         try{
             const result = await getCart(cartItems);
@@ -24,6 +25,15 @@ export const useOrdersStore = defineStore ('orders', ()=> {
         }
     }
 
+    async function alterCartQuant(id, newQuantity) {
+        try{
+            const result = await putCart(id, newQuantity);
+            item.value = result;
+        } catch (error){
+            console.error('OrdersStore erro ao alterar quantidade do item', error);
+        }
+    }
+
     async function removeCartItem(itemId) {
         try{
             const result = await deleteCart(itemId);
@@ -33,6 +43,7 @@ export const useOrdersStore = defineStore ('orders', ()=> {
         }
     }
 
+    //pedidos
     async function fetchOrder(orderId = null) {
         try{
             const result = await getOrders(orderId);
@@ -42,5 +53,5 @@ export const useOrdersStore = defineStore ('orders', ()=> {
         }
     }
 
-    return {cart, order, fetchCart, fetchOrder, addCartItem, removeCartItem}
+    return {cart, order, fetchCart, fetchOrder, addCartItem, alterCartQuant, removeCartItem}
 })
