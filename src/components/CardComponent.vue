@@ -4,14 +4,18 @@
         <h3>{{ name }}</h3>
         <p>{{ description }}</p>
         <p>{{ price }}</p>
-        <ButtonComponent text="Add to Cart" class="gray button"/>
-        <ButtonComponent text="Buy Now" class="white button"/>
+        <ButtonComponent 
+        text="Adicionar ao Carrinho" 
+        class="gray button"
+        @click="$emit('addtocart')"
+        />
+        <ButtonComponent text="Comprar Agora" class="white button"/>
     </div>
 </template>
 
 <script setup>
 import ButtonComponent from './ButtonComponent.vue';
-import { defineProps } from 'vue';
+import { defineProps, defineEmits } from 'vue';
 
 const props = defineProps({
     src: String,
@@ -20,6 +24,8 @@ const props = defineProps({
     description: String,
     price: String
 })
+
+const emit = defineEmits (['addtocart'])
 </script>
 
 <style scoped>

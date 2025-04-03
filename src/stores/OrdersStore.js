@@ -17,8 +17,10 @@ export const useOrdersStore = defineStore ('orders', ()=> {
     }
 
     async function addCartItem(itemData) {
+        console.log('dados na store:', itemData);
         try{
             const result = await postCart(itemData);
+            console.log('os dados foram adicinados', itemData);
             cart.value.push(result);
         } catch (error){
             console.error('OrdersStore erro ao adicionar item', error);

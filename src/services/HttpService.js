@@ -68,7 +68,7 @@ async function request(method, url, data = null) {
         const response = await api({ method, url, data });
         return response.data;
     } catch (error) {
-        console.error(`HTTP Erro em ${method}`, error.response || error);
+        console.error(`HTTP Erro em ${method} ${url}`, error.response || error);
         throw error;
     }
 }
@@ -136,8 +136,9 @@ export const deleteProduct = (id) => request("delete", `/products/${id}`);
 export async function getCart(cartItems = false) {
     return request('get', cartItems? '/cart/items' : '/cart')
 }
-export async function postCart(itemData) {
-    return request('post', itemData? '/cart/items' : '/cart')
+export async function postCart(itemData = null) {
+    const url = itemData? '/cart/items' : '/cart';
+    return request('post', url, itemData);
 }
 export const putCart = (id, newQuantity) => request("put", '/cart/items', {id, newQuantity});
 export async function deleteCart(itemId) {
