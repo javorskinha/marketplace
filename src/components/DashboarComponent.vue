@@ -35,7 +35,7 @@ async function excludeAccount(){
         return;
     }
 
-    await userStore.delUser(authStore.token);
+    await userStore.delUser();
     handleLogout();
 
     window.alert('Conta deletada');

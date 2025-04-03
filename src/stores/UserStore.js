@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { deleteUser, getUser, putUser, getAddresses, postAddresses, putAddress, deleteAddress } from "@/services/HttpService";
+import { deleteUser, getUser, putUser, getAddresses, postAddresses, putAddress, deleteAddress, deleteCart } from "@/services/HttpService";
 import { ref } from "vue";
 
 export const useUserStore = defineStore('user', ()=>{
@@ -35,6 +35,7 @@ export const useUserStore = defineStore('user', ()=>{
             await deleteUser();
             user.value = null;
             addresses.value = [];
+            await deleteCart();
         } catch (error){
             console.error('Erro ao deletar dados', error);
             throw error;
