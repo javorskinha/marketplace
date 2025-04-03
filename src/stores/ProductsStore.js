@@ -16,8 +16,7 @@ export const useProductsStore = defineStore('products', ()=>{
             throw error;
         }
     }
-
-    // criar post, put e delete para admin e moderador.
+    // criar categories post, put e delete para admin e moderador.
 
     async function fetchProducts(userId = null, categoryId = null, productId = null) {
         try{
@@ -28,6 +27,7 @@ export const useProductsStore = defineStore('products', ()=>{
             throw error;
         }
     }
+    // criar products post, put e delete para admin e moderador.
 
     return {categories, products, fetchCategories, fetchProducts}
 })
