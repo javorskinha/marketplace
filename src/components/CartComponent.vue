@@ -6,6 +6,7 @@
             :name="item.name"
             :description="item.description"
             :price="item.price"
+            @addtocart="removeItem(item.id)"
             />
         </div>
     </div>
@@ -14,7 +15,7 @@
 <script setup>
 import { useOrdersStore } from '@/stores/OrdersStore';
 import CardComponent from './CardComponent.vue';
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { baseURL, getProducts } from "@/services/HttpService";
 
 const orderStore = useOrdersStore();
@@ -41,9 +42,13 @@ const getImageUrl = (path) => {
     return `${baseURL}${path.replace(/^\/+/, '')}`
 };
 
+async function removeItem(itemId) {
+    await orderStore.removeCartItem(itemId);
+    intItem.value = intItem.value.filter(item => item.id !== itemId);
+    await showCartItems();
+}
+
 onMounted(()=>{
     showCartItems();
 })
 </script>
-
-const items = computed (()=> orderStore.cart);

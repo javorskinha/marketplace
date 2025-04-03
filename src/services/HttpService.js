@@ -142,7 +142,7 @@ export async function postCart(itemData = null) {
 }
 export const putCart = (id, newQuantity) => request("put", '/cart/items', {id, newQuantity});
 export async function deleteCart(itemId) {
-    return request('delete', itemId? '/cart/items' : '/cart/clear')
+    return request('delete', itemId? '/cart/items' : '/cart/clear', itemId? {"product_id": itemId} : {});
 }
 
 // orders requests

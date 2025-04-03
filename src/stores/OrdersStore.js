@@ -39,7 +39,7 @@ export const useOrdersStore = defineStore ('orders', ()=> {
     async function removeCartItem(itemId) {
         try{
             const result = await deleteCart(itemId);
-            cart.value = cart.value.filter(item => item.id !== result.id);
+            cart.value.items = cart.value.items.filter(item => item.id !== result.id);
         } catch (error){
             console.error('OrdersStore erro ao excluir item', error);
         }
