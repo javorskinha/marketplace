@@ -140,7 +140,7 @@ export async function postCart(itemData = null) {
     const url = itemData? '/cart/items' : '/cart';
     return request('post', url, itemData);
 }
-export const putCart = (id, newQuantity) => request("put", '/cart/items', {id, newQuantity});
+export const putCart = (id, newQuantity) => request("put", '/cart/items', {product_id: id, quantity: newQuantity});
 export async function deleteCart(itemId) {
     return request('delete', itemId? '/cart/items' : '/cart/clear', itemId? {"product_id": itemId} : {});
 }

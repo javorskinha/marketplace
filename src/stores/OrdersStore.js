@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { getCart, postCart, deleteCart, getOrders, putCart } from "@/services/HttpService";
+import { getCart, postCart, deleteCart, getOrders, putCart, postOrder } from "@/services/HttpService";
 import { ref } from "vue";
 
 export const useOrdersStore = defineStore ('orders', ()=> {
@@ -16,32 +16,23 @@ export const useOrdersStore = defineStore ('orders', ()=> {
         }
     }
 
-    async function addCartItem(itemData) {
-        console.log('dados na store:', itemData);
+    async function updateCartItem(itemData, isAdding, newQuantity = null) {
         try{
-            const result = await postCart(itemData);
-            console.log('os dados foram adicinados', itemData);
-            cart.value.push(result);
+            if(isAdding){
+                const result = await postCart(itemData);
+                console.log('os dados foram adicinados', itemData);
+                cart.value.push(result);
+            } else if (newQuantity !== null){
+                await putCart(itemData.product_id, newQuantity);
+                const index = cart.value.items.findIndex(item => item.id === itemData.id);
+                if (index !== -1) cart.value[index].quantity = newQuantity;
+                console.log("quantidade atualizada com sucesso!")
+            } else {
+                await deleteCart(itemData.id);
+                cart.value.items = cart.value.items.filter(item => item.id !== itemData.id);
+            }
         } catch (error){
-            console.error('OrdersStore erro ao adicionar item', error);
-        }
-    }
-
-    async function alterCartQuant(id, newQuantity) {
-        try{
-            const result = await putCart(id, newQuantity);
-            item.value = result;
-        } catch (error){
-            console.error('OrdersStore erro ao alterar quantidade do item', error);
-        }
-    }
-
-    async function removeCartItem(itemId) {
-        try{
-            const result = await deleteCart(itemId);
-            cart.value.items = cart.value.items.filter(item => item.id !== result.id);
-        } catch (error){
-            console.error('OrdersStore erro ao excluir item', error);
+            console.error('OrdersStore erro ao atualizar o carrinho', error);
         }
     }
 
@@ -55,5 +46,14 @@ export const useOrdersStore = defineStore ('orders', ()=> {
         }
     }
 
-    return {cart, order, fetchCart, fetchOrder, addCartItem, alterCartQuant, removeCartItem}
+    async function newOrder(orderData){
+        try {
+            const result = await postOrder(orderData);
+            order.value = result;
+        } catch (error){
+            console.error('OrdersStore erro exibir pedido', error);
+        }
+    }
+
+    return {cart, order, fetchCart, fetchOrder, updateCartItem}
 })
