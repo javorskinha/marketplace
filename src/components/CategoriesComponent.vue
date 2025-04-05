@@ -1,13 +1,17 @@
 <template>
     <div class="categories">
-        <div class="text">
-            <h2>Comprar por Categorias</h2>
-            <p>Navegue por nossas categorias e encontre o que você precisa.</p>
+        <div class="text-center my-5">
+            <h2 class="fw-bold">Comprar por Categorias</h2>
+            <p class="text-muted">Navegue por nossas categorias e encontre o que você precisa.</p>
         </div>
-        <div class="cards">
-            <div v-for="category in allCategories" :key="category.id" class="card">
-                <p>{{ category.name }}</p>
-                <img :src="getImageUrl(category.image_path)" alt="">
+        <div class="container">
+            <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4">
+                <div v-for="category in allCategories" :key="category.id" class="col">
+                    <div class="card text-center border-0 shadow-sm p-3">
+                        <img :src="getImageUrl(category.image_path)" alt="" class="mb-3 mx-auto">
+                        <h6 class="fw-semibold mb-0">{{ category.name }}</h6>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -35,33 +39,6 @@ onMounted(() =>{
 </script>
 
 <style scoped>
-    .categories{
-        background-color: var(--color-light-gray);
-        border-radius: 10px;
-        margin: 0.5em;
-        text-align: center;
-    }
-
-    .text{ 
-        padding: 1em;
-    }
-
-    .cards{
-        display: grid;
-        grid-template-columns: 50% 50%;
-    }
-
-    .card{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background-color: var(--color-white);
-        border-radius: 8px;
-        margin: 10px;
-        height: 8em;
-    }
-
     img{
         width: 5em;
         height: 5em;

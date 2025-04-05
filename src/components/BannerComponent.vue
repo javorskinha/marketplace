@@ -1,19 +1,12 @@
 <template>
-    <div class="banner">
-        <div class="banner-content">
-            <div>
-                <h2>Lorem ipsum dolor sit amet consectetur.</h2>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam laudantium vel.</p>
-            </div>
-            <div class="product">
-                <div class="img">
-                    <img src="../../public/images/image-example.jpeg" alt="">
-                </div>
-                <div class="buttons">
-                    <ButtonComponent text="Shop Now >" class="blue button"/>
-                    <ButtonComponent text="See Category" class="white button"/>
-                </div>
-            </div>
+    <div class="bg-image-custom bg-white d-flex flex-column justify-content-between px-3 py-3 text-dark shadow-lg">
+        <div class="content-box">
+            <h3 class="fw-bold display-6 text-shadow">Smartphone Motorola Razr 50</h3>
+            <p class="lead text-shadow">Tela dobrável 6,9" pOLED e externa 3,6” Moto AI camera IPX8</p>
+        </div>
+        <div class="d-flex gap-3">
+            <ButtonComponent text="Shop Now" class="btn shadow"/>
+            <ButtonComponent text="See Category" class="btn shadow"/>
         </div>
     </div>
 </template>
@@ -23,51 +16,15 @@ import ButtonComponent from "./ButtonComponent.vue";
 </script>
 
 <style scoped>
-    .banner{
-        background-color: var(--color-dark-blue);
+    .bg-image-custom{
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(226, 231, 235, 0) 50%),url('/images/1.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 80%;
+        height: 55vh;
     }
 
-    .banner-content{
-        padding: 3em 1em;
-    }
-
-    h2, p{
-        color: var(--color-white);
-    }
-
-    .banner-content img{
-        display: block;
-        place-self: center;
-        border-radius: 50%;
-        margin: 15px 0 15px 0;
-    }
-
-    .buttons{
-        display: block;
-        place-self: center;
-        width: 90%;
-    }
-
-    @media screen and (min-width: 600px) {
-        .product{
-            display: flex;
-            width: 100%;
-        }
-
-        .img{
-            width: 60%;
-        }
-
-        .banner-content{
-            padding: 1em;
-        }
-
-        .banner-content img{
-            border: 2px solid var(--color-light-beige);
-        }
-
-        .buttons{
-            width: 40%;
-        }
+    .content-box{
+        width: 50%;
     }
 </style>

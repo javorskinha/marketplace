@@ -1,16 +1,18 @@
 <template>
-    <div>
-        <div v-for="item in intItem" :key="item.id">
-            <CardComponent
-            :src="getImageUrl(item.image_path)"
-            :name="item.name"
-            :description="item.description"
-            :price="item.price"
-            @addtocart="removeItem(item.id)"
-            />
-            <input type="number" min="1"
-            v-model.number="item.quantity"
-            @change="alterQuantity(item)"/>
+    <div class="container my-4">
+        <div class="row g-4">
+            <div v-for="item in intItem" :key="item.id" class="col-12 col-sm-6 col-lg-3">
+                <CardComponent
+                :src="getImageUrl(item.image_path)"
+                :name="item.name"
+                :description="item.description"
+                :price="item.price"
+                @addtocart="removeItem(item.id)"
+                />
+                <input type="number" min="1"
+                v-model.number="item.quantity"
+                @change="alterQuantity(item)"/>
+            </div>
         </div>
     </div>
 </template>

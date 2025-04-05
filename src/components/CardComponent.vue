@@ -1,15 +1,23 @@
 <template>
-    <div class="card">
-        <img :src="src" :alt="alt">
-        <h3>{{ name }}</h3>
-        <p>{{ description }}</p>
-        <p>{{ price }}</p>
-        <ButtonComponent 
-        text="Adicionar ao Carrinho" 
-        class="gray button"
-        @click="$emit('addtocart')"
-        />
-        <ButtonComponent text="Comprar Agora" class="white button"/>
+    <div class="card shadow-sm">
+        <div class="position-relative">
+            <img :src="src" class="card-img-top" :alt="alt">
+            <span class="badge bg-danger position-absolute top-0 start-0 m-2">novo{{ marker }}</span>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ name }}</h5>
+            <p class="card-text text-muted small card-text-limit">{{ description }}</p>
+            <p class="card-text fw-bold fs-5 text-primary">R$ {{ price }}</p>
+            <div class="d-flex flex-column gap-2">
+                <ButtonComponent
+                text="Adicionar ao Carrinho"
+                class="btn btn-info"
+                @click="$emit('addtocart')"
+                icon="pi pi-shopping-cart"
+                />
+                <ButtonComponent text="Lista de Desejos" class="btn btn-outline-secondary" icon="pi pi-heart"/>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -22,7 +30,8 @@ const props = defineProps({
     alt: String,
     name: String,
     description: String,
-    price: String
+    price: String, 
+    marker: String
 })
 
 const emit = defineEmits (['addtocart'])
@@ -30,16 +39,18 @@ const emit = defineEmits (['addtocart'])
 
 <style scoped>
     .card{
-        width: 25em;
-        height: 45em;
-
+        width: 18rem;;
     }
 
-    .button{
-        margin: 5px 10px;
+    .card-text-limit {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
-    img{
-        width: 100%;
+    .card:hover {
+      transform: translateY(-4px);
+      transition: all 0.4s ease-in-out;
     }
 </style>

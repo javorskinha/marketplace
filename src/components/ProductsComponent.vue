@@ -1,13 +1,15 @@
 <template>
-    <div>
-        <div v-for="product in allProducts" :key="product.id">
-            <CardComponent 
-            :src="getImageUrl(product.image_path)"
-            :name="product.name"
-            :description="product.description"
-            :price="product.price"
-            @addtocart="addItem(product)"
-            />
+    <div class="container my-4">
+        <div class="row g-4">
+            <div v-for="product in allProducts" :key="product.id" class="col-12 col-sm-6 col-lg-3" >
+                <CardComponent
+                :src="getImageUrl(product.image_path)"
+                :name="product.name"
+                :description="product.description"
+                :price="product.price"
+                @addtocart="addItem(product)"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -38,7 +40,7 @@ async function addItem(product) {
         "unit_price": product.price
     };
 
-    await orderStore.addCartItem(itemData);
+    await orderStore.updateCartItem(itemData, true);
 }
 
 onMounted(getAllProducts)
