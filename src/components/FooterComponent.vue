@@ -6,7 +6,7 @@
                     <h1 class="fw-bold">S+mart</h1>
                     <p>O seu ponto de referência para produtos exclusivos e uma jornada de compras incrível.</p>
                 </div>
-                <div class="m-3">
+                <div class="m-3 hover">
                     <i class="pi pi-whatsapp me-3"></i>
                     <i class="pi pi-facebook me-3"></i>
                     <i class="pi pi-instagram me-3"></i>
