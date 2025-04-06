@@ -1,4 +1,4 @@
-@import './base.css';
+@import 'primeicons/primeicons.css';
 
 /*reset css */
 * {
@@ -29,10 +29,6 @@
     font-size: 0.8em;
     font-weight: 600;
   }
-
-  .button{
-    margin: 3px;
-}
 
 .pi {
   color: var(--color-dark-blue);
