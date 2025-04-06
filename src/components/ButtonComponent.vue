@@ -1,5 +1,5 @@
 <template>
-    <div class="d-grid rounded-0">
+    <div class="d-grid rounded-0" v-bind="$attrs">
         <button :type="type" class="btn fw-bold d-flex align-items-center justify-content-center gap-2">{{ text }}<i :class="icon"></i></button>
     </div>
 </template>
@@ -14,7 +14,7 @@ const props = defineProps({
 })
 </script>
 
-<style scoped>
+<style>
     button{
         height: 20px;
     }
