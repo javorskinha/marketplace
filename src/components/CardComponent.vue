@@ -43,14 +43,14 @@ const emit = defineEmits (['addtocart'])
     }
 
     .card-text-limit {
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     .card:hover {
-      transform: translateY(-4px);
-      transition: all 0.4s ease-in-out;
+        transform: translateY(-4px);
+        transition: all 0.4s ease-in-out;
     }
 </style>
