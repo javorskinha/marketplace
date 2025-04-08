@@ -1,63 +1,63 @@
 <template>
-    <div class="login-register">
+    <div class="d-flex justify-content-center success">
         <div :class="{'active' : active}" class="container">
             <div class="form-box login">
-                <form @submit.prevent="hadleLogin">
-                    <h1>Login</h1>
+                <form @submit.prevent="hadleLogin" class="w-100">
+                    <h1 class="mb-3">Login</h1>
                     <div class="input-box">
-                        <InputComponent v-model="email" type="email" placeholder="Email" required class="input"/>
+                        <InputComponent v-model="email" type="email" placeholder="E-mail" required class="input"/>
                         <i class="pi pi-envelope"></i>
                     </div>
                     <div class="input-box">
-                        <InputComponent v-model="password" type="password" placeholder="Password" required class="input"/>
+                        <InputComponent v-model="password" type="password" placeholder="Senha" required class="input"/>
                         <i class="pi pi-lock"></i>
                     </div>
-                    <div class="forgot-link">
-                        <a href="#">Forgot password?</a>
+                    <div class="m-2">
+                        <a href="#" class="nav-link"><small>Esqueceu a senha?</small></a>
                     </div>
-                    <ButtonComponent text="Login" class="blue" type="submit"/>
-                    <p>Or login with social platforms</p>
-                    <div class="social-icons">
-                        <a href=""><i class="pi pi-google"></i></a>
-                        <a href=""><i class="pi pi-facebook"></i></a>
-                        <a href=""><i class="pi pi-instagram"></i></a>
+                    <ButtonComponent text="Login" class="btn btn-primary" type="submit"/>
+                    <p class="mt-3">Ou faça login com suas redes sociais</p>
+                    <div class="fs-3">
+                        <a class="m-3" href=""><i class="pi pi-google"></i></a>
+                        <a class="m-3" href=""><i class="pi pi-facebook"></i></a>
+                        <a class="m-3" href=""><i class="pi pi-instagram"></i></a>
                     </div>
                 </form>
             </div>
             <div class="form-box register">
-                <form @submit.prevent="hadleRegister">
-                    <h1>Registration</h1>
+                <form @submit.prevent="hadleRegister" class="w-100">
+                    <h1 class="mb-3">Cadastrar</h1>
                     <div class="input-box">
-                        <InputComponent v-model="name" type="text" placeholder="Username" required class="input"/>
+                        <InputComponent v-model="name" type="text" placeholder="Nome" required class="input"/>
                         <i class="pi pi-user"></i>
                     </div>
                     <div class="input-box">
-                        <InputComponent v-model="email" type="email" placeholder="Email" required class="input"/>
+                        <InputComponent v-model="email" type="email" placeholder="E-mail" required class="input"/>
                         <i class="pi pi-envelope"></i>
                     </div>
                     <div class="input-box">
-                        <InputComponent v-model="password" type="password" placeholder="Password" required class="input"/>
+                        <InputComponent v-model="password" type="password" placeholder="Senha" required class="input"/>
                         <i class="pi pi-lock"></i>
                     </div>
-                    <ButtonComponent text="Register" class="blue" type="submit"/>
-                    <p>Or register with social platforms</p>
-                    <div class="social-icons">
-                        <a href=""><i class="pi pi-google"></i></a>
-                        <a href=""><i class="pi pi-facebook"></i></a>
-                        <a href=""><i class="pi pi-instagram"></i></a>
+                    <ButtonComponent text="Cadastrar" class="btn btn-outline-primary" type="submit"/>
+                    <p class="mt-3">Ou cadastre-se com suas redes sociais</p>
+                    <div class="fs-3">
+                        <a class="m-3" href=""><i class="pi pi-google"></i></a>
+                        <a class="m-3" href=""><i class="pi pi-facebook"></i></a>
+                        <a class="m-3" href=""><i class="pi pi-instagram"></i></a>
                     </div>
                 </form>
             </div>
             <div class="toggle-box" :class="{'active' : active}">
                 <div class="toggle-panel toggle-top" :class="{'active' : active}">
-                    <h1>Hello, Welcome!</h1>
-                    <p>Don't have an account?</p>
-                    <ButtonComponent text="Register" class="gray btn" @click="changeActive()"/>
+                    <h1>Bem Vindo!</h1>
+                    <p>Ainda não possui uma conta?</p>
+                    <ButtonComponent text="Cadastrar-se" class="btn btn-light rounded-3 w-50" @click="changeActive()"/>
                 </div>
                 <div class="toggle-panel toggle-bottom" :class="{'active' : active}">
-                    <h1>Welcome!</h1>
-                    <p>Already have an account?</p>
-                    <ButtonComponent text="Login" class="gray btn" @click="changeActive()"/>
+                    <h1>Bem Vindo!</h1>
+                    <p>Já possui uma conta?</p>
+                    <ButtonComponent text="Fazer Login" class="btn btn-light rounded-3 w-50" @click="changeActive()"/>
                 </div>
             </div>
         </div>
@@ -112,21 +112,13 @@ async function hadleRegister() {
 </script>
 
 <style scoped>
-    .login-register{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 85vh;
-        background: linear-gradient(90deg, var(--color-light-gray), var(--color-light-beige));
-    }
-
     .container{
         position: relative;
         width: 90%;
         height: auto;
         min-height: 600px;
         max-width: 500px;
-        background-color: var(--color-white);
+        background-color: #F5F5F5;
         border-radius: 30px;
         box-shadow: 0 0 30px rgba(0, 0, 0, .2);
         margin: 1.5em 0;
@@ -136,7 +128,7 @@ async function hadleRegister() {
     .form-box {
         position: absolute;
         top: 25%;
-        left: 2.5;
+        left:5%;
         width: 90%;
         height: 70%;
         display: flex;
@@ -168,18 +160,9 @@ async function hadleRegister() {
         transform: translateX(0);
     }
 
-    form{
-        width: 100%;
-    }
-
     .input-box{
-        width: 100%;
         position: relative;
         margin: 10px 0;
-    }
-
-    .input{
-        width: 90%;
     }
 
     .input-box i{
@@ -189,31 +172,11 @@ async function hadleRegister() {
         transform: translateY(-50%);
     }
 
-    .forgot-link{
-        margin: -15px 0 15px;
-    }
-
-    .forgot-link a{
-        color: var(--color-dark-blue);
-    }
-
-    form p{
-        margin: 15px 0;
-    }
-
-    .social-icons a{
-        display: inline-flex;
-        padding: 5px;
-        font-size: 1.5em;
-        border: 2px solid var(--color-light-beige);
-        border-radius: 8px;
-        margin: 0 8px;
-    }
-
     .toggle-box{
         position: absolute;
         width: 100%;
         height: 100%;
+        right: 0;
     }
 
     .toggle-box::before{
@@ -222,7 +185,7 @@ async function hadleRegister() {
         top: -275%;
         width: 100%;
         height: 300%;
-        background-color: var(--color-light-beige);
+        background-color: #87b8da;
         border-radius: 70px;
         z-index: 2;
         transition: 1.5s ease-in-out;
@@ -265,10 +228,6 @@ async function hadleRegister() {
 
     .toggle-panel p{
         margin: 10px;
-    }
-
-    .btn{
-        width: 40%;
     }
 
 </style>
