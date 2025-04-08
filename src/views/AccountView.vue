@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="vh-100">
         <div v-if="authStore.isAuthenticated">
             <DashboarComponent />
         </div>
