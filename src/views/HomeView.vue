@@ -1,7 +1,11 @@
 <template>
     <BannerComponent />
     <CategoriesComponent />
-    <EnphasisComponent />
+    <EnphasisComponent 
+    title="Produtos em destaque"
+    paragraph="Descubra nossa seleção de produtos premium."
+    button="VEJA TODOS OS PRODUTOS"
+    />
     <UpdatedComponent />
 </template>
 
