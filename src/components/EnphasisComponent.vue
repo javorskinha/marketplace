@@ -4,7 +4,8 @@
             <h2>Produtos em destaque</h2>
             <p>Descubra nossa seleção de produtos premium.</p>
         </div>
-        <div v-for="product in randomProducts" :key="product.id">
+        <div class="d-flex flex-wrap justify-content-around ms-md-5 me-md-5">
+            <div v-for="product in randomProducts" :key="product.id" class="m-2">
                 <CardComponent
                 :src="getImageUrl(product.image_path)"
                 :name="product.name"
@@ -13,25 +14,32 @@
                 @addtocart="addItem(product)"
                 />
             </div>
+        </div>
     </div>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import CardComponent from '../components/CardComponent.vue';
 import { useProductsStore } from '@/stores/ProductsStore';
 import { baseURL } from "@/services/HttpService";
 
 const productsStore = useProductsStore();
 
-const randomProducts = computed (()=> getRandomProducts(productsStore.products));
+console.log('Produtos da store:', productsStore.products);
+
+const randomProducts = computed (()=> getRandomProducts(productsStore.products))
 
 function getRandomProducts(products, quantity = 4){
-    const result = [...products].sort(()=> 0.5 - Math.random());
+    const result = [...products].sort(()=> 0.4 - Math.random());
     return result.slice(0,quantity);
 }
 
 const getImageUrl = (path) => {
     return `${baseURL}${path.replace(/^\/+/, '')}`
 };
+
+onMounted(async ()=>{
+    await productsStore.fetchProducts();
+})
 </script>
