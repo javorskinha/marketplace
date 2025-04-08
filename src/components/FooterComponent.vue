@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div class="d-flex flex-column justify-content-around flex-md-row w-md-50">
+        <hr class="m-0">
+        <div class="d-flex flex-column justify-content-around flex-md-row w-md-50 p-3">
             <div>
                 <div class="m-3">
                     <h1 class="fw-bold">S+mart</h1>
