@@ -36,27 +36,27 @@
             </div>
         </nav>
         <div class="offcanvas vh-100 offcanvas-start w-75 transition" tabindex="-1" id="offcanvasNavbar">
-          <div class="offcanvas-header pb-0">
-            <h3 class="offcanvas-title fw-bold">S+mart</h3>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-          </div>
-          <div class="offcanvas-body d-flex flex-column justify-content-between">
+            <div class="offcanvas-header pb-0">
+                <h3 class="offcanvas-title fw-bold">S+mart</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body d-flex flex-column justify-content-between">
             <div>
                 <div  class="position-relative">
                     <InputComponent type="text" placeholder="Buscar"/>
                     <i class="pi pi-search position-absolute end-0 top-50 translate-middle"></i>
                 </div>
                 <ul class="navbar-nav d-flex flex-column justify-content-around">
-                  <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Categorias</a><i class="pi pi-chevron-right"></i></li>
-                  <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Ofertas</a><i class="pi pi-chevron-right"></i></li>
-                  <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Conta</a><i class="pi pi-chevron-right"></i></li>
+                    <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Categorias</a><i class="pi pi-chevron-right"></i></li>
+                    <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Ofertas</a><i class="pi pi-chevron-right"></i></li>
+                    <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Conta</a><i class="pi pi-chevron-right"></i></li>
                 </ul>
             </div>
-            <a href="/account" class="d-flex flex-column gap-2 mt-3 nav-link">
-              <ButtonComponent text="Entrar" class="btn btn-outline-primary"/>
-              <ButtonComponent text="Criar Conta" class="btn btn-outline-secondary bg-info"/>
-            </a>
-          </div>
+                <a href="/account" class="d-flex flex-column gap-2 mt-3 nav-link">
+                <ButtonComponent text="Entrar" class="btn btn-outline-primary"/>
+                <ButtonComponent text="Criar Conta" class="btn btn-outline-secondary bg-info"/>
+                </a>
+            </div>
         </div>
     </div>
 </template>
