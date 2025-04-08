@@ -4,8 +4,8 @@
             <h2>Produtos em destaque</h2>
             <p>Descubra nossa seleção de produtos premium.</p>
         </div>
-        <div class="d-flex flex-wrap justify-content-around ms-md-5 me-md-5">
-            <div v-for="product in randomProducts" :key="product.id" class="m-2">
+        <div class="row g-4">
+            <div v-for="product in randomProducts" :key="product.id" class="col-12 col-sm-6 col-lg-3 d-flex justify-content-center">
                 <CardComponent
                 :src="getImageUrl(product.image_path)"
                 :name="product.name"
@@ -15,7 +15,7 @@
                 />
             </div>
         </div>
-        <a href="/categories" class="nav-link">
+        <a href="/categories" class="nav-link mt-3">
             <ButtonComponent text="VEJA TODOS OS PRODUTOS" class="btn btn-info" icon="pi pi-chevron-right"/>
         </a>
     </div>
