@@ -15,12 +15,16 @@
                 />
             </div>
         </div>
+        <a href="/categories">
+            <ButtonComponent text="Ver Todos os Produtos >" class="blue button"/>
+        </a>
     </div>
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted } from 'vue';
 import CardComponent from '../components/CardComponent.vue';
+import ButtonComponent from './ButtonComponent.vue';
 import { useProductsStore } from '@/stores/ProductsStore';
 import { baseURL } from "@/services/HttpService";
 
