@@ -15,8 +15,8 @@
                 />
             </div>
         </div>
-        <a href="/categories">
-            <ButtonComponent text="Ver Todos os Produtos >" class="blue button"/>
+        <a href="/categories" class="nav-link">
+            <ButtonComponent text="VEJA TODOS OS PRODUTOS" class="btn btn-info" icon="pi pi-chevron-right"/>
         </a>
     </div>
 </template>
