@@ -11,7 +11,6 @@
                 :name="product.name"
                 :description="product.description"
                 :price="product.price"
-                @addtocart="addItem(product)"
                 />
             </div>
         </div>

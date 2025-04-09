@@ -7,7 +7,6 @@
                 :name="item.name"
                 :description="item.description"
                 :price="item.price"
-                @addtocart="removeItem(item.id)"
                 />
                 <input type="number" min="1"
                 v-model.number="item.quantity"
@@ -20,7 +19,6 @@
 <script setup>
 import { useOrdersStore } from '@/stores/OrdersStore';
 import CardComponent from './CardComponent.vue';
-import InputComponent from './InputComponent.vue';
 import { onMounted, ref } from 'vue';
 import { baseURL, getProducts } from "@/services/HttpService";
 
@@ -50,12 +48,6 @@ const getImageUrl = (path) => {
 
 async function alterQuantity(item) {
     await orderStore.updateCartItem({product_id: item.product_id}, false, item.quantity);
-    await showCartItems();
-}
-
-async function removeItem(itemId) {
-    await orderStore.updateCartItem({ id: itemId});
-    intItem.value = intItem.value.filter(item => item.id !== itemId);
     await showCartItems();
 }
 

@@ -24,7 +24,7 @@ export const useOrdersStore = defineStore ('orders', ()=> {
                 cart.value.push(result);
             } else if (newQuantity !== null){
                 await putCart(itemData.product_id, newQuantity);
-                const index = cart.value.items.findIndex(item => item.id === itemData.id);
+                const index = cart.value.findIndex(item => item.id === itemData.id);
                 if (index !== -1) cart.value[index].quantity = newQuantity;
                 console.log("quantidade atualizada com sucesso!")
             } else {
