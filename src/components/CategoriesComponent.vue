@@ -7,7 +7,7 @@
         <div class="container">
             <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4">
                 <div v-for="category in allCategories" :key="category.id" class="col">
-                    <div class="card text-center border-0 shadow-sm p-3">
+                    <div class="card text-center border shadow-sm p-3">
                         <img :src="getImageUrl(category.image_path)" alt="" class="mb-3 mx-auto">
                         <h6 class="fw-semibold mb-0">{{ category.name }}</h6>
                     </div>
