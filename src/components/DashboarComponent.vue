@@ -1,14 +1,14 @@
 <template>
-    <div class="dashboard">
-        <div class="dashboard-content">
-            <div class="dashboard-header">
+    <div class="p-3 bg-light">
+        <div class="bg-white p-3  rounded-2">
+            <div class="d-flex align-items-center justify-content-between">
                 <h2>Perfil de Usuário</h2>
-                <div @click="handleLogout"><i class="pi pi-sign-out"></i></div>
+                <div @click="handleLogout"><i class="pi pi-sign-out fs-2"></i></div>
             </div>
             <UserDataComponent />
             <AddressesComponent />
-            <div class="button">
-                <ButtonComponent @click="excludeAccount" text="EXCLUIR CONTA" class="red"></ButtonComponent>
+            <div class="d-flex justify-content-end mt-4">
+                <ButtonComponent @click="excludeAccount" text="excluir conta" class="bg-danger rounded-2" icon="pi pi-trash"></ButtonComponent>
             </div>
         </div>
     </div>
@@ -41,39 +41,3 @@ async function excludeAccount(){
     window.alert('Conta deletada');
 }
 </script>
-
-<style scoped>
-    .dashboard{
-        background-color: var(--color-light-gray);
-        padding: 1em 1em;
-    }
-
-    .dashboard-content{
-        background-color: var(--color-white);
-        border-radius: 15px;
-        padding: 1em;
-    }
-
-    .dashboard-header{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .pi-sign-out{
-        font-size: 1.5em;
-    }
-
-    .button{
-        display: flex;
-        flex-direction: row-reverse;
-    }
-
-    .red{
-        width: 90px;
-        height: 20px;
-        font-size: 10px;
-        border-radius: 2px;
-        background-color: red;
-    }
-</style>

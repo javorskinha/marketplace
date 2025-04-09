@@ -1,34 +1,37 @@
 <template>
-    <div class="addresses">
+    <div class="m-1 border border-success rounded-3 p-1 pt-3">
         <div>
-            <h3>Endereços Registrados</h3>
+            <h3 class="ms-3">Endereços Registrados</h3>
             <div v-if="addresses.length > 0">
-                <div v-for="addr in addresses" :key="addr.id" class="address-container">
-                    <div class="text">
-                        <div class="block-one">
-                            <p>{{ addr.street }}</p>
-                            <p>, {{ addr.number }}</p>
+                <div v-for="addr in addresses" :key="addr.id" class="m-2 border border-success p-3 rounded-3">
+                    <div class="fs-5 d-flex align-items-center justify-content-around">
+                        <div>
+                            <div class="d-flex">
+                                <p>{{ addr.street }}</p>
+                                <p>, {{ addr.number }}</p>
+                            </div>
+                            <div class="d-flex">
+                                <p>{{ addr.city }}</p>
+                                <p>/{{ addr.state }}</p>
+                                <p>- {{ addr.country }}</p>
+                            </div>
                         </div>
-                        <div class="block-two">
-                            <p>{{ addr.city }}</p>
-                            <p>/{{ addr.state }}</p>
-                            <p>- {{ addr.country }}</p>
-                        </div>
+                        <i class="pi pi-map-marker"></i>
                     </div>
-                    <div class="buttons">
-                        <ButtonComponent @click="editAddress(addr)" text="Editar" class="gray button"/>
-                        <ButtonComponent @click="deletAdress(addr.id)" text="Excluir" class="white button"/>
+                    <div class="d-flex">
+                        <ButtonComponent @click="editAddress(addr)" text="Editar" class="btn btn-primary w-100 me-1"/>
+                        <ButtonComponent @click="deletAdress(addr.id)" text="Excluir" class="btn btn-secondary w-100 ms-1"/>
                     </div>
                 </div>
             </div>
             <div v-else>
-                <p class="no-adress">Você não possui nenhum endereço cadastrado <i class="pi pi-home"></i>
+                <p class="fs-5 text-center m-4 fw-light">Você não possui nenhum endereço cadastrado <i class="pi pi-home"></i>
                 </p>
             </div>
         </div>
         <div ref="formSection">
-            <h3>{{ isEditing? 'Alterar Endereço Registrado' : 'Adicionar Novo Endereço' }}</h3>
-            <form @submit.prevent="saveAddress">
+            <h3  class="ms-3">{{ isEditing? 'Alterar Endereço Registrado' : 'Adicionar Novo Endereço' }}</h3>
+            <form @submit.prevent="saveAddress" class="m-2">
                 <div class="input-box">
                     <InputComponent v-model="editedAddress.street" type="text" placeholder="Rua" required class="input"/>
                 </div>
@@ -47,7 +50,7 @@
                 <div class="input-box">
                     <InputComponent v-model="editedAddress.country" type="text" placeholder="País" required class="input"/>
                 </div>
-                <ButtonComponent type="submit" :text="isEditing? 'ALTERAR' : 'ADICIONAR'" class="blue"></ButtonComponent>
+                <ButtonComponent type="submit" :text="isEditing? 'ALTERAR' : 'ADICIONAR'" class="btn btn-info"></ButtonComponent>
             </form> 
         </div>
     </div>
@@ -136,61 +139,7 @@ onMounted (()=>{
 </script>
 
 <style scoped>
-    .addresses{
-        margin: 2em 0 1em 0;
-        padding: 0.5em 0;
-        border: solid 1px var(--color-light-beige);
-    }
-
-    .address-container{
-        margin: 1em;
-        padding: 0.5em;
-        border: solid 1px var(--color-light-beige);
-    }
-
-    .text{
-        font-size: 1.1em;
-        letter-spacing: 1px;
-        margin-bottom: 0.5em;
-    }
-
-    .block-one{
-        display: flex;
-    }
-
-    .block-two{
-        display: flex;
-        color: var(--color-gray);
-    }
-
-    .buttons{
-        display: flex;
-    }
-
-    .button{
-        height: 25px;
-    }
-
-    .no-adress{
-        font-size: 1.2em;
-        font-weight: 200;
-        color: var(--color-gray);
-        text-align: center;
-        margin: 2em;
-    }
-
-    h3{
-        margin-left: 0.6em;
-    }
-
-    form{
-        margin: 0.5em;
-    }
-
-    .blue{
-        display: block;
-        place-self: center;
-        width: 94%;
-        height: 30px;
+    .pi-map-marker{
+        font-size: 2em;
     }
 </style>
