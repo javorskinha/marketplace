@@ -10,22 +10,24 @@
                 </div>
         
                 <div class="d-none d-md-flex align-items-center gap-4 justify-content-between w-100">
-                    <div class="w-50">
+                    <div class="w-50 position-relative ps-4">
                         <InputComponent type="text" placeholder="Buscar"></InputComponent>
+                        <i class="pi pi-search position-absolute end-0 top-50 translate-middle"></i>
                     </div>
                     <div class="d-flex align-items-center">
-                        <ul class="navbar-nav flex-row gap-3">
+                        <ul class="navbar-nav flex-row gap-3 hover fs-5">
                             <li class="nav-item"><a class="nav-link" href="#">Categorias</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">Ofertas</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Conta</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Cupons</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Frete Grátis</a></li>
                         </ul>
-                        <a href="/account" class="d-flex gap-2 nav-link">
-                            <ButtonComponent text="Entrar" class="hover pl-0"/>
-                            <ButtonComponent text="Criar Conta" class="hover"/>
+                        <a href="/account" class="nav-link ps-5">
+                            <ButtonComponent text="Entrar" class="hover"/>
+                            <ButtonComponent text="Cadastrar" class="hover"/>
                         </a>
                     </div>
                 </div>
-                <div class="d-flex align-items-center gap-3">
+                <div class="d-flex align-items-center gap-3 hover">
                     <a href="#favoritos">
                         <i class="pi pi-heart-fill fs-5"></i>
                     </a>
@@ -46,10 +48,11 @@
                     <InputComponent type="text" placeholder="Buscar"/>
                     <i class="pi pi-search position-absolute end-0 top-50 translate-middle"></i>
                 </div>
-                <ul class="navbar-nav d-flex flex-column justify-content-around">
+                <ul class="navbar-nav d-flex flex-column justify-content-around fs-5">
                     <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Categorias</a><i class="pi pi-chevron-right"></i></li>
                     <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Ofertas</a><i class="pi pi-chevron-right"></i></li>
-                    <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Conta</a><i class="pi pi-chevron-right"></i></li>
+                    <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Cupons</a><i class="pi pi-chevron-right"></i></li>
+                    <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Frete Grátis</a><i class="pi pi-chevron-right"></i></li>
                 </ul>
             </div>
                 <a href="/account" class="d-flex flex-column gap-2 mt-3 nav-link">
