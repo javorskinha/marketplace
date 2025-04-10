@@ -1,5 +1,5 @@
 <template>
-    <div class="card shadow-sm">
+    <div class="card shadow-sm" :id="id">
         <div class="position-relative">
             <img :src="src" class="card-img-top" :alt="alt">
             <span class="badge bg-danger position-absolute top-0 start-0 m-2">novo{{ marker }}</span>
@@ -27,7 +27,7 @@
 
 <script setup>
 import ButtonComponent from './ButtonComponent.vue';
-import { defineProps, computed } from 'vue';
+import { defineProps, computed, toRef } from 'vue';
 import { useOrdersStore } from '@/stores/OrdersStore';
 
 const orderStore = useOrdersStore();
@@ -42,21 +42,26 @@ const props = defineProps({
     marker: String
 })
 
+console.log(orderStore.cart.items);
+
 const isInCart = computed (()=>
-    orderStore.cart.items.some(item => item.product_id === props.id)
+    Array.isArray(orderStore.cart.items) &&
+    orderStore.cart.items.some(item => Number(item.product_id) === Number(props.id))
 )
 
 async function toggleCart() {
+    console.log("isInCart:", isInCart.value);
+
     const itemData = {
-        "product_id": props.id,
+        "product_id": Number(props.id),
         "quantity": 1,
-        "unit_price": props.price
+        "unit_price": Number(props.price)
     };
 
     if(isInCart.value){
-        const itemToRemove = orderStore.cart.find(item => item.product_id === props.id);
-        if (!itemToRemove) console.log('NÃO ENCONTRADO NO CARRINHO');
-        await orderStore.updateCartItem({ id: itemToRemove.id }, false);
+        const itemToRemove = orderStore.cart.items.find(item => item.product_id === props.id);
+        console.log('estrutura item to remove', itemToRemove)
+        await orderStore.updateCartItem(itemToRemove, false);
     } else {
         await orderStore.updateCartItem(itemData, true);
     }

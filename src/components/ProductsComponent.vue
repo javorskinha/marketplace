@@ -9,6 +9,7 @@
                 :description="product.description"
                 :price="product.price"
                 />
+                <p>{{product.id}}</p>
             </div>
         </div>
     </div>

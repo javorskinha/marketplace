@@ -19,18 +19,15 @@ export const useOrdersStore = defineStore ('orders', ()=> {
     async function updateCartItem(itemData, isAdding, newQuantity = null) {
         try{
             if(isAdding){
-                const result = await postCart(itemData);
+                await postCart(itemData);
                 console.log('os dados foram adicinados', itemData);
-                cart.value.push(result);
             } else if (newQuantity !== null){
                 await putCart(itemData.product_id, newQuantity);
-                const index = cart.value.findIndex(item => item.id === itemData.id);
-                if (index !== -1) cart.value[index].quantity = newQuantity;
                 console.log("quantidade atualizada com sucesso!")
             } else {
-                await deleteCart(itemData.id);
-                cart.value.items = cart.value.items.filter(item => item.id !== itemData.id);
+                await deleteCart(itemData.product_id);
             }
+            await fetchCart();
         } catch (error){
             console.error('OrdersStore erro ao atualizar o carrinho', error);
         }

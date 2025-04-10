@@ -7,6 +7,7 @@
         <div class="row g-4">
             <div v-for="product in randomProducts" :key="product.id" class="col-12 col-sm-6 col-lg-3 d-flex justify-content-center">
                 <CardComponent
+                :id="product.id"
                 :src="getImageUrl(product.image_path)"
                 :name="product.name"
                 :description="product.description"

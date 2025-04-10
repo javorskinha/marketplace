@@ -3,6 +3,7 @@
         <div class="row g-4">
             <div v-for="item in intItem" :key="item.id" class="col-12 col-sm-6 col-lg-3">
                 <CardComponent
+                :id="item.id"
                 :src="getImageUrl(item.image_path)"
                 :name="item.name"
                 :description="item.description"
@@ -19,7 +20,7 @@
 <script setup>
 import { useOrdersStore } from '@/stores/OrdersStore';
 import CardComponent from './CardComponent.vue';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { baseURL, getProducts } from "@/services/HttpService";
 
 const orderStore = useOrdersStore();
@@ -27,7 +28,6 @@ const intItem = ref([]);
 
 async function showCartItems() {
     await orderStore.fetchCart();
-    console.log("Itens do carrinho:", orderStore.cart);
     
     const products = await Promise.all(orderStore.cart.items.map(async (item) => {
         try{
@@ -39,7 +39,6 @@ async function showCartItems() {
     }))
 
     intItem.value = products;
-    console.log("Itens detalhados:", intItem.value);
 }
 
 const getImageUrl = (path) => {
@@ -54,4 +53,12 @@ async function alterQuantity(item) {
 onMounted(()=>{
     showCartItems();
 })
+
+watch(
+    () => orderStore.cart.items,
+    async () => {
+        await showCartItems();
+    },
+    { deep: true }
+);
 </script>
