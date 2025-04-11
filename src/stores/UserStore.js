@@ -5,6 +5,7 @@ import { ref } from "vue";
 export const useUserStore = defineStore('user', ()=>{
     const user = ref({});
     const addresses = ref([]);
+    const defaultAddress = ref({});
 
     // user data
     async function userData() {
@@ -97,5 +98,9 @@ export const useUserStore = defineStore('user', ()=>{
         };
     }
 
-    return {user, addresses, userData, changeUserData, delUser, userAddresses, postAddress, changeAddressData, delAddress}
-})
+    function turnDefault(addressData) {
+        defaultAddress.value = addressData;
+    }
+
+    return {user, addresses, defaultAddress, userData, changeUserData, delUser, userAddresses, postAddress, changeAddressData, delAddress, turnDefault}
+}, {persist: true})

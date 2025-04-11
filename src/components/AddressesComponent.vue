@@ -17,6 +17,14 @@
                             </div>
                         </div>
                         <i class="pi pi-map-marker"></i>
+                        <div>
+                            <ButtonComponent 
+                                v-if="!isDefault(addr)" 
+                                @click="setAsDefault(addr)" 
+                                text="Usar como padrão" 
+                                class="btn btn-outline-primary w-100 mt-2"/>
+                            <p v-else class="text-primary mt-2 text-center">Endereço padrão</p>
+                        </div>
                     </div>
                     <div class="d-flex">
                         <ButtonComponent @click="editAddress(addr)" text="Editar" class="btn btn-primary w-100 me-1"/>
@@ -65,8 +73,7 @@ import { computed, onMounted, ref } from "vue";
 const userStore = useUserStore();
 
 const addresses = computed (() => userStore.addresses);
-
-console.log('array dos endereços no componente', addresses.value)
+const defaultAddress = computed(() => userStore.defaultAddress);
 
 const editedAddress = ref({
     street: '',
@@ -131,6 +138,16 @@ async function deletAdress(id) {
     await userStore.delAddress(id);
     window.alert('endereço deletado');
     await userStore.userAddresses();
+}
+
+async function setAsDefault(addr) {
+    console.log('dados de addr', addr)
+    userStore.turnDefault(addr);
+    window.alert('Endereço definido como padrão!');
+}
+
+function isDefault(addr){
+    return defaultAddress.value?.id === addr.id;
 }
 
 onMounted (()=>{

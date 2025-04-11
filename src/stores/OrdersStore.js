@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { getCart, postCart, deleteCart, getOrders, putCart, postOrder } from "@/services/HttpService";
+import { getCart, postCart, deleteCart, getOrders, putCart, postOrder, putOrder } from "@/services/HttpService";
 import { ref } from "vue";
 
 export const useOrdersStore = defineStore ('orders', ()=> {
@@ -52,5 +52,22 @@ export const useOrdersStore = defineStore ('orders', ()=> {
         }
     }
 
-    return {cart, order, fetchCart, fetchOrder, updateCartItem}
+    async function updateOrder(moderator, id, status){
+        try {
+            if(moderator)await putOrder(id, status);
+            else window.alert('Somente moderador pode alterar o status');
+        } catch (error){
+            console.error('OrdersStore erro update order', error);
+        }
+    }
+
+    async function deleteOrder(id){
+        try {
+            await putOrder(id);
+        } catch (error){
+            console.error('OrdersStore erro ao deletar order', error);
+        }
+    }
+
+    return {cart, order, fetchCart, fetchOrder, newOrder, deleteOrder, updateOrder, updateCartItem}
 })

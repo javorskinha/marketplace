@@ -6,6 +6,7 @@
                 <div @click="handleLogout"><i class="pi pi-sign-out fs-2"></i></div>
             </div>
             <UserDataComponent />
+            <OrdersComponent />
             <AddressesComponent />
             <div class="d-flex justify-content-end mt-4">
                 <ButtonComponent @click="excludeAccount" text="excluir conta" class="bg-danger rounded-2" icon="pi pi-trash"></ButtonComponent>
@@ -20,6 +21,7 @@ import { useUserStore } from "@/stores/UserStore";
 import ButtonComponent from "./ButtonComponent.vue";
 import UserDataComponent from "./UserDataComponent.vue";
 import AddressesComponent from "./AddressesComponent.vue";
+import OrdersComponent from "./OrdersComponent.vue";
 
 const authStore = useAuthStore();
 const userStore = useUserStore();
