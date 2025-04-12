@@ -19,7 +19,7 @@
         <div>
             <p>Total: R${{ totalAmount }}</p>
             <p>Endereço de entrega {{ sendAddress.street }}, id {{ sendAddress.id }}</p>
-            <ButtonComponent text="Realizar Pedido" class="btn btn-outline-primary" icon="pi pi-arrow-right" @click="sendOrder()"/>
+            <ButtonComponent text="Realizar Pedido" class="btn btn-outline-primary" icon="pi pi-arrow-right" @click="sendOrder(sendAddress.id)"/>
         </div>
     </div>
 </template>
@@ -54,8 +54,21 @@ async function alterQuantity(item) {
     await showCartItems();
 }
 
-async function sendOrder(orderData) {
-    await orderStore.newOrder(orderData);
+async function sendOrder(addressId) {
+    const orderData = {
+        address_id: addressId,
+        coupon_id: 0
+    }
+
+    try{
+        console.log("Enviando pedido com:", orderData);
+        await orderStore.newOrder(orderData);
+        window.alert('Pedido enviado com sucesso!')
+        await orderStore.updateCartItem(false);
+    } catch (error){
+        window.alert('erro ao enviar pedido');
+        console.error(error)
+    }
 }
 
 onMounted(()=>{

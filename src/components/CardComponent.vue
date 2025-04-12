@@ -10,7 +10,6 @@
                 <p class="card-text text-muted small card-text-limit">{{ description }}</p>
             </div>
             <div>
-                {{ id }}
                 <p class="card-text fw-bold fs-5 text-primary">R$ {{ price }}</p>
                 <div class="d-flex flex-column gap-2">
                     <ButtonComponent

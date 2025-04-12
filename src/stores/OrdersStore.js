@@ -4,7 +4,29 @@ import { ref } from "vue";
 
 export const useOrdersStore = defineStore ('orders', ()=> {
     const cart = ref([]);
-    const order = ref([]);
+    const order = ref([
+        {
+            address_id: 96,
+            coupon_id: 0,
+            id: 1,
+            order_date: "2025-04-12T19:02:24.067Z",
+            status: "PENDING",
+          },
+          {
+            address_id: 96,
+            coupon_id: 0,
+            id: 2,
+            order_date: "2025-04-11T19:02:24.067Z",
+            status: "DELIVERED",
+          },
+          {
+            address_id: 0,
+            coupon_id: 0,
+            id: 3,
+            order_date: "2025-04-10T19:02:24.067Z",
+            status: "CANCELLED",
+          },
+    ]);
 
     //carrinho
     async function fetchCart(cartItems = true) {
@@ -36,8 +58,10 @@ export const useOrdersStore = defineStore ('orders', ()=> {
     //pedidos
     async function fetchOrder(orderId = null) {
         try{
-            const result = await getOrders(orderId);
-            order.value = result;
+            //comentado a chamada da api, para usar os dados manuais do array
+            //const result = await getOrders(orderId);
+            //order.value = result;
+            return order.value;
         } catch (error){
             console.error('OrdersStore erro exibir pedido', error);
         }

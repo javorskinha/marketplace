@@ -1,24 +1,25 @@
 <template>
-    <div>
+    <div class="orders">
         <div v-for="order in orders" :key="order.id">
-            <p>{{ order.order_date }}</p>
-            <p>{{ order.status }}</p>
+            <p>Data do pedido:{{ order.order_date }}</p>
+            <p>Status do pedido:{{ order.status }}</p>
         </div>
     </div>
 </template>
 
 <script setup>
 import { useOrdersStore } from '@/stores/OrdersStore';
-import { onMounted, ref } from 'vue';
+import { onMounted, computed } from 'vue';
 
 const orderStore = useOrdersStore();
-const orders = ref([]);
+const orders = computed(() => orderStore.order);
 
 async function getAllOrders() {
-    const result = await orderStore.fetchOrder();
-    console.log('getOrders data', result)
-    orders.value = result;
+    console.log('os dados de orderStore.order', orderStore.order)
+    await orderStore.fetchOrder();
 }
 
-onMounted(getAllOrders)
+onMounted(()=> {
+    getAllOrders();
+})
 </script>
