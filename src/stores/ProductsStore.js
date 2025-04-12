@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { getCategories, getProducts } from "@/services/HttpService";
+import { deleteCategory, deleteProduct, getCategories, getProducts, postCategory, postProduct, putCategory, putProducts } from "@/services/HttpService";
 import { ref } from "vue";
 
 export const useProductsStore = defineStore('products', ()=>{
@@ -16,7 +16,34 @@ export const useProductsStore = defineStore('products', ()=>{
             throw error;
         }
     }
-    // criar categories post, put e delete para admin e moderador.
+
+    // categories post, put e delete para admin e moderador.
+    async function updateCategories({action, categoryData, newCatData = null}) {
+        try{
+            switch (action){
+                case 'create':
+                    await postCategory(categoryData);
+                    console.log('PRODUCTS STORE categoria criada');
+                    break;
+
+                case 'update':
+                    await putCategory(categoryData.id, newCatData);
+                    console.log('PRODUCTS STORE categoria foi alterada');
+                    break;
+
+                case 'delete':
+                    await deleteCategory(categoryData.id);
+                    console.log('PRODUCTS STORE categoria foi deletada');
+                    break;
+
+                default:
+                    throw new Error ('Ação não encontrada!')
+            }
+            await fetchCategories();
+        } catch (error){
+            console.error('PRODUCTS STORE erro ao atualizar categoria', error);
+        }
+    }
 
     async function fetchProducts(userId = null, categoryId = null, productId = null) {
         try{
@@ -27,7 +54,34 @@ export const useProductsStore = defineStore('products', ()=>{
             throw error;
         }
     }
-    // criar products post, put e delete para admin e moderador.
 
-    return {categories, products, fetchCategories, fetchProducts}
+    // products post, put e delete para admin e moderador.
+    async function updateProducts({action, productData, newProData = null}) {
+        try{
+            switch (action){
+                case 'create':
+                    await postProduct(productData);
+                    console.log('PRODUCTS STORE Produto adicionado');
+                    break;
+
+                case 'update':
+                    await putProducts(productData.id, newProData);
+                    console.log('PRODUCTS STORE dados do produto foram alterados');
+                    break;
+
+                case 'delete':
+                    await deleteProduct(productData.id);
+                    console.log('PRODUCTS STORE Produto foi deletado');
+                    break;
+
+                default:
+                    throw new Error ('Ação não encontrada!')
+            }
+            await fetchCategories();
+        } catch (error){
+            console.error('PRODUCTS STORE erro ao atualizar produtos', error);
+        }
+    }
+
+    return {categories, products, fetchCategories, updateCategories, fetchProducts, updateProducts}
 })

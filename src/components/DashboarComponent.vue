@@ -5,6 +5,7 @@
                 <h2>Perfil de Usuário</h2>
                 <div @click="handleLogout"><i class="pi pi-sign-out fs-2"></i></div>
             </div>
+            <AdmAreaComponent />
             <UserDataComponent />
             <OrdersComponent />
             <AddressesComponent />
@@ -22,6 +23,7 @@ import ButtonComponent from "./ButtonComponent.vue";
 import UserDataComponent from "./UserDataComponent.vue";
 import AddressesComponent from "./AddressesComponent.vue";
 import OrdersComponent from "./OrdersComponent.vue";
+import AdmAreaComponent from "./AdmAreaComponent.vue";
 
 const authStore = useAuthStore();
 const userStore = useUserStore();
@@ -31,7 +33,7 @@ const handleLogout = ()=>{
 }
 
 async function excludeAccount(){
-    const confirmation = window.confirm('Tem certesa que deseja excluir sua conta? Esta ação não pode ser desfeita.');
+    const confirmation = window.confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.');
 
     if(!confirmation){
         return;
