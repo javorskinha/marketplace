@@ -11,6 +11,7 @@ export const useProductsStore = defineStore('products', ()=>{
         try{
             const result = await getCategories(userId, categoryId);
             categories.value = result;
+            return result;
         } catch (error){
             console.error('ProductsStore erro ao pegar categoria', error);
             throw error;
@@ -19,9 +20,12 @@ export const useProductsStore = defineStore('products', ()=>{
 
     // categories post, put e delete para admin e moderador.
     async function updateCategories({action, categoryData, newCatData = null}) {
+        console.log('AÇÃO:', action);
+        console.log('DADOS da categoria:', categoryData);
         try{
             switch (action){
                 case 'create':
+                    console.log('categoryData na STORE', categoryData)
                     await postCategory(categoryData);
                     console.log('PRODUCTS STORE categoria criada');
                     break;

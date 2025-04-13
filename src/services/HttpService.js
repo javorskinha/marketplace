@@ -3,10 +3,7 @@ import axios from "axios";
 export const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const api = axios.create({
-    baseURL: baseURL,
-    headers: {
-        "Content-Type": "application/json",
-    }
+    baseURL: baseURL
 });
 
 api.interceptors.request.use(
@@ -65,7 +62,16 @@ export async function postRegister(userData) {
 //função auxiliar para realizar as requisições
 async function request(method, url, data = null) {
     try {
-        const response = await api({ method, url, data });
+        const config = {
+            method, url, data
+        };
+
+        if (data instanceof FormData) {
+            config.headers = {
+                'Content-Type': 'multipart/form-data'};
+        }
+
+        const response = await api(config);
         return response.data;
     } catch (error) {
         console.error(`HTTP Erro em ${method} ${url}`, error.response || error);
