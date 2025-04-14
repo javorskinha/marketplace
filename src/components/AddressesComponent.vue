@@ -99,15 +99,11 @@ function scrollToForm(){
 }
 
 async function saveAddress() {
-    console.log('COMPONENTE Entrando em saveAddress', isEditing.value, 'addresses data:', addresses.value);
     if(isEditing.value){
-        console.log('COMPONENTE Editando endereço, id do endereço:', editedAddress.value.id, 'dados do endereço:', editedAddress.value);
         await userStore.changeAddressData(editedAddress.value.id, editedAddress.value);
-        console.log('COMPONENTE Endereço alterado com sucesso');
         window.alert('Endereço alterado com sucesso');
     } else {
         await userStore.postAddress(editedAddress.value);
-        console.log('ADICIONANDO endereço...');
         window.alert('Endereço adicionado com sucesso');
     };
 
@@ -134,14 +130,18 @@ function resetForm() {
 }
 
 async function deletAdress(id) {
-    console.log('COMPONENTE id do endereço', id);
+    const confirmation = window.confirm('Tem certeza que deseja excluir esse endereço?');
+
+    if(!confirmation){
+        return;
+    }
+
     await userStore.delAddress(id);
     window.alert('endereço deletado');
     await userStore.userAddresses();
 }
 
 async function setAsDefault(addr) {
-    console.log('dados de addr', addr)
     userStore.turnDefault(addr);
     window.alert('Endereço definido como padrão!');
 }
