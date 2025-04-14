@@ -1,29 +1,27 @@
 <template>
     <div>
-        <div>
-            <div>
-                <h4>Suas Categorias</h4>
-                <!--criar novas categorias aqui-->
-                <form  @submit.prevent="createCategory">
-                    <InputComponent type="text" placeholder="Nome" v-model="name"/>
-                    <InputComponent type="text" placeholder="Descrição" v-model="description"/>
-                    <InputComponent type="file" @change="handleImage"/>
-                    <ButtonComponent type="submit" text="Criar Categoria"/>
-                </form>
+        <section>
+            <h4>Suas Categorias</h4>
                 <div v-for="category in userCategories" :key="category.id">
                     <!--exibe as categorias que o usuário criou/possui-->
                     <img :src="getImageUrl(category.image_path)" alt="" class="w-25">
                     <p>{{ category.name }}</p>
                     <p>{{ category.description }}</p>
-
-                    <!--editar categorias existentes-->
-                    <ButtonComponent text="Editar Categoria" class="btn btn-outline-primary" @click="editCategory()"/>
-
+                    <ButtonComponent text="Editar Categoria" class="btn btn-outline-primary" @click="editCategory(category)"/>
                     <!--excluir categorias-->
-                    <ButtonComponent text="DELETAR" class="btn btn-primary" @click="deleteCategory()"/>
+                    <ButtonComponent text="DELETAR" class="btn btn-primary" @click="deleteCategory(category)"/>
                 </div>
-            </div>
-        </div>
+                <div >
+                    <!--criar ou editar categorias aqui-->
+                    <h3>{{ isEditing ? 'Alterar Dados' : 'Criar Categoria' }}</h3>
+                    <form @submit.prevent="saveCategory">
+                        <InputComponent type="text" placeholder="Nome" v-model="editedCat.name" required/>
+                        <InputComponent type="text" placeholder="Descrição" v-model="editedCat.description"/>
+                        <InputComponent type="file" @change="handleImage"/>
+                        <ButtonComponent type="submit" :text="isEditing? 'Alterar' :'Criar Categoria'"/>
+                    </form>
+                </div>
+        </section>
     </div>
 </template>
 
@@ -33,35 +31,59 @@ import { useUserStore } from '@/stores/UserStore';
 import { baseURL } from "@/services/HttpService";
 import ButtonComponent from './ButtonComponent.vue';
 import InputComponent from './InputComponent.vue';
-import { onMounted, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 
 const productsStore = useProductsStore();
 const userStore = useUserStore();
 const userCategories = ref([]);
-const name = ref('');
-const description = ref('');
-const image = ref(null);
 const isEditing = ref(false);
+const editedCat = reactive({
+    name:'',
+    description:'',
+    image:null,
+    id: ''
+})
 
 function handleImage(event){
-    image.value = event.target.files[0];
+    editedCat.image = event.target.files[0];
 }
 
-async function createCategory() {
+function editCategory(category){
+    isEditing.value = true;
+    editedCat.name = category.name;
+    editedCat.description = category.description;
+    editedCat.image = null;
+    editedCat.id = category.id;
+}
+
+async function saveCategory() {
     const formData = new FormData();
-    formData.append('name', name.value);
-    formData.append('description', description.value);
-    formData.append('image', image.value);
+    formData.append('name', editedCat.name);
+    formData.append('description', editedCat.description);
+    if (editedCat.image) {
+        formData.append('image', editedCat.image);
+    }
+
+    if(isEditing.value){
+        await productsStore.updateCategories({
+            action: 'update',
+            categoryData: editedCat,
+            newCatData: editedCat
+        });
+    } else {
+        await productsStore.updateCategories({
+            action: 'create',
+            categoryData: formData
+        });
+    }
 
     console.log('dados da categoria que estão sendo enviados:');
     for (const pair of formData.entries()) {
         console.log(pair[0], pair[1]);
     }
 
-    await productsStore.updateCategories({
-            action: 'create', 
-            categoryData: formData
-        });
+    resetForm();
+    getUserCategories();
 }
 
 const getImageUrl = (path) => {
@@ -76,13 +98,22 @@ async function getUserCategories() {
     userCategories.value = response;
 }
 
-async function editCategory() {
+async function deleteCategory(catData) {
+    const confirmation = window.confirm('Tem certeza que deseja excluir a categoria?');
 
-    await productsStore.updateCategories({
-        action: 'update',
-        categoryData: category,
-        newCatData: formData
-    })
+    if(!confirmation){
+        return;
+    }
+
+    await productsStore.updateCategories({action: 'delete', categoryData: catData})
+    getUserCategories();
+}
+
+function resetForm(){
+    editedCat.name = '';
+    editedCat.description = '';
+    editedCat.image = null;
+    isEditing.value = false;
 }
 
 onMounted(()=>{
