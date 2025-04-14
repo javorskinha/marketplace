@@ -56,18 +56,17 @@ async function alterQuantity(item) {
 
 async function sendOrder(addressId) {
     const orderData = {
-        address_id: addressId,
-        coupon_id: 0
+        "address_id": addressId,
+        "coupon_id": null
     }
 
     try{
-        console.log("Enviando pedido com:", orderData);
         await orderStore.newOrder(orderData);
         window.alert('Pedido enviado com sucesso!')
         await orderStore.updateCartItem(false);
     } catch (error){
         window.alert('erro ao enviar pedido');
-        console.error(error)
+        console.error(error);
     }
 }
 
