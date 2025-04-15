@@ -7,6 +7,26 @@
                     <img :src="getImageUrl(category.image_path)" alt="" class="w-25">
                     <p>{{ category.name }}</p>
                     <p>{{ category.description }}</p>
+                    <ButtonComponent text="Adicionar Produto" @click="addProduct(category.id)"/>
+                    <div v-if="catForProduct === category.id">
+                        <form @submit.prevent="newProduct">
+                            <InputComponent type="text" placeholder="Nome" v-model="newProd.name" required/>
+                            <InputComponent type="number" placeholder="Preço" v-model="newProd.price"/>
+                            <InputComponent type="int" placeholder="Estoque disponível" v-model="newProd.stock" required/>
+                            <InputComponent type="file" @change="handleImage"/>
+                            <ButtonComponent type="submit" text="Adicionar Produto"/>
+                        </form>
+                    </div>
+                    <ButtonComponent text="Mostrar produtos da categoria" @click="showProducts(category.id)" />
+                    <div v-if="visibleCat.includes(category.id)">
+                        <div v-for="product in catProducts[category.id]" :key="product.id">
+                            <img :src="getImageUrl(product.image_path)" alt="" class="w-25">
+                            <p>Nome: {{ product.name }}</p>
+                            <p>{{ product.description }}</p>
+                            <p>Preço: {{ product.price }}Kg</p>
+                            <p>Estoque: {{ product.stock }}Kg</p>
+                        </div>
+                    </div>
                     <ButtonComponent text="Editar Categoria" class="btn btn-outline-primary" @click="editCategory(category)"/>
                     <!--excluir categorias-->
                     <ButtonComponent text="DELETAR" class="btn btn-primary" @click="deleteCategory(category)"/>
@@ -36,16 +56,68 @@ import { onMounted, reactive, ref } from 'vue';
 const productsStore = useProductsStore();
 const userStore = useUserStore();
 const userCategories = ref([]);
+const catProducts = reactive({});
+const visibleCat = ref([]);
 const isEditing = ref(false);
 const editedCat = reactive({
     name:'',
     description:'',
     image:null,
     id: ''
+});
+const catForProduct = ref(null)
+const addProduct = (categoryId) => {
+    newProd.id = categoryId;
+    catForProduct.value = categoryId;
+}
+const newProd = reactive({
+    name: '',
+    description: '',
+    price: null,
+    stock: null,
+    id: null,
+    image: null
 })
+
+async function showProducts(categoryId){
+    const visible = visibleCat.value.includes(categoryId);
+
+    if(visible){
+        visibleCat.value = visibleCat.value.filter(id => id !== categoryId)
+    } else {
+        if(!catProducts[categoryId]){
+            const result = await productsStore.fetchProducts(null, categoryId, null);
+        console.log('RESULTADO', result)
+        catProducts[categoryId] = result;
+        };
+        visibleCat.value.push(categoryId)
+    };
+}
+
+async function newProduct() {
+    const formData = new FormData();
+    formData.append('name', newProd.name);
+    formData.append('description', newProd.description);
+    formData.append('price', newProd.price);
+    formData.append('stock', newProd.stock);
+    formData.append('category_id', newProd.id);
+    formData.append('image', newProd.image);
+
+
+    console.log('DADOS DO PRODUTO');
+    for (const pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+    }
+
+    await productsStore.updateProducts({
+            action: 'create',
+            productData: formData
+        });
+}
 
 function handleImage(event){
     editedCat.image = event.target.files[0];
+    newProd.image = event.target.files[0];
 }
 
 function editCategory(category){

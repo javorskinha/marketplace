@@ -53,6 +53,7 @@ export const useProductsStore = defineStore('products', ()=>{
         try{
             const result = await getProducts(userId, categoryId, productId);
             products.value = result;
+            return result;
         } catch (error){
             console.error('ProductsStore erro ao pegar produto', error);
             throw error;
@@ -83,7 +84,7 @@ export const useProductsStore = defineStore('products', ()=>{
             }
             await fetchCategories();
         } catch (error){
-            console.error('PRODUCTS STORE erro ao atualizar produtos', error);
+            console.error('Erro detalhado:', error.response?.data);
         }
     }
 
