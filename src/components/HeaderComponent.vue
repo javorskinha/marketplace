@@ -21,10 +21,6 @@
                             <li class="nav-item"><a class="nav-link" href="#">Cupons</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">Frete Grátis</a></li>
                         </ul>
-                        <a href="/account" class="nav-link ps-5">
-                            <ButtonComponent text="Entrar" class="hover"/>
-                            <ButtonComponent text="Cadastrar" class="hover"/>
-                        </a>
                     </div>
                 </div>
                 <div class="d-flex align-items-center gap-3 hover">
@@ -32,7 +28,10 @@
                         <i class="pi pi-heart-fill fs-5"></i>
                     </a>
                     <a href="/cart">
-                        <i class="pi pi-cart-plus fs-5"></i>
+                        <i class="pi pi-shopping-bag fs-5"></i>
+                    </a>
+                    <a href="/account" class="nav-link ps-5">
+                        <i class="pi pi-user fs-5"></i>
                     </a>
                 </div>
             </div>
