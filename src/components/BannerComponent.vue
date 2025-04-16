@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="row bg-white max-width-desktop m-3 w-100 justify-content-center">
+        <div class="row bg-white m-3 w-100 justify-content-center">
             <div class="col-md-8 content-box bg-image-1 rounded-3 d-flex align-items-center">
                 <div class="d-flex flex-column w-50 p-5 text-white">
                     <h3 class="fw-bold display-6">Organicos Saudáveis e Frescos</h3>
