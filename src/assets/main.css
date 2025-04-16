@@ -16,7 +16,6 @@
 
   h2, h3, a{
     font-family: var(--font-main);
-    color: var(--color-dark-blue);
 }
 
   h2{
@@ -30,8 +29,8 @@
     font-weight: 600;
   }
 
-.pi {
-  color: var(--color-dark-blue);
-}
+  .pi{
+    color: black;
+  }
 
 
