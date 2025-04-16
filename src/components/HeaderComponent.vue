@@ -13,15 +13,15 @@
                         <InputComponent type="text" placeholder="Buscar" class="w-100"></InputComponent>
                         <i class="pi pi-search position-absolute end-0 top-50 translate-middle"></i>
                     </div>
-                    <div class="d-flex align-items-center gap-4 hover">
+                    <div class="d-flex align-items-center gap-4">
                         <a href="#favoritos">
-                            <i class="pi pi-heart-fill fs-4"></i>
+                            <i class="pi pi-heart-fill fs-4 text-black"></i>
                         </a>
                         <a href="/cart">
-                            <i class="pi pi-shopping-bag fs-4"></i>
+                            <i class="pi pi-shopping-bag fs-4 text-black"></i>
                         </a>
                         <a href="/account">
-                            <i class="pi pi-user fs-4"></i>
+                            <i class="pi pi-user fs-4 text-black"></i>
                         </a>
                     </div>
                 </section>
