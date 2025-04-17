@@ -24,6 +24,20 @@ const router = createRouter({
       name: 'cart',
       component: () => import('../views/CartView.vue'),
     },
+    {
+      path: '/dashboard',
+      component: () => import('../components/DashboarComponent.vue'),
+      children: [
+        { path: '', redirect: 'perfil' },
+        { path: 'perfil', component: () => import('../components/UserDataComponent.vue') },
+        { path: 'enderecos', component: () => import('../components/AddressesComponent.vue') },
+        { path: 'carrinho', component: () => import('../components/CartComponent.vue') },
+        //{ path: 'favoritos', component: () => import('../') },
+        { path: 'pedidos', component: () => import('../components/OrdersComponent.vue') },
+        { path: 'categorias', component: () => import('../components/AdmAreaComponent.vue') },
+        { path: 'produtos', component: () => import('../components/AdmAreaComponent.vue') },
+      ]
+    },
   ],
 })
 

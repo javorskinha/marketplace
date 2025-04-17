@@ -33,6 +33,9 @@
                 </form>
             </div>
         </div>
+        <div class="d-flex justify-content-end mt-5">
+            <button @click="excludeAccount" class="btn"><small>Exculir Conta</small><i class="pi pi-trash text-danger ms-1"></i></button>
+        </div>
     </div>
 </template>
 
