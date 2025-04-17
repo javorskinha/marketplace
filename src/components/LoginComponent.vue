@@ -3,7 +3,7 @@
         <div :class="{'active' : active}" class="container">
             <div class="form-box login">
                 <form @submit.prevent="hadleLogin" class="w-100">
-                    <h1 class="mb-3">Login</h1>
+                    <h1 class="mb-3 text-black">Login</h1>
                     <div class="input-box">
                         <InputComponent v-model="email" type="email" placeholder="E-mail" required class="input"/>
                         <i class="pi pi-envelope"></i>
@@ -15,7 +15,7 @@
                     <div class="m-2">
                         <a href="#" class="nav-link"><small>Esqueceu a senha?</small></a>
                     </div>
-                    <ButtonComponent text="Login" class="btn btn-primary" type="submit"/>
+                    <ButtonComponent text="Login" class="btn btn-primary rounded-1" type="submit"/>
                     <p class="mt-3">Ou faça login com suas redes sociais</p>
                     <div class="fs-3">
                         <a class="m-3" href=""><i class="pi pi-google"></i></a>
@@ -26,7 +26,7 @@
             </div>
             <div class="form-box register">
                 <form @submit.prevent="hadleRegister" class="w-100">
-                    <h1 class="mb-3">Cadastrar</h1>
+                    <h1 class="mb-3 text-black">Cadastrar</h1>
                     <div class="input-box">
                         <InputComponent v-model="name" type="text" placeholder="Nome" required class="input"/>
                         <i class="pi pi-user"></i>
@@ -39,7 +39,7 @@
                         <InputComponent v-model="password" type="password" placeholder="Senha" required class="input"/>
                         <i class="pi pi-lock"></i>
                     </div>
-                    <ButtonComponent text="Cadastrar" class="btn btn-outline-primary" type="submit"/>
+                    <ButtonComponent text="Cadastrar" class="btn btn-primary rounded-1" type="submit"/>
                     <p class="mt-3">Ou cadastre-se com suas redes sociais</p>
                     <div class="fs-3">
                         <a class="m-3" href=""><i class="pi pi-google"></i></a>
@@ -49,15 +49,19 @@
                 </form>
             </div>
             <div class="toggle-box" :class="{'active' : active}">
-                <div class="toggle-panel toggle-top" :class="{'active' : active}">
-                    <h1>Bem Vindo!</h1>
-                    <p>Ainda não possui uma conta?</p>
-                    <ButtonComponent text="Cadastrar-se" class="btn btn-light rounded-3 w-50" @click="changeActive()"/>
+                <div class="toggle-panel toggle-top text-white" :class="{'active' : active}">
+                    <h1 class="mb-0">Bem Vindo!</h1>
+                    <p class="mt-0">Ainda não possui uma conta?</p>
+                    <span @click="changeActive()">
+                        <ButtonComponent text="Cadastrar-se" class="btn btn-primary rounded-3"/>
+                    </span>
                 </div>
-                <div class="toggle-panel toggle-bottom" :class="{'active' : active}">
+                <div class="toggle-panel toggle-bottom text-white" :class="{'active' : active}">
                     <h1>Bem Vindo!</h1>
                     <p>Já possui uma conta?</p>
-                    <ButtonComponent text="Fazer Login" class="btn btn-light rounded-3 w-50" @click="changeActive()"/>
+                    <span @click="changeActive()">
+                        <ButtonComponent text="Fazer Login" class="btn btn-primary rounded-3"/>
+                    </span>
                 </div>
             </div>
         </div>
@@ -185,7 +189,7 @@ async function hadleRegister() {
         top: -275%;
         width: 100%;
         height: 300%;
-        background-color: #87b8da;
+        background-color: #1A1A1A;
         border-radius: 70px;
         z-index: 2;
         transition: 1.5s ease-in-out;
