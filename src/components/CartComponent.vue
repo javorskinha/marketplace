@@ -19,7 +19,7 @@
         <div>
             <p>Total: R${{ totalAmount }}</p>
             <p>Endereço de entrega {{ sendAddress.street }}, id {{ sendAddress.id }}</p>
-            <ButtonComponent text="Realizar Pedido" class="btn btn-outline-primary" icon="pi pi-arrow-right" @click="sendOrder(sendAddress.id)"/>
+            <ButtonComponent text="Realizar Pedido" class="btn btn-info" icon="pi pi-arrow-right" @click="sendOrder(sendAddress.id)"/>
         </div>
     </div>
 </template>

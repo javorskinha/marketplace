@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="p-5 text-center">
-            <h2>{{ title }}</h2>
-            <p>{{ paragraph }}</p>
+            <h2 class="text-black">{{ title }}</h2>
+            <p class="text-secondary">{{ paragraph }}</p>
         </div>
-        <div class="row g-4">
+        <div class="row g-4 ms-5 me-5">
             <div v-for="product in randomProducts" :key="product.id" class="col-12 col-sm-6 col-lg-3 d-flex justify-content-center">
                 <CardComponent
                 :id="product.id"

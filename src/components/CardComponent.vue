@@ -2,7 +2,7 @@
     <div class="card shadow-sm" :id="id">
         <div class="position-relative">
             <img :src="src" class="card-img-top" :alt="alt">
-            <span class="badge bg-danger position-absolute top-0 start-0 m-2">novo{{ marker }}</span>
+            <span class="position-absolute top-0 start-0 m-3 fs-3"><i class="pi pi-heart text-info"></i></span>
         </div>
         <div class="card-body d-flex flex-column justify-content-between">
             <div>
@@ -18,7 +18,6 @@
                     @click="toggleCart()"
                     icon="pi pi-shopping-cart"
                     />
-                    <ButtonComponent text="Lista de Desejos" class="btn btn-outline-secondary" icon="pi pi-heart"/>
                 </div>
             </div>
         </div>
@@ -39,7 +38,6 @@ const props = defineProps({
     name: String,
     description: String,
     price: String, 
-    marker: String
 })
 
 console.log(orderStore.cart.items);

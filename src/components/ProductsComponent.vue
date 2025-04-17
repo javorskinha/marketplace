@@ -1,6 +1,6 @@
 <template>
     <div class="container my-4">
-        <div class="row g-4">
+        <div class="row g-4 m-auto">
             <div v-for="product in allProducts" :key="product.id" class="col-12 col-sm-6 col-lg-3 d-flex justify-content-center" >
                 <CardComponent
                 :id="product.id"
@@ -9,7 +9,6 @@
                 :description="product.description"
                 :price="product.price"
                 />
-                <p>{{product.id}}</p>
             </div>
         </div>
     </div>
