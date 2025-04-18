@@ -60,7 +60,7 @@
                 </ul>
             </div>
                 <a href="/account" class="d-flex flex-column gap-2 mt-3 nav-link">
-                <ButtonComponent text="Conta" class="btn btn-outline-secondary bg-info"/>
+                <ButtonComponent text="Acessar" class="btn btn-primary"/>
                 </a>
             </div>
         </div>
