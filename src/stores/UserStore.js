@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { deleteUser, getUser, putUser, getAddresses, postAddresses, putAddress, deleteAddress, deleteCart } from "@/services/HttpService";
+import { deleteUser, getUser, putUser, putUserPic, getAddresses, postAddresses, putAddress, deleteAddress, deleteCart } from "@/services/HttpService";
 import { ref } from "vue";
 
 export const useUserStore = defineStore('user', ()=>{
@@ -16,6 +16,10 @@ export const useUserStore = defineStore('user', ()=>{
             console.error('Erro ao buscar dados', error);
             throw error;
         };
+    }
+
+    async function userPic(picture) {
+        await putUserPic(picture);
     }
 
     async function changeUserData(userData) {
@@ -102,5 +106,5 @@ export const useUserStore = defineStore('user', ()=>{
         defaultAddress.value = addressData;
     }
 
-    return {user, addresses, defaultAddress, userData, changeUserData, delUser, userAddresses, postAddress, changeAddressData, delAddress, turnDefault}
+    return {user, addresses, defaultAddress, userData, userPic, changeUserData, delUser, userAddresses, postAddress, changeAddressData, delAddress, turnDefault}
 }, {persist: true})

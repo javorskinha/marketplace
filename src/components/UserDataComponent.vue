@@ -1,39 +1,45 @@
 <template>
-    <div>
-        <div v-if="userStore.user" class="user-all-data">
-            <div class="user-data">
-                <div class="data">
-                    <p class="data-name">Nome: </p>
-                    <p>{{ userStore.user.name }}</p>
+    <div class="d-flex flex-column justify-content-center">
+        <div class="d-flex">
+            <div v-if="userStore.user" class="w-50 d-flex flex-column align-items-center">
+                <div class="perfil-image d-flex align-items-center justify-content-center rounded-circle border border-success">
+                    <img :src="getImageUrl(userStore.user.image_path)" alt="" class="w-100 h-100">
                 </div>
-                <div class="data">
-                    <p class="data-name">E-mail: </p>
-                    <p>{{ userStore.user.email }}</p>
+                <div>
+                    <h3>{{ userStore.user.name }}</h3>
                 </div>
-                <div class="data">
-                    <p class="data-name">Conta: </p>
-                    <p>{{ userStore.user.role }}</p>
+                <div class="fs-5">
+                    <div class="d-flex">
+                        <p class="me-3">E-mail: </p>
+                        <p>{{ userStore.user.email }}</p>
+                    </div>
+                    <div class="d-flex">
+                        <p class="me-3">Tipo de Conta: </p>
+                        <p>{{ userStore.user.role }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="alter-form">
-            <ButtonComponent @click="alterData" text="Alterar Dados" class="white"/>
-            <div v-if="alter" class="form">
-                <h3>Novos Dados:</h3>
-                <form @submit.prevent="alterUserData">
-                    <div class="input-box">
+            <div class="w-50 m-auto">
+                <h4>Alterar Dados:</h4>
+                <form @submit.prevent="alterUserData" class="w-75">
+                    <label for="InputComponent">Nova foto de perfil:</label>
+                    <div class="d-flex align-items-center">
+                        <InputComponent type="file" @change="handleImage"/>
+                        <ButtonComponent type="submit" text="Enviar" class="bg-primary h-50 rounded-1 ms-2 d-flex text-black" @click="updateImage"></ButtonComponent>
+                    </div>
+                    <div class="input-box position-relative">
                         <InputComponent v-model="name" type="text" placeholder="Username" required class="input"/>
-                        <i class="pi pi-pen-to-square"></i>
+                        <i class="pi pi-pen-to-square position-absolute end-0 top-50 translate-middle"></i>
                     </div>
-                    <div class="input-box">
+                    <div class="input-box position-relative">
                         <InputComponent v-model="email" type="email" placeholder="Email" required class="input"/>
-                        <i class="pi pi-pen-to-square"></i>
+                        <i class="pi pi-pen-to-square position-absolute end-0 top-50 translate-middle"></i>
                     </div>
-                    <ButtonComponent type="submit" text="ALTERAR" class="blue"></ButtonComponent>
+                    <ButtonComponent type="submit" text="ALTERAR" class=""></ButtonComponent>
                 </form>
             </div>
         </div>
-        <div class="d-flex justify-content-end mt-5">
+        <div class="d-flex justify-content-end">
             <button @click="excludeAccount" class="btn"><small>Exculir Conta</small><i class="pi pi-trash text-danger ms-1"></i></button>
         </div>
     </div>
@@ -45,16 +51,12 @@ import ButtonComponent from "./ButtonComponent.vue";
 import { useAuthStore } from "@/stores/AuthStore";
 import { useUserStore } from "@/stores/UserStore";
 import { onMounted, ref } from "vue";
+import { baseURL } from "@/services/HttpService";
 
 const authStore = useAuthStore();
 const userStore = useUserStore();
 const name = ref('');
 const email = ref('');
-const alter = ref(false);
-
-function alterData(){
-    alter.value = !alter.value;
-}
 
 async function showUserData(){
     await userStore.userData(authStore.token);
@@ -79,57 +81,50 @@ async function alterUserData() {
     alter.value = false;
 }
 
+const userImage = ref('')
+
+function handleImage(event){
+    userImage.value = event.target.files[0];
+}
+
+async function updateImage() {
+    const formData = new FormData();
+    formData.append('image', userImage.value);
+
+    await userStore.userPic(formData);
+
+    await showUserData();
+}
+
+const getImageUrl = (path) => {
+    return `${baseURL}${path.replace(/^\/+/, '')}`
+};
+
+async function excludeAccount(){
+    const confirmation = window.confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.');
+
+    if(!confirmation){
+        return;
+    }
+
+    await userStore.delUser();
+    handleLogout();
+
+    window.alert('Conta deletada');
+}
+
 onMounted(showUserData);
 </script>
 
-<style scoped>
-    .user-all-data{
-        margin: 1em 0;
+<style>
+    .perfil-image{
+        width: 250px;
+        height: 250px;
+        overflow: hidden;
+        margin-bottom: 1rem;
     }
 
-    .user-data{
-        font-size: 1.2em;
-    }
-
-    .data{
-        display: flex;
-        margin: 0.9em 2em 0.9em 0.2em;
-        border-bottom: solid 1px var(--color-light-beige);
-    }
-
-    .data-name{
-        width: 5em;
-    }
-
-    .alter-form{
-        text-align: center;
-    }
-
-    .form{
-        border: solid 1px var(--color-light-beige);
-        border-radius: 5px;
-        margin: 1em 0;
-        padding: 1em ;
-    }
-    
-    .form h3{
-        text-align: left;
-        margin-left: 0.7em;
-    }
-
-    .input-box{
-        position: relative;
-    }
-
-    .input-box i{
-        position: absolute;
-        right: 20px;
-        top: 25px;
-        font-size: 1.2em;
-    }
-
-    .yellow{
-        width: 94%;
-        height: 30px;
+    .perfil-image img{
+        object-fit: cover;
     }
 </style>

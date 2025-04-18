@@ -82,6 +82,7 @@ async function request(method, url, data = null) {
 // user data requests
 export const getUser = () => request("get", "/users/me");
 export const putUser = (userData) => request("put", "/users/me", userData);
+export const putUserPic = (userData) => request("put", "/users/image", userData);
 export const deleteUser = () => request("delete", "/users/me");
 //users/created-moderator
 

@@ -26,28 +26,12 @@
 
 <script setup>
 import { useAuthStore } from "@/stores/AuthStore";
-import { useUserStore } from "@/stores/UserStore";
-import ButtonComponent from "./ButtonComponent.vue";
 import { ref } from "vue";
 
 const authStore = useAuthStore();
-const userStore = useUserStore();
 const userAdm = ref(true);
 
 const handleLogout = ()=>{
     authStore.logout();
-}
-
-async function excludeAccount(){
-    const confirmation = window.confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.');
-
-    if(!confirmation){
-        return;
-    }
-
-    await userStore.delUser();
-    handleLogout();
-
-    window.alert('Conta deletada');
 }
 </script>
