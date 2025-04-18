@@ -1,34 +1,35 @@
 <template>
-    <div class="m-1 border border-success rounded-3 p-1 pt-3">
+    <div class="m-1 rounded-3 p-1 pt-3">
         <div>
             <h3 class="ms-3">Endereços Registrados</h3>
             <div v-if="addresses.length > 0">
-                <div v-for="addr in addresses" :key="addr.id" class="m-2 border border-success p-3 rounded-3">
-                    <div class="fs-5 d-flex align-items-center justify-content-around">
-                        <div>
-                            <div class="d-flex">
-                                <p>{{ addr.street }}</p>
-                                <p>, {{ addr.number }}</p>
-                            </div>
-                            <div class="d-flex">
-                                <p>{{ addr.city }}</p>
-                                <p>/{{ addr.state }}</p>
-                                <p>- {{ addr.country }}</p>
+                <div v-for="addr in addresses" :key="addr.id" class="m-2 p-3 rounded-3">
+                    <div class="fs-5 d-flex align-items-center justify-content-between w-100 border-bottom border-info">
+                        <div class="d-flex align-items-center">
+                            <i class="pi pi-map-marker text-info"></i>
+                            <div class="ms-2">
+                                <div class="d-flex">
+                                    <p class="m-0">{{ addr.street }}</p>
+                                    <p class="m-0">, {{ addr.number }}</p>
+                                    <p class="m-0 ms-2">CEP: {{ addr.zip }}</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="m-0">{{ addr.city }}</p>
+                                    <p class="m-0">/{{ addr.state }}</p>
+                                    <p class="m-0">- {{ addr.country }}</p>
+                                </div>
                             </div>
                         </div>
-                        <i class="pi pi-map-marker"></i>
-                        <div>
-                            <ButtonComponent 
-                                v-if="!isDefault(addr)" 
-                                @click="setAsDefault(addr)" 
-                                text="Usar como padrão" 
-                                class="btn btn-outline-primary w-100 mt-2"/>
-                            <p v-else class="text-primary mt-2 text-center">Endereço padrão</p>
+                        <div class="custom-width">
+                            <div>
+                                <p v-if="!isDefault(addr)" @click="setAsDefault(addr)" class="text-black m-0"><i class="pi pi-circle-off"></i> Tornar padrão</p>
+                                <p v-else class="text-info border-bottom border-info m-0"><i class="pi pi-check-circle"></i> Endereço padrão</p>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <ButtonComponent @click="editAddress(addr)" icon="pi pi-pen-to-square fs-5" class="my-1 text-secondary" text="Editar"/>
+                                <ButtonComponent @click="deletAdress(addr.id)" icon="pi pi-trash text-danger fs-5" class="my-1 text-secondary" text="Excluir"/>
+                            </div>
                         </div>
-                    </div>
-                    <div class="d-flex">
-                        <ButtonComponent @click="editAddress(addr)" text="Editar" class="btn btn-primary w-100 me-1"/>
-                        <ButtonComponent @click="deletAdress(addr.id)" text="Excluir" class="btn btn-secondary w-100 ms-1"/>
                     </div>
                 </div>
             </div>
@@ -37,8 +38,8 @@
                 </p>
             </div>
         </div>
-        <div ref="formSection">
-            <h3  class="ms-3">{{ isEditing? 'Alterar Endereço Registrado' : 'Adicionar Novo Endereço' }}</h3>
+        <div ref="formSection" class="w-100 w-md-50 w-lg-25">
+            <h3  class="ms-3">{{ isEditing? 'Editar Endereço' : 'Adicionar Novo Endereço' }}</h3>
             <form @submit.prevent="saveAddress" class="m-2">
                 <div class="input-box">
                     <InputComponent v-model="editedAddress.street" type="text" placeholder="Rua" required class="input"/>
@@ -158,5 +159,9 @@ onMounted (()=>{
 <style scoped>
     .pi-map-marker{
         font-size: 2em;
+    }
+
+    .custom-width{
+        width: 150px;
     }
 </style>
