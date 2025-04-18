@@ -12,9 +12,12 @@
                     <img :src="getImageUrl(item.image_path)" alt="" class="custom-img-w rounded-circle shadow m-3">
                     <h4>{{ item.name }}</h4>
                     <p>R$ {{ item.unit_price }}</p>
-                    <input type="number" min="1"
-                    v-model.number="item.quantity"
-                    @change="alterQuantity(item)"/>
+                    <div class="d-flex w-25 justify-content-end align-items-center">
+                        <i class="pi pi-minus text-primary bg-light p-1 rounded-circle me-3" @click="decreaseQty(item)"></i>
+                        <input type="number" class="text-center" min="1" v-model.number="item.quantity" @change="alterQuantity(item)" style="width: 25px;">
+                        <i class="pi pi-plus text-primary bg-light p-1 rounded-circle" @click="increaseQty(item)"></i>
+                    </div>
+                    <i class="pi pi-times-circle"></i>
                 </div>
             </div>
             <div class="col-12 col-md-4 col-lg-3 p-4 border m-4 ms-0">
@@ -116,6 +119,18 @@ async function sendOrder(addressId) {
         window.alert('erro ao enviar pedido');
         console.error(error);
     }
+}
+
+function decreaseQty(item) {
+  if (item.quantity > 1) {
+    item.quantity--;
+    alterQuantity(item);
+  }
+}
+
+function increaseQty(item) {
+  item.quantity++;
+  alterQuantity(item);
 }
 
 onMounted(()=>{
