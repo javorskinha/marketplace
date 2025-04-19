@@ -11,12 +11,11 @@
             </div>
             <div>
                 <p class="card-text fw-bold fs-5 text-primary">R$ {{ price }}</p>
-                <div class="d-flex flex-column gap-2">
+                <div class="d-flex flex-column gap-2" @click="toggleCart()">
                     <ButtonComponent
-                    :text="isInCart ? 'Remover do Carrinho' : 'Adicionar ao Carrinho'"
-                    class="btn btn-info"
-                    @click="toggleCart()"
-                    icon="pi pi-shopping-cart"
+                    :text="isInCart ? 'Na sacola' : 'Adicionar a sacola'"
+                    :class="isInCart ? 'btn btn-success' : 'btn btn-info'"
+                    icon="pi pi-shopping-bag"
                     />
                 </div>
             </div>
@@ -48,6 +47,8 @@ const isInCart = computed (()=>
 )
 
 async function toggleCart() {
+    console.log("ToggleCart chamado")
+
     console.log("isInCart:", isInCart.value);
 
     const itemData = {
