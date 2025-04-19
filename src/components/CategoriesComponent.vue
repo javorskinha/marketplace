@@ -26,7 +26,7 @@ const productsStore = useProductsStore();
 const allCategories = computed (()=> productsStore.categories);
 
 async function getAllCategories() {
-    await productsStore.fetchCategories();
+    await productsStore.fetchCategories(17);
 }
 
 const getImageUrl = (path) => {
