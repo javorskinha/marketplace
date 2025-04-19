@@ -50,6 +50,6 @@ const getImageUrl = (path) => {
 };
 
 onMounted(async ()=>{
-    await productsStore.fetchProducts();
+    await productsStore.fetchProducts(17);
 })
 </script>
