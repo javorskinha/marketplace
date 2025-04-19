@@ -24,7 +24,7 @@ const productsStore = useProductsStore();
 const allProducts = computed (()=> productsStore.products);
 
 async function getAllProducts() {
-    await productsStore.fetchProducts();
+    await productsStore.fetchProducts(17);
 };
 
 const getImageUrl = (path) => {
