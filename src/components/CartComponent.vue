@@ -17,7 +17,7 @@
                         <input type="number" class="text-center" min="1" v-model.number="item.quantity" @change="alterQuantity(item)" style="width: 25px;">
                         <i class="pi pi-plus text-primary bg-light p-1 rounded-circle" @click="increaseQty(item)"></i>
                     </div>
-                    <i class="pi pi-times-circle"></i>
+                    <i class="pi pi-times-circle" @click="removeProduct(item)"></i>
                 </div>
             </div>
             <div class="col-12 col-md-4 col-lg-3 p-4 border m-4 ms-0">
@@ -64,7 +64,7 @@
                         <p class="m-0 text-secondary">Rua: {{ sendAddress.street }}, {{ sendAddress.number }}</p>
                         <p class="m-0 text-secondary">CEP: {{ sendAddress.zip }}</p>
                         <p class="m-0 text-secondary">{{ sendAddress.city }} - {{ sendAddress.state }} / {{ sendAddress.country }}</p>
-                        <p @click="" class="d-flex justify-content-end text-info">Trocar Endereço</p>
+                        <p class="d-flex justify-content-end"><button class="btn text-info"><router-link to="/dashboard/enderecos">Trocar Endereço</router-link></button></p>
                         <ButtonComponent text="Enviar Pedido" class="btn btn-primary" icon="pi pi-arrow-right" @click="sendOrder(sendAddress.id)"/>
                     </div>
                 </div>
@@ -102,7 +102,6 @@ const getImageUrl = (path) => {
 
 async function alterQuantity(item) {
     await orderStore.updateCartItem({product_id: item.product_id}, false, item.quantity);
-    await showCartItems();
 }
 
 async function sendOrder(addressId) {
@@ -119,31 +118,33 @@ async function sendOrder(addressId) {
         window.alert('erro ao enviar pedido');
         console.error(error);
     }
+
+    showCartItems();
 }
 
 function decreaseQty(item) {
   if (item.quantity > 1) {
     item.quantity--;
     alterQuantity(item);
+    showCartItems();
   }
 }
 
 function increaseQty(item) {
   item.quantity++;
   alterQuantity(item);
+  showCartItems();
+}
+
+async function removeProduct(item) {
+    await orderStore.updateCartItem(item);
+    showCartItems();
 }
 
 onMounted(()=>{
     showCartItems();
 })
 
-watch(
-    () => orderStore.cart.items,
-    async () => {
-        await showCartItems();
-    },
-    { deep: true }
-);
 </script>
 
 <style>
