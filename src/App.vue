@@ -11,3 +11,9 @@ import HeaderComponent from './components/HeaderComponent.vue'
 import { RouterView } from 'vue-router';
 import FooterComponent from './components/FooterComponent.vue';
 </script>
+
+<style>
+    .hover :hover{
+        color: #00b207;
+    }
+</style>
