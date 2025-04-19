@@ -53,9 +53,3 @@
         </div>
     </div>
 </template>
-
-<style>
-    .hover :hover{
-        color: #2c742f;
-    }
-</style>
