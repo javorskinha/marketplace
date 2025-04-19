@@ -14,26 +14,35 @@
                         <i class="pi pi-search position-absolute end-0 top-50 translate-middle"></i>
                     </div>
                     <div class="d-flex align-items-center gap-4">
-                        <a href="#favoritos">
-                            <i class="pi pi-heart-fill fs-4 text-black"></i>
+                        <a href="#favoritos" class="nav-link text-black hover">
+                            <i class="pi pi-heart-fill fs-4"></i>
                         </a>
-                        <a href="/cart">
-                            <i class="pi pi-shopping-bag fs-4 text-black"></i>
+                        <a href="/cart" class="nav-link text-black hover">
+                            <i class="pi pi-shopping-bag fs-4"></i>
                         </a>
-                        <a href="/account">
-                            <i class="pi pi-user fs-4 text-black"></i>
+                        <a href="/account" class="nav-link text-black hover">
+                            <i class="pi pi-user fs-4"></i>
                         </a>
                     </div>
                 </section>
                 <div class="d-none d-md-flex align-items-center bg-dark w-100">
-                    <ul class="navbar-nav flex-row gap-3 hover fs-5 max-width-desktop">
-                        <li class="nav-item"><a class="nav-link text-white" href="#">Categorias</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="#">Produtos</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="#">Ofertas</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="#">Cupons</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="#">Frete Grátis</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="#">Sobre</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="#">Contato</a></li>
+                    <ul class="navbar-nav flex-row gap-3 fs-5 max-width-desktop">
+                        <li class="nav-item dropdown position-relative">
+                            <a class="nav-link costum-color dropdown-toggle" href="#">Categorias</a>
+                            <ul class="dropdown-menu hover">
+                                <li><a href="#" class="dropdown-item fw-bold">Legumes</a></li>
+                                <li><a href="#" class="dropdown-item fw-bold">Verduras</a></li>
+                                <li><a href="#" class="dropdown-item fw-bold">Frutas</a></li>
+                                <li><a href="#" class="dropdown-item fw-bold">Grãos</a></li>
+                                <li><a href="#" class="dropdown-item fw-bold">Folhas</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link costum-color" href="#">Produtos</a></li>
+                        <li class="nav-item"><a class="nav-link costum-color" href="#">Ofertas</a></li>
+                        <li class="nav-item"><a class="nav-link costum-color" href="#">Cupons</a></li>
+                        <li class="nav-item"><a class="nav-link costum-color" href="#">Frete Grátis</a></li>
+                        <li class="nav-item"><a class="nav-link costum-color" href="#">Sobre</a></li>
+                        <li class="nav-item"><a class="nav-link costum-color" href="#">Contato</a></li>
                     </ul>
                 </div>
             </div>
@@ -50,7 +59,20 @@
                     <i class="pi pi-search position-absolute end-0 top-50 translate-middle"></i>
                 </div>
                 <ul class="navbar-nav d-flex flex-column justify-content-around fs-5">
-                    <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Categorias</a><i class="pi pi-chevron-right"></i></li>
+                    <li class="d-flex align-items-center justify-content-between border-bottom mb-2" @click="toggleDropdown">
+                        <a class="nav-link pb-0" href="#">Categorias</a><i class="pi" :class="isOpen? 'pi-chevron-down' : 'pi-chevron-right'"></i>
+                    </li>
+                    <transition name="dropdown">
+                        <li v-if="isOpen">
+                            <ul>
+                                <li><a href="#" class="nav-link">Legumes</a></li>
+                                <li><a href="#" class="nav-link">Verduras</a></li>
+                                <li><a href="#" class="nav-link">Frutas</a></li>
+                                <li><a href="#" class="nav-link">Grãos</a></li>
+                                <li><a href="#" class="nav-link">Folhas</a></li>
+                            </ul>
+                        </li>
+                    </transition>
                     <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Produtos</a><i class="pi pi-chevron-right"></i></li>
                     <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Ofertas</a><i class="pi pi-chevron-right"></i></li>
                     <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Cupons</a><i class="pi pi-chevron-right"></i></li>
@@ -68,8 +90,15 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import ButtonComponent from './ButtonComponent.vue';
 import InputComponent from './InputComponent.vue';
+
+const isOpen = ref(false);
+
+function toggleDropdown(){
+    isOpen.value = !isOpen.value;
+}
 </script>
 
 <style>
@@ -83,5 +112,49 @@ import InputComponent from './InputComponent.vue';
             margin-left: auto;
             margin-right: auto;
         }
+    }
+
+    .dropdown:hover .dropdown-menu{
+        display: block;
+        margin-top: 0;
+    }
+
+    .dropdown-menu{
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #1A1A1A;
+    }
+
+    .dropdown-item{
+        color: white;
+    }
+
+    .costum-color{
+        color: white;
+    }
+
+    .costum-color:hover{
+        color: #00b207;
+    }
+
+    .dropdown-enter-active,
+    .dropdown-leave-active {
+      transition: all 1s ease;
+      overflow: hidden;
+    }
+
+    .dropdown-enter-from,
+    .dropdown-leave-to {
+      opacity: 0;
+      transform: translateY(-5px);
+      max-height: 0;
+    }
+
+    .dropdown-enter-to,
+    .dropdown-leave-from {
+      opacity: 1;
+      transform: translateY(0);
+      max-height: 500px;
     }
 </style>
