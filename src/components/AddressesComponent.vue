@@ -1,22 +1,17 @@
 <template>
-    <div class="m-1 rounded-3 p-1 pt-3">
-        <div>
+    <div class="m-1 rounded-3 p-1 pt-3 d-flex flex-column flex-md-row">
+        <div class="w-100">
             <h3 class="ms-3">Endereços Registrados</h3>
             <div v-if="addresses.length > 0">
-                <div v-for="addr in addresses" :key="addr.id" class="m-2 p-3 rounded-3">
+                <div v-for="addr in addresses" :key="addr.id" class="m-2 p-md-3 rounded-3">
                     <div class="fs-5 d-flex align-items-center justify-content-between w-100 border-bottom border-info">
                         <div class="d-flex align-items-center">
-                            <i class="pi pi-map-marker text-info"></i>
+                            <i class="pi pi-map-marker text-info d-none d-md-block"></i>
                             <div class="ms-2">
-                                <div class="d-flex">
-                                    <p class="m-0">{{ addr.street }}</p>
-                                    <p class="m-0">, {{ addr.number }}</p>
-                                    <p class="m-0 ms-2">CEP: {{ addr.zip }}</p>
-                                </div>
-                                <div class="d-flex">
-                                    <p class="m-0">{{ addr.city }}</p>
-                                    <p class="m-0">/{{ addr.state }}</p>
-                                    <p class="m-0">- {{ addr.country }}</p>
+                                <div>
+                                    <p class="m-0">{{ addr.street }}, {{ addr.number }}</p>
+                                    <p class="m-0">CEP: {{ addr.zip }}</p>
+                                    <p class="m-0">{{ addr.city }}/{{ addr.state }} - {{ addr.country }}</p>
                                 </div>
                             </div>
                         </div>
@@ -38,9 +33,9 @@
                 </p>
             </div>
         </div>
-        <div ref="formSection" class="w-100 w-md-50 w-lg-25">
-            <h3  class="ms-3">{{ isEditing? 'Editar Endereço' : 'Adicionar Novo Endereço' }}</h3>
-            <form @submit.prevent="saveAddress" class="m-2">
+        <div ref="formSection" class="w-100 w-md-50 d-flex flex-column align-items-center">
+            <h3>{{ isEditing? 'Editar Endereço' : 'Adicionar Novo Endereço' }}</h3>
+            <form @submit.prevent="saveAddress" class="m-2 w-75">
                 <div class="input-box">
                     <InputComponent v-model="editedAddress.street" type="text" placeholder="Rua" required class="input"/>
                 </div>
@@ -164,4 +159,6 @@ onMounted (()=>{
     .custom-width{
         width: 150px;
     }
+
+    
 </style>

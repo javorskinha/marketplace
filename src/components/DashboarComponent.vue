@@ -17,7 +17,7 @@
                     <p @click="handleLogout" class="text-danger m-0 mt-3 d-flex justify-content-end align-items-center">Logout<i class="pi pi-sign-out ms-2"></i></p>
                 </nav>
             </aside>
-            <main class="col bg-white p-4 border m-4 ms-0">
+            <main class="col bg-white p-0 p-md-4 border m-1 m-md-4 ms-md-0">
                 <Router-View />
             </main>
         </div>
