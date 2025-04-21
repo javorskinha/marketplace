@@ -1,13 +1,13 @@
 <template>
-    <div>
-        <section>
-            <h4>Suas Categorias</h4>
-                <div v-for="category in userCategories" :key="category.id">
+    <div class="container">
+        <h3>Suas Categorias</h3>
+        <section class="row row-cols-sm-2 row-cols-md-3">
+                <div v-for="category in userCategories" :key="category.id" class="position-relative border m-2 p-2">
                     <!--exibe as categorias que o usuário criou/possui-->
-                    <img :src="getImageUrl(category.image_path)" alt="" class="w-25">
-                    <p>{{ category.name }}</p>
-                    <p>{{ category.description }}</p>
-                    <ButtonComponent text="Adicionar Produto" @click="addProduct(category.id)"/>
+                    <img :src="getImageUrl(category.image_path)" alt="" class="costum-image">
+                    <h4>{{ category.name }}</h4>
+                    <p><span class="text-secondary">Descrição:</span> {{ category.description }}</p>
+                    <ButtonComponent text="Adicionar produto a categoria" @click="addProduct(category.id)"  class="btn"/>
                     <div v-if="catForProduct === category.id">
                         <form @submit.prevent="newProduct">
                             <InputComponent type="text" placeholder="Nome" v-model="newProd.name" required/>
@@ -17,7 +17,7 @@
                             <ButtonComponent type="submit" text="Adicionar Produto"/>
                         </form>
                     </div>
-                    <ButtonComponent text="Mostrar produtos da categoria" @click="showProducts(category.id)" />
+                    <ButtonComponent text="Exibir produtos da categoria" @click="showProducts(category.id)" class="btn btn-secondary" />
                     <div v-if="visibleCat.includes(category.id)">
                         <div v-for="product in catProducts[category.id]" :key="product.id">
                             <img :src="getImageUrl(product.image_path)" alt="" class="w-25">
@@ -27,9 +27,11 @@
                             <p>Estoque: {{ product.stock }}Kg</p>
                         </div>
                     </div>
-                    <ButtonComponent text="Editar Categoria" class="btn btn-outline-primary" @click="editCategory(category)"/>
-                    <!--excluir categorias-->
-                    <ButtonComponent text="DELETAR" class="btn btn-primary" @click="deleteCategory(category)"/>
+                    <div class="d-flex flex-column gap-1 position-absolute top-0 end-0">
+                        <ButtonComponent icon="pi pi-pen-to-square text-info fs-4" class="btn" @click="editCategory(category)"/>
+                        <!--excluir categorias-->
+                        <ButtonComponent icon="pi pi-trash text-danger fs-4" class="btn" @click="deleteCategory(category)"/>
+                    </div>
                 </div>
                 <div >
                     <!--criar ou editar categorias aqui-->
@@ -192,3 +194,11 @@ onMounted(()=>{
     getUserCategories();
 })
 </script>
+
+<style>
+    .costum-image{
+        width: 170px;
+        height: 170px;
+        object-fit: cover;
+    }
+</style>
