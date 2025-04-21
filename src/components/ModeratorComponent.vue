@@ -1,6 +1,6 @@
 <template>
     <div class="h-100 d-flex align-items-center justify-content-center">
-        <form @submit.prevent="newModerator">
+        <form @submit.prevent="newModerator" class="mt-5 mb-5">
             <h3>Criar Usuário Moderador</h3>
             <div class="position-relative">
                 <InputComponent v-model="modData.name" type="text" placeholder="Nome" required class="input"/>
