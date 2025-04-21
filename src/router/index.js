@@ -36,6 +36,7 @@ const router = createRouter({
         { path: 'pedidos', component: () => import('../components/OrdersComponent.vue') },
         { path: 'categorias', component: () => import('../components/AdmAreaComponent.vue') },
         { path: 'produtos', component: () => import('../components/AdmAreaComponent.vue') },
+        { path: 'moderator', component: () => import('../components/ModeratorComponent.vue') },
       ]
     },
   ],

@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { deleteUser, getUser, putUser, putUserPic, getAddresses, postAddresses, putAddress, deleteAddress, deleteCart } from "@/services/HttpService";
+import { deleteUser, getUser, putUser, putUserPic, postModerator, getAddresses, postAddresses, putAddress, deleteAddress, deleteCart } from "@/services/HttpService";
 import { ref } from "vue";
 
 export const useUserStore = defineStore('user', ()=>{
@@ -47,7 +47,13 @@ export const useUserStore = defineStore('user', ()=>{
         };
     }
 
-    //create-moderator
+    async function createModerator(modData) {
+        try{
+            await postModerator(modData)
+        } catch (error){
+            console.error('USER STORE erro ao criar moderador')
+        }
+    }
 
     // user addresses
     async function userAddresses(id) {
@@ -106,5 +112,5 @@ export const useUserStore = defineStore('user', ()=>{
         defaultAddress.value = addressData;
     }
 
-    return {user, addresses, defaultAddress, userData, userPic, changeUserData, delUser, userAddresses, postAddress, changeAddressData, delAddress, turnDefault}
+    return {user, addresses, defaultAddress, userData, userPic, changeUserData, delUser, createModerator, userAddresses, postAddress, changeAddressData, delAddress, turnDefault}
 }, {persist: true})

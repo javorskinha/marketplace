@@ -84,7 +84,7 @@ export const getUser = () => request("get", "/users/me");
 export const putUser = (userData) => request("put", "/users/me", userData);
 export const putUserPic = (userData) => request("put", "/users/image", userData);
 export const deleteUser = () => request("delete", "/users/me");
-//users/created-moderator
+export const postModerator = (modData) => request("post", "/users/create-moderator", modData);
 
 // user addresses requests
 export async function getAddresses(addressId = null) {
