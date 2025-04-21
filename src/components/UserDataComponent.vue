@@ -1,7 +1,7 @@
 <template>
-    <div class="d-flex flex-column justify-content-center">
-        <div class="d-flex">
-            <div v-if="userStore.user" class="w-50 d-flex flex-column align-items-center">
+    <div class="d-flex flex-column justify-content-center m-3">
+        <div class="d-flex flex-column flex-md-row">
+            <div v-if="userStore.user" class="w-100 w-md-50 d-flex flex-column align-items-center">
                 <div class="perfil-image d-flex align-items-center justify-content-center rounded-circle border border-success">
                     <img :src="getImageUrl(userStore.user.image_path)" alt="" class="w-100 h-100">
                 </div>
@@ -19,12 +19,12 @@
                     </div>
                 </div>
             </div>
-            <div class="w-50 m-auto">
+            <div class="w-100 w-md-50 m-auto">
                 <h4>Alterar Dados:</h4>
-                <form @submit.prevent="alterUserData" class="w-75">
+                <form @submit.prevent="alterUserData" class="">
                     <label for="InputComponent">Nova foto de perfil:</label>
                     <div class="d-flex align-items-center">
-                        <InputComponent type="file" @change="handleImage"/>
+                        <InputComponent type="file" @change="handleImage" class="w-100"/>
                         <ButtonComponent type="submit" text="Enviar" class="bg-primary h-50 rounded-1 ms-2 d-flex text-black" @click="updateImage"></ButtonComponent>
                     </div>
                     <div class="position-relative">
