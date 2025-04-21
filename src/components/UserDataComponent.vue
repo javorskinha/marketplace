@@ -27,11 +27,11 @@
                         <InputComponent type="file" @change="handleImage"/>
                         <ButtonComponent type="submit" text="Enviar" class="bg-primary h-50 rounded-1 ms-2 d-flex text-black" @click="updateImage"></ButtonComponent>
                     </div>
-                    <div class="input-box position-relative">
+                    <div class="position-relative">
                         <InputComponent v-model="name" type="text" placeholder="Username" required class="input"/>
                         <i class="pi pi-pen-to-square position-absolute end-0 top-50 translate-middle"></i>
                     </div>
-                    <div class="input-box position-relative">
+                    <div class="position-relative">
                         <InputComponent v-model="email" type="email" placeholder="Email" required class="input"/>
                         <i class="pi pi-pen-to-square position-absolute end-0 top-50 translate-middle"></i>
                     </div>

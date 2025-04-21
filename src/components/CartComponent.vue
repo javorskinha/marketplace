@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid w-75">
+    <div class="container-fluid w-100">
         <h3 class="ms-4 mt-4 fw-bold">Minha Sacola <i class="pi pi-shopping-bag"></i></h3>
         <div class="row min-vh-75">
             <div class="col-12 col-md-8 bg-white p-4 border m-4">
