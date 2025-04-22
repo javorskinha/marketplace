@@ -113,7 +113,9 @@ async function excludeAccount(){
     window.alert('Conta deletada');
 }
 
-onMounted(showUserData);
+onMounted(()=>{
+    showUserData();
+});
 </script>
 
 <style>

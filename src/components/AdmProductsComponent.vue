@@ -62,33 +62,33 @@ const getImageUrl = (path) => {
 async function saveNewData(product) {
     try {
         const productData = {
-      name: product.name,
-      price: product.price,
-      category_id: product.category_id
+        price: product.price,
+        name: product.name,
+        category_id: product.category_id
     };
 
     const stockData = {
-      stock: product.stock
+        stock: product.stock
     };
 
     await productsStore.updateProducts({
-      action: "update",
-      productData: { id: product.id },
-      newProData: productData
+        action: "update",
+        productData: { id: product.id },
+        newProData: productData
     });
 
     await productsStore.updateProducts({
-      action: "update",
-      productData: { id: product.id },
-      newProData: stockData
+        action: "update",
+        productData: { id: product.id },
+        newProData: stockData
     });
 
 
     isEditing.value[product.id] = false;
 
-  } catch (error) {
-    console.error("Erro ao salvar produto:", error);
-  }
+    } catch (error) {
+        console.error("Erro ao salvar produto:", error);
+    }
 }
 
 onMounted(getAllProducts)

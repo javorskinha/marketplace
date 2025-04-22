@@ -20,7 +20,7 @@
         <div class="row min-vh-75">
             <button @click="handleLogout" class="d-none btn text-danger m-0 mt-3 d-md-flex justify-content-end align-items-center">Logout<i class="pi pi-sign-out ms-2"></i></button>
             <aside class="d-none d-md-block col-12 col-md-3 col-lg-2 p-4 border m-4">
-                <h3 class="mb-4">Olá, {{ userStore.user.name.split(' ')[0] }}</h3>
+                <h3 class="mb-4">Olá, {{ userStore.user?.name?.split(' ')[0] || 'Usuário' }}</h3>
                 <nav class="nav flex-column gap-2">
                     <router-link to="/dashboard/perfil" class="nav-link"><i class="pi pi-user me-2"></i>Meu Perfil</router-link>
                     <router-link to="/dashboard/enderecos" class="nav-link"><i class="pi pi-map-marker"></i>Endereços</router-link>
@@ -56,5 +56,6 @@ const userModerator = computed(()=> userStore.user.role === 'MODERATOR');
 
 const handleLogout = ()=>{
     authStore.logout();
+    router.push('/account');
 }
 </script>

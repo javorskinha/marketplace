@@ -38,7 +38,7 @@ export const useUserStore = defineStore('user', ()=>{
         try{
             console.log('dados sendo deletados...')
             await deleteUser();
-            user.value = null;
+            user.value = {};
             addresses.value = [];
             await deleteCart();
         } catch (error){
