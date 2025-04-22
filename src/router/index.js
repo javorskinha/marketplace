@@ -34,7 +34,7 @@ const router = createRouter({
         { path: 'carrinho', component: () => import('../components/CartComponent.vue') },
         //{ path: 'favoritos', component: () => import('../') },
         { path: 'pedidos', component: () => import('../components/OrdersComponent.vue') },
-        { path: 'categorias', component: () => import('../components/AdmAreaComponent.vue') },
+        { path: 'categorias', component: () => import('../components/AdmCategoriesComponent.vue') },
         { path: 'produtos', component: () => import('../components/AdmProductsComponent.vue') },
         { path: 'moderator', component: () => import('../components/ModeratorComponent.vue') },
       ]

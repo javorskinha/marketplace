@@ -1,5 +1,16 @@
 <template>
-    <div class="container">
+    <div class="container w-100 m-auto">
+        <h2 class="text-info border-bottom border-info">Categorias</h2>
+        <div class="w-100 w-md-50">
+            <!--criar ou editar categorias aqui-->
+            <h3>{{ isEditing ? 'Alterar Dados' : 'Criar Nova Categoria' }}</h3>
+            <form @submit.prevent="saveCategory">
+                <InputComponent type="text" placeholder="Nome" v-model="editedCat.name" required/>
+                <InputComponent type="text" placeholder="Descrição" v-model="editedCat.description"/>
+                <InputComponent type="file" @change="handleImage"/>
+                <ButtonComponent type="submit" :text="isEditing? 'Alterar' :'Criar Categoria'" class="btn btn-primary rounded-1"/>
+            </form>
+        </div>
         <h3>Suas Categorias</h3>
         <section class="row row-cols-sm-2 row-cols-md-3">
                 <div v-for="category in userCategories" :key="category.id" class="position-relative border m-2 p-2">
@@ -31,16 +42,6 @@
                         <!--excluir categorias-->
                         <ButtonComponent icon="pi pi-trash text-danger fs-4" class="btn" @click="deleteCategory(category)"/>
                     </div>
-                </div>
-                <div >
-                    <!--criar ou editar categorias aqui-->
-                    <h3>{{ isEditing ? 'Alterar Dados' : 'Criar Categoria' }}</h3>
-                    <form @submit.prevent="saveCategory">
-                        <InputComponent type="text" placeholder="Nome" v-model="editedCat.name" required/>
-                        <InputComponent type="text" placeholder="Descrição" v-model="editedCat.description"/>
-                        <InputComponent type="file" @change="handleImage"/>
-                        <ButtonComponent type="submit" :text="isEditing? 'Alterar' :'Criar Categoria'"/>
-                    </form>
                 </div>
         </section>
     </div>
