@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="d-md-none p-2 pt-4 border-bottom bg-white border-top mt-3">
             <div class="d-flex align-items-top justify-content-between">
-                <h4 class="m-0">Olá, {{ userStore.user.name.split(' ')[0] }}</h4>
+                <h4 class="m-0">Olá, {{ userStore.user?.name?.split(' ')[0] || 'Usuário' }}</h4>
                 <button @click="handleLogout" class="btn btn-sm text-danger m-0 d-block w-25">
                 Logout <i class="pi pi-sign-out ms-1"></i>
                 </button>
