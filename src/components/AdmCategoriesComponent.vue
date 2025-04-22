@@ -22,7 +22,6 @@
                         <div v-for="product in catProducts[category.id]" :key="product.id">
                             <img :src="getImageUrl(product.image_path)" alt="" class="w-25">
                             <p>Nome: {{ product.name }}</p>
-                            <p>{{ product.description }}</p>
                             <p>Preço: {{ product.price }}Kg</p>
                             <p>Estoque: {{ product.stock }}Kg</p>
                         </div>

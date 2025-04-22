@@ -70,7 +70,13 @@ export const useProductsStore = defineStore('products', ()=>{
                     break;
 
                 case 'update':
-                    await putProducts(productData.id, newProData);
+                    if ('stock' in newProData && Object.keys(newProData).length === 1){
+                        console.log(newProData)
+                        await putProducts(productData.id, newProData, true);
+                    } else {
+                        console.log(newProData)
+                        await putProducts(productData.id, newProData);
+                    };
                     console.log('PRODUCTS STORE dados do produto foram alterados');
                     break;
 
@@ -82,7 +88,7 @@ export const useProductsStore = defineStore('products', ()=>{
                 default:
                     throw new Error ('Ação não encontrada!')
             }
-            await fetchCategories();
+            await fetchProducts();
         } catch (error){
             console.error('Erro detalhado:', error.response?.data);
         }

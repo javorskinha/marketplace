@@ -134,8 +134,8 @@ export async function getProducts(userId = null, categoryId = null, productId = 
     return request('get', url);
 }
 export const postProduct = (productData) => request("post", "/products", productData);
-export async function putProducts(productId = null, stock = false) {
-    return request('put', stock? `/products/${productId}/stock` : `/products/${productId}`)
+export async function putProducts(productId = null, data = {},  stock = false) {
+    return request('put', stock? `/products/${productId}/stock` : `/products/${productId}`, data)
 }
 export const deleteProduct = (id) => request("delete", `/products/${id}`);
 
