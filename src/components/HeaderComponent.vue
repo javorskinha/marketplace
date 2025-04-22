@@ -30,14 +30,10 @@
                         <li class="nav-item dropdown position-relative">
                             <a class="nav-link costum-color dropdown-toggle" href="#">Categorias</a>
                             <ul class="dropdown-menu hover">
-                                <li><a href="#" class="dropdown-item fw-bold">Legumes</a></li>
-                                <li><a href="#" class="dropdown-item fw-bold">Verduras</a></li>
-                                <li><a href="#" class="dropdown-item fw-bold">Frutas</a></li>
-                                <li><a href="#" class="dropdown-item fw-bold">Grãos</a></li>
-                                <li><a href="#" class="dropdown-item fw-bold">Folhas</a></li>
+                                <li v-for="category in allCategories" :key="category.id"><a href="#" class="nav-link dropdown-item" @click.prevent="goToCategory(category.id)">{{ category.name }}</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link costum-color" href="#">Produtos</a></li>
+                        <li class="nav-item"><a class="nav-link costum-color" href="/products">Produtos</a></li>
                         <li class="nav-item"><a class="nav-link costum-color" href="#">Ofertas</a></li>
                         <li class="nav-item"><a class="nav-link costum-color" href="#">Cupons</a></li>
                         <li class="nav-item"><a class="nav-link costum-color" href="#">Frete Grátis</a></li>
@@ -60,20 +56,18 @@
                 </div>
                 <ul class="navbar-nav d-flex flex-column justify-content-around fs-5">
                     <li class="d-flex align-items-center justify-content-between border-bottom mb-2" @click="toggleDropdown">
-                        <a class="nav-link pb-0" href="#">Categorias</a><i class="pi" :class="isOpen? 'pi-chevron-down' : 'pi-chevron-right'"></i>
+                        <a class="nav-link pb-0" href="#">Categorias</a><i class="pi" :class="isOpen? 'pi-chevron-up' : 'pi-chevron-down'"></i>
                     </li>
                     <transition name="dropdown">
                         <li v-if="isOpen">
                             <ul>
-                                <li><a href="#" class="nav-link">Legumes</a></li>
-                                <li><a href="#" class="nav-link">Verduras</a></li>
-                                <li><a href="#" class="nav-link">Frutas</a></li>
-                                <li><a href="#" class="nav-link">Grãos</a></li>
-                                <li><a href="#" class="nav-link">Folhas</a></li>
+                                <li v-for="category in allCategories" :key="category.id">
+                                    <a href="#" class="nav-link" @click.prevent="goToCategory(category.id)">{{ category.name }}</a>
+                                </li>
                             </ul>
                         </li>
                     </transition>
-                    <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Produtos</a><i class="pi pi-chevron-right"></i></li>
+                    <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="/products">Produtos</a><i class="pi pi-chevron-right"></i></li>
                     <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Ofertas</a><i class="pi pi-chevron-right"></i></li>
                     <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Cupons</a><i class="pi pi-chevron-right"></i></li>
                     <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Frete Grátis</a><i class="pi pi-chevron-right"></i></li>
@@ -90,15 +84,28 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { useProductsStore } from '@/stores/ProductsStore';
+import { useRouter } from 'vue-router';
 import ButtonComponent from './ButtonComponent.vue';
 import InputComponent from './InputComponent.vue';
 
 const isOpen = ref(false);
+const router = useRouter();
+const productsStore = useProductsStore();
+const allCategories = computed(()=> productsStore.categories);
+
+const goToCategory = (categoryId) =>{
+    router.push({ name: 'categoryProducts', params: { categoryId } });
+}
 
 function toggleDropdown(){
     isOpen.value = !isOpen.value;
 }
+
+onMounted (() => {
+    productsStore.fetchCategories(17);
+})
 </script>
 
 <style>
@@ -108,7 +115,7 @@ function toggleDropdown(){
 
     @media (min-width: 768px) {
         .max-width-desktop {
-            max-width: 1500px; /* ou o valor que preferir */
+            max-width: 1500px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -140,21 +147,21 @@ function toggleDropdown(){
 
     .dropdown-enter-active,
     .dropdown-leave-active {
-      transition: all 1s ease;
-      overflow: hidden;
+        transition: all 1s ease;
+        overflow: hidden;
     }
 
     .dropdown-enter-from,
     .dropdown-leave-to {
-      opacity: 0;
-      transform: translateY(-5px);
-      max-height: 0;
+        opacity: 0;
+        transform: translateY(-5px);
+        max-height: 0;
     }
 
     .dropdown-enter-to,
     .dropdown-leave-from {
-      opacity: 1;
-      transform: translateY(0);
-      max-height: 500px;
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 500px;
     }
 </style>
