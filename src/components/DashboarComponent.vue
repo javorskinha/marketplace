@@ -56,6 +56,5 @@ const userModerator = computed(()=> userStore.user.role === 'MODERATOR');
 
 const handleLogout = ()=>{
     authStore.logout();
-    router.push('/account');
 }
 </script>
