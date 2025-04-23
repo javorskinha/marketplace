@@ -1,37 +1,47 @@
 <template>
     <div class="container">
         <h4>Produtos Cadastrados</h4>
-        <div class="row row-cols-sm-2 row-cols-md-3 gap-3 d-flex justify-content-center mt-5">
-            <div v-for="product in allProducts" :key="product.id" class="border rounded-1 border-success w-25">
-                <div v-if="isEditing[product.id]" class="position-relative">
-                    <div class="d-flex justify-content-center"><img :src="getImageUrl(product.image_path)" alt="" class="costum-image"></div>
-                    <form action="">
-                        <div class="d-flex">
-                            <h5 class="me-2">Nome:</h5>
-                            <input v-model="product.name" class="border rounded-1 ps-1 w-100 h-50"/>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 mt-3">
+            <div v-for="product in allProducts" :key="product.id" class="col">
+                <div class="card h-100 shadow border-0">
+                    <div class="card-body position-relative">
+                        <div class="d-flex justify-content-center mb-3">
+                            <img :src="getImageUrl(product.image_path)" alt="" class="img-fluid rounded" style="width: 170px; height: 170px; object-fit: cover;">
                         </div>
-                        <div class="d-flex">
-                            <h5 class="me-2">Preço:</h5>
-                            <input v-model="product.price" class="border rounded-1 ps-1 w-100 h-50"/>
+                        <div v-if="isEditing[product.id]">
+                            <form @submit.prevent="saveNewData(product)">
+                                <div class="mb-2">
+                                    <label for="form-label">Nome</label>
+                                    <input v-model="product.name" class="form-control"/>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="form-label">Preço</label>
+                                    <input v-model="product.price" class="form-control"/>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="form-label">Estoque</label>
+                                    <input v-model="product.stock" class="form-control"/>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="form-label">Categoria</label>
+                                    <input v-model="product.category_id" class="form-control"/>
+                                </div>
+                                <button type="submit" class="btn btn-info w-100 mt-2 h-25">
+                                    Salvar
+                                </button>
+                            </form>
                         </div>
-                        <div class="d-flex">
-                            <h5 class="me-2">Estoque:</h5>
-                            <input v-model="product.stock" class="border rounded-1 ps-1 w-100 h-50"/>
+                        <div v-else>
+                            <h5 class="card-title mb-2">{{ product.name }}</h5>
+                            <p class="mb-1"><strong>Preço:</strong> {{ product.price }}</p>
+                            <p class="mb-1"><strong>Estoque:</strong> {{ product.stock }}</p>
+                            <p class="mb-3"><strong>Categoria:</strong> {{ product.category_id }}</p>
+                            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
+                                <button @click="toggleEdit(product.id)" class="btn btn-outline-primary btn-sm h-25"><i class="pi pi-pen-to-square"></i></button>
+                                <div v-if="userAdm"><button @click="delProd(product)" class="btn btn-outline-danger btn-sm h-25"><i class="pi pi-trash"></i></button></div>
+                            </div>
                         </div>
-                        <div class="d-flex">
-                            <h5 class="me-2">Categoria:</h5>
-                            <input v-model="product.category_id" class="border rounded-1 ps-1 w-100 h-50"/>
-                        </div>
-                    </form>
-                    <button @click="saveNewData(product)"><i class="pi pi-check-square text-info position-absolute top-0 end-0 m-3 fs-3"></i></button>
-                </div>
-                <div v-else class="position-relative">
-                    <div class="d-flex justify-content-center"><img :src="getImageUrl(product.image_path)" alt="" class="costum-image"></div>
-                    <h5>Nome: {{ product.name }}</h5>
-                    <h5>Preço: {{ product.price }}</h5>
-                    <h5>Estoque: {{ product.stock }}</h5>
-                    <h5>Categoria: {{ product.category_id }}</h5>
-                    <button @click="toggleEdit(product.id)"><i class="pi pi-pen-to-square text-info position-absolute top-0 end-0 m-3 fs-3"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -40,10 +50,13 @@
 
 <script setup>
 import { useProductsStore } from '@/stores/ProductsStore';
+import { useAuthStore } from '@/stores/AuthStore';
 import { computed, onMounted, ref } from 'vue';
 import { baseURL } from "@/services/HttpService";
 
 const productsStore = useProductsStore();
+const authStore = useAuthStore();
+const userAdm = computed(()=> authStore.user.role === 'ADMIN');
 const allProducts = computed (()=> productsStore.products);
 const isEditing = ref({})
 
@@ -91,7 +104,9 @@ async function saveNewData(product) {
     }
 }
 
-onMounted(getAllProducts)
+onMounted(()=>{
+    getAllProducts();
+})
 </script>
 
 <style>
