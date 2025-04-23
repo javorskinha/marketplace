@@ -1,21 +1,21 @@
 <template>
     <div class="d-flex flex-column justify-content-center m-3">
         <div class="d-flex flex-column flex-md-row">
-            <div v-if="userStore.user" class="w-100 w-md-50 d-flex flex-column align-items-center">
+            <div v-if="authStore.user" class="w-100 w-md-50 d-flex flex-column align-items-center">
                 <div class="perfil-image d-flex align-items-center justify-content-center rounded-circle border border-success">
-                    <img :src="getImageUrl(userStore.user.image_path)" alt="" class="w-100 h-100">
+                    <img :src="getImageUrl(authStore.user.image_path)" alt="" class="w-100 h-100">
                 </div>
                 <div>
-                    <h3>{{ userStore.user.name }}</h3>
+                    <h3>{{ authStore.user.name }}</h3>
                 </div>
                 <div class="fs-5">
                     <div class="d-flex">
                         <p class="me-3">E-mail: </p>
-                        <p>{{ userStore.user.email }}</p>
+                        <p>{{ authStore.user.email }}</p>
                     </div>
                     <div class="d-flex">
                         <p class="me-3">Tipo de Conta: </p>
-                        <p>{{ userStore.user.role }}</p>
+                        <p>{{ authStore.user.role }}</p>
                     </div>
                 </div>
             </div>
@@ -57,17 +57,6 @@ const authStore = useAuthStore();
 const userStore = useUserStore();
 const name = ref('');
 const email = ref('');
-
-async function showUserData(){
-    await userStore.userData(authStore.token);
-
-    if(userStore.user){
-        name.value = userStore.user.name;
-        email.value = userStore.user.email;
-    }
-
-    console.log('dados carregados:',userStore.user);
-}
 
 async function alterUserData() {
     const updatedUser = {
@@ -112,10 +101,6 @@ async function excludeAccount(){
 
     window.alert('Conta deletada');
 }
-
-onMounted(()=>{
-    showUserData();
-});
 </script>
 
 <style>

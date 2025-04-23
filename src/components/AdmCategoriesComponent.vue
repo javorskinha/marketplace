@@ -49,14 +49,14 @@
 
 <script setup>
 import { useProductsStore } from '@/stores/ProductsStore';
-import { useUserStore } from '@/stores/UserStore';
+import { useAuthStore } from '@/stores/AuthStore';
 import { baseURL } from "@/services/HttpService";
 import ButtonComponent from './ButtonComponent.vue';
 import InputComponent from './InputComponent.vue';
 import { onMounted, reactive, ref } from 'vue';
 
 const productsStore = useProductsStore();
-const userStore = useUserStore();
+const authStore = useAuthStore();
 const userCategories = ref([]);
 const catProducts = reactive({});
 const visibleCat = ref([]);
@@ -165,10 +165,7 @@ const getImageUrl = (path) => {
 };
 
 async function getUserCategories() {
-    console.log('dados do user na userStore', userStore.user);
-    console.log('id do user na userStore', userStore.user.id);
-    const response = await productsStore.fetchCategories(userStore.user.id);
-    console.log('retorno do fetchCategories para o componente', response);
+    const response = await productsStore.fetchCategories(authStore.user.id);
     userCategories.value = response;
 }
 

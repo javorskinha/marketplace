@@ -4,7 +4,7 @@ import { computed, ref } from "vue";
 
 export const useAuthStore = defineStore('auth', ()=>{
     const token = ref(localStorage.getItem('token') || null);
-    const user = ref(null);
+    const user = ref(JSON.parse(localStorage.getItem('user')) || null);
     const isAuthenticated = computed(()=> !!token.value);
 
     //authentication 
@@ -15,6 +15,7 @@ export const useAuthStore = defineStore('auth', ()=>{
             token.value = response.token;
             localStorage.setItem('token', response.token);
             user.value = response.user;
+            localStorage.setItem('user', JSON.stringify(response.user));
         } catch (error){
             console.error('Erro ao fazer login', error);
             throw error;
@@ -50,7 +51,8 @@ export const useAuthStore = defineStore('auth', ()=>{
     function logout(){
         token.value = null;
         user.value = null;
-        localStorage.removeItem('token')
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
     };
 
     return{ token, user, isAuthenticated, login, register, logout};

@@ -159,6 +159,4 @@ onMounted (()=>{
     .custom-width{
         width: 150px;
     }
-
-    
 </style>

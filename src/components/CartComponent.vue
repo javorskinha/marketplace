@@ -123,17 +123,17 @@ async function sendOrder(addressId) {
 }
 
 function decreaseQty(item) {
-  if (item.quantity > 1) {
-    item.quantity--;
-    alterQuantity(item);
-    showCartItems();
-  }
+    if (item.quantity > 1) {
+        item.quantity--;
+        alterQuantity(item);
+        showCartItems();
+    }
 }
 
 function increaseQty(item) {
-  item.quantity++;
-  alterQuantity(item);
-  showCartItems();
+    item.quantity++;
+    alterQuantity(item);
+    showCartItems();
 }
 
 async function removeProduct(item) {

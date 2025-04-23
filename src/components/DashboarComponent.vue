@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="d-md-none p-2 pt-4 border-bottom bg-white border-top mt-3">
             <div class="d-flex align-items-top justify-content-between">
-                <h4 class="m-0">Olá, {{ userStore.user?.name?.split(' ')[0] || 'Usuário' }}</h4>
+                <h4 class="m-0">Olá, {{ firstName }}</h4>
                 <button @click="handleLogout" class="btn btn-sm text-danger m-0 d-block w-25">
                 Logout <i class="pi pi-sign-out ms-1"></i>
                 </button>
@@ -20,7 +20,7 @@
         <div class="row min-vh-75">
             <button @click="handleLogout" class="d-none btn text-danger m-0 mt-3 d-md-flex justify-content-end align-items-center">Logout<i class="pi pi-sign-out ms-2"></i></button>
             <aside class="d-none d-md-block col-12 col-md-3 col-lg-2 p-4 border m-4">
-                <h3 class="mb-4">Olá, {{ userStore.user?.name?.split(' ')[0] || 'Usuário' }}</h3>
+                <h3 class="mb-4">Olá, {{ firstName }}</h3>
                 <nav class="nav flex-column gap-2">
                     <router-link to="/dashboard/perfil" class="nav-link"><i class="pi pi-user me-2"></i>Meu Perfil</router-link>
                     <router-link to="/dashboard/enderecos" class="nav-link"><i class="pi pi-map-marker"></i>Endereços</router-link>
@@ -46,13 +46,15 @@
 
 <script setup>
 import { useAuthStore } from "@/stores/AuthStore";
-import { useUserStore } from "@/stores/UserStore";
 import { computed } from "vue";
 
 const authStore = useAuthStore();
-const userStore = useUserStore();
-const userAdm = computed(()=> userStore.user.role === 'ADMIN');
-const userModerator = computed(()=> userStore.user.role === 'MODERATOR');
+const userAdm = computed(()=> authStore.user.role === 'ADMIN');
+const userModerator = computed(()=> authStore.user.role === 'MODERATOR');
+
+const firstName = computed(()=>{
+    return authStore.user.name.split(' ')[0] || 'Usuário';
+})
 
 const handleLogout = ()=>{
     authStore.logout();

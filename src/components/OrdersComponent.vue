@@ -35,9 +35,9 @@
                         :class="isPass(order.status, step) ? 'pi-check-circle text-primary' : 'pi-circle text-secondary'"
                         ></i>
                         <div
-                         v-if="index < statusSteps.length - 1"
-                         class="position-absolute top-50 translate-middle-y line-style"
-                         :style="{ backgroundColor: isPass(order.status, statusSteps[index + 1]) ? '#00b207' : '#e9e9e9' }"
+                            v-if="index < statusSteps.length - 1"
+                            class="position-absolute top-50 translate-middle-y line-style"
+                            :style="{ backgroundColor: isPass(order.status, statusSteps[index + 1]) ? '#00b207' : '#e9e9e9' }"
                         ></div>
                     </div>
                 </div>
