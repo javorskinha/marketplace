@@ -1,17 +1,7 @@
 <template>
     <div class="container w-100 m-auto">
-        <h2 class="text-info border-bottom border-info">Categorias</h2>
-        <div class="w-100 w-md-50">
-            <!--criar ou editar categorias aqui-->
-            <h3>{{ isEditing ? 'Alterar Dados' : 'Criar Nova Categoria' }}</h3>
-            <form @submit.prevent="saveCategory">
-                <InputComponent type="text" placeholder="Nome" v-model="editedCat.name" required/>
-                <InputComponent type="text" placeholder="Descrição" v-model="editedCat.description"/>
-                <InputComponent type="file" @change="handleImage"/>
-                <ButtonComponent type="submit" :text="isEditing? 'Alterar' :'Criar Categoria'" class="btn btn-primary rounded-1"/>
-            </form>
-        </div>
         <h3>Suas Categorias</h3>
+        <ButtonComponent class="btn btn-info" text="Criar nova categoria" @click="openModal()" />
         <section class="row row-cols-sm-2 row-cols-md-3">
                 <div v-for="category in userCategories" :key="category.id" class="position-relative border m-2 p-2">
                     <!--exibe as categorias que o usuário criou/possui-->
@@ -38,12 +28,30 @@
                         </div>
                     </div>
                     <div class="d-flex flex-column gap-1 position-absolute top-0 end-0">
-                        <ButtonComponent icon="pi pi-pen-to-square text-info fs-4" class="btn" @click="editCategory(category)"/>
+                        <ButtonComponent icon="pi pi-pen-to-square text-info fs-4" class="btn" @click="openModal(category)"/>
                         <!--excluir categorias-->
                         <ButtonComponent icon="pi pi-trash text-danger fs-4" class="btn" @click="deleteCategory(category)"/>
                     </div>
                 </div>
         </section>
+        <div class="model fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ isEditing ? 'Alterar Dados' : 'Criar Nova Categoria' }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form @submit.prevent="saveCategory">
+                            <InputComponent type="text" placeholder="Nome" v-model="editedCat.name" required/>
+                            <InputComponent type="text" placeholder="Descrição" v-model="editedCat.description"/>
+                            <InputComponent type="file" @change="handleImage"/>
+                            <ButtonComponent type="submit" :text="isEditing? 'Alterar' :'Criar Categoria'" class="btn btn-primary rounded-1"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -54,6 +62,9 @@ import { baseURL } from "@/services/HttpService";
 import ButtonComponent from './ButtonComponent.vue';
 import InputComponent from './InputComponent.vue';
 import { onMounted, reactive, ref } from 'vue';
+import { Modal } from 'bootstrap';
+
+let modalInstance;
 
 const productsStore = useProductsStore();
 const authStore = useAuthStore();
@@ -122,13 +133,25 @@ function handleImage(event){
     newProd.image = event.target.files[0];
 }
 
-function editCategory(category){
-    isEditing.value = true;
-    editedCat.name = category.name;
-    editedCat.description = category.description;
-    editedCat.image = null;
-    editedCat.id = category.id;
-}
+const openModal = (category = null) => {
+    if (category) {
+        isEditing.value = true;
+        editedCat.name = category.name;
+        editedCat.description = category.description;
+        editedCat.image = null;
+        editedCat.id = category.id;
+    } else {
+        isEditing.value = false;
+        resetForm();
+    }
+
+    if (!modalInstance) {
+        const modalEl = document.getElementById('categoryModal');
+        modalInstance = new Modal(modalEl);
+    }
+
+    modalInstance.show();
+};
 
 async function saveCategory() {
     const formData = new FormData();
@@ -156,6 +179,7 @@ async function saveCategory() {
         console.log(pair[0], pair[1]);
     }
 
+    modalInstance.hide();
     resetForm();
     getUserCategories();
 }
