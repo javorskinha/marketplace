@@ -15,7 +15,7 @@
                 />
             </div>
         </div>
-        <a href="/categories" class="nav-link mt-3">
+        <a href="/products" class="nav-link mt-3">
             <ButtonComponent :text="button" class="btn btn-info" icon="pi pi-chevron-right"/>
         </a>
     </div>
