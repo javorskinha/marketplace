@@ -45,6 +45,7 @@
 </template>
 
 <script setup>
+import router from "@/router";
 import { useAuthStore } from "@/stores/AuthStore";
 import { computed } from "vue";
 
@@ -53,10 +54,11 @@ const userAdm = computed(()=> authStore.user.role === 'ADMIN');
 const userModerator = computed(()=> authStore.user.role === 'MODERATOR');
 
 const firstName = computed(()=>{
-    return authStore.user.name.split(' ')[0] || 'Usuário';
+    return authStore.user?.name?.split(' ')[0] ?? 'Usuário';
 })
 
 const handleLogout = ()=>{
     authStore.logout();
+    router.push('/account')
 }
 </script>

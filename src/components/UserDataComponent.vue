@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex flex-column justify-content-center m-3">
         <div class="d-flex flex-column flex-md-row">
-            <div v-if="authStore.user" class="w-100 w-md-50 d-flex flex-column align-items-center">
+            <div v-if="authStore?.user" class="w-100 w-md-50 d-flex flex-column align-items-center">
                 <div class="perfil-image d-flex align-items-center justify-content-center rounded-circle border border-success">
                     <img :src="getImageUrl(authStore.user.image_path)" alt="" class="w-100 h-100">
                 </div>
@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="d-flex justify-content-end">
-            <button @click="excludeAccount" class="btn"><small>Exculir Conta</small><i class="pi pi-trash text-danger ms-1"></i></button>
+            <button @click="excludeAccount" class="btn"><small>Excluir Conta</small><i class="pi pi-trash text-danger ms-1"></i></button>
         </div>
     </div>
 </template>
@@ -50,7 +50,7 @@ import InputComponent from "./InputComponent.vue";
 import ButtonComponent from "./ButtonComponent.vue";
 import { useAuthStore } from "@/stores/AuthStore";
 import { useUserStore } from "@/stores/UserStore";
-import { onMounted, ref } from "vue";
+import { ref, onMounted } from "vue";
 import { baseURL } from "@/services/HttpService";
 
 const authStore = useAuthStore();
@@ -65,9 +65,8 @@ async function alterUserData() {
     }
 
     await userStore.changeUserData(updatedUser);
-    console.log('dados alterados',userStore.user)
-
-    alter.value = false;
+    authStore.user.name = updatedUser.name;
+    authStore.user.email = updatedUser.email;
 }
 
 const userImage = ref('')
@@ -97,10 +96,16 @@ async function excludeAccount(){
     }
 
     await userStore.delUser();
-    handleLogout();
 
     window.alert('Conta deletada');
 }
+
+onMounted(() => {
+    if (authStore.user) {
+        name.value = authStore.user.name;
+        email.value = authStore.user.email;
+    }
+});
 </script>
 
 <style>

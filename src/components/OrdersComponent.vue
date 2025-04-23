@@ -23,10 +23,10 @@
             <div class="w-100 w-md-75 mt-4 d-flex">
                 <div v-for="(step, index) in statusSteps" :key="step" class="text-center custom-width">
                     <div class="mb-2">
-                      <i
+                        <i
                         class="pi fs-4"
                         :class="stepIcon(step)"
-                      ></i>
+                        ></i>
                     </div>
                     <p class="mb-0">{{ orderStatus[step] }}</p>
                     <div class="mt-1 position-relative">
@@ -48,13 +48,13 @@
 
 <script setup>
 import { useOrdersStore } from '@/stores/OrdersStore';
-import { useUserStore } from '@/stores/UserStore';
+import { useAuthStore } from '@/stores/AuthStore';
 import { onMounted, computed, ref } from 'vue';
 
 const orderStore = useOrdersStore();
-const userStore = useUserStore();
-const userAdm = computed(()=> userStore.user.role === 'ADMIN');
-const userModerator = computed(()=> userStore.user.role === 'MODERATOR');
+const authStore = useAuthStore();
+const userAdm = computed(()=> authStore.user.role === 'ADMIN');
+const userModerator = computed(()=> authStore.user.role === 'MODERATOR');
 const orders = computed(() => orderStore.order);
 const orderStatus = {
     PENDING: 'Recebido',
