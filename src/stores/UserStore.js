@@ -3,21 +3,10 @@ import { deleteUser, getUser, putUser, putUserPic, postModerator, getAddresses, 
 import { ref } from "vue";
 
 export const useUserStore = defineStore('user', ()=>{
-    const user = ref({});
     const addresses = ref([]);
     const defaultAddress = ref({});
 
     // user data
-    async function userData() {
-        try{
-            const result = await getUser();
-            user.value = result;
-        } catch (error){
-            console.error('Erro ao buscar dados', error);
-            throw error;
-        };
-    }
-
     async function userPic(picture) {
         await putUserPic(picture);
     }
