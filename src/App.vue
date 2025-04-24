@@ -15,5 +15,6 @@ import FooterComponent from './components/FooterComponent.vue';
 <style>
     .hover :hover{
         color: #00b207;
+        transition: color 0.3s ease;
     }
 </style>
