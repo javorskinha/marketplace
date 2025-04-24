@@ -25,7 +25,9 @@
                     <label for="InputComponent">Nova foto de perfil:</label>
                     <div class="d-flex align-items-center">
                         <InputComponent type="file" @change="handleImage" class="w-100"/>
-                        <ButtonComponent type="submit" text="Enviar" class="bg-primary h-50 rounded-1 ms-2 d-flex text-black" @click="updateImage"></ButtonComponent>
+                        <div>
+                            <ButtonComponent type="submit" text="Enviar" class="bg-primary h-50 rounded-1 ms-2 d-flex text-black" @click="updateImage"></ButtonComponent>
+                        </div>
                     </div>
                     <div class="position-relative">
                         <InputComponent v-model="name" type="text" placeholder="Username" required class="input"/>
