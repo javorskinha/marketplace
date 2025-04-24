@@ -1,8 +1,19 @@
 <template>
     <div class="container">
-        <h4>Produtos Cadastrados</h4>
+        <div class="w-100 d-flex justify-content-between">
+            <h4>Produtos Cadastrados</h4>
+            <div class="mb-3">
+                <label class="form-label"><i class="pi pi-filter"></i> Categoria:</label>
+                <select v-model="selectedCategory" class="ms-2 border rounded-1 w-auto d-inline-block">
+                    <option value="">Todas</option>
+                    <option v-for="cat in categoriesNames" :key="cat" :value="cat">
+                        {{ cat }}
+                    </option>
+                </select>
+            </div>
+        </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 mt-3">
-            <div v-for="product in allProducts" :key="product.id" class="col">
+            <div v-for="product in filteredProducts" :key="product.id" class="col">
                 <div class="card h-100 shadow border-0">
                     <div class="card-body position-relative">
                         <div class="d-flex justify-content-center mb-3">
@@ -56,13 +67,23 @@ import { baseURL } from "@/services/HttpService";
 
 const productsStore = useProductsStore();
 const authStore = useAuthStore();
+const isEditing = ref({});
 const userAdm = computed(()=> authStore.user.role === 'ADMIN');
 const allProducts = computed (()=> productsStore.products);
-const isEditing = ref({})
+const filteredCategory = ref('');
+const filteredProducts = computed(() => {
+    if(!filteredCategory.value) return allProducts.value;
+    return allProducts.value.filter(p => p.category_id == filteredCategory.value)
+})
+
+const categoriesNames = computed(() => {
+    const ids = allProducts.value.map(p => p.category_id);
+    return [...new Set(ids)];
+})
 
 function toggleEdit(productId){
     isEditing.value[productId] = !isEditing.value[productId];
-}
+};
 
 async function getAllProducts() {
     await productsStore.fetchProducts(17);
