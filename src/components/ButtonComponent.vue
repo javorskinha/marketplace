@@ -1,7 +1,5 @@
 <template>
-    <div class="d-grid rounded-0">
-        <button v-bind="$attrs" :type="type" class="btn fw-bold d-flex align-items-center justify-content-center gap-2">{{ text }}<i :class="icon"></i></button>
-    </div>
+    <button v-bind="$attrs" :type="type" class="btn fw-bold d-flex align-items-center justify-content-center gap-2 w-100 rounded-1">{{ text }}<i :class="icon"></i></button>
 </template>
 
 <script setup>
@@ -13,9 +11,3 @@ const props = defineProps({
     icon: String
 })
 </script>
-
-<style>
-    button{
-        height: 20px;
-    }
-</style>
