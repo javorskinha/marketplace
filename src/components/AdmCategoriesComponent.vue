@@ -1,52 +1,68 @@
 <template>
-    <div class="container w-100 m-auto">
+    <div class="container">
         <h3>Suas Categorias</h3>
         <ButtonComponent class="btn btn-info" text="Criar nova categoria" @click="openModal()" />
-        <section class="row row-cols-sm-2 row-cols-md-3">
-                <div v-for="category in userCategories" :key="category.id" class="position-relative border m-2 p-2">
-                    <!--exibe as categorias que o usuário criou/possui-->
-                    <img :src="getImageUrl(category.image_path)" alt="" class="costum-image">
-                    <h4>{{ category.name }}</h4>
-                    <p><span class="text-secondary">Descrição:</span> {{ category.description }}</p>
-                    <ButtonComponent text="Adicionar produto a categoria" @click="addProduct(category.id)"  class="btn"/>
-                    <div v-if="catForProduct === category.id">
-                        <form @submit.prevent="newProduct">
-                            <InputComponent type="text" placeholder="Nome" v-model="newProd.name" required/>
-                            <InputComponent type="number" placeholder="Preço" v-model="newProd.price"/>
-                            <InputComponent type="int" placeholder="Estoque disponível" v-model="newProd.stock" required/>
-                            <InputComponent type="file" @change="handleImage"/>
-                            <ButtonComponent type="submit" text="Adicionar Produto"/>
-                        </form>
-                    </div>
-                    <ButtonComponent text="Exibir produtos da categoria" @click="showProducts(category.id)" class="btn btn-secondary" />
-                    <div v-if="visibleCat.includes(category.id)">
-                        <div v-for="product in catProducts[category.id]" :key="product.id">
-                            <img :src="getImageUrl(product.image_path)" alt="" class="w-25">
-                            <p>Nome: {{ product.name }}</p>
-                            <p>Preço: {{ product.price }}Kg</p>
-                            <p>Estoque: {{ product.stock }}Kg</p>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 mt-3">
+            <div v-for="category in userCategories" :key="category.id" class="col">
+                <!--exibe as categorias que o usuário criou/possui-->
+                <div class="card h-100 shadow border-0">
+                    <div class="card-body position-relative">
+                        <img :src="getImageUrl(category.image_path)" alt="" class="costum-image">
+                        <h4>{{ category.name }}</h4>
+                        <p><span class="text-secondary">Descrição:</span> {{ category.description }}</p>
+                        <ButtonComponent text="Adicionar produto a categoria" @click="openAddProdModal(category.id)"  class="btn btn-success"/>
+                        <ButtonComponent text="Exibir produtos da categoria" @click="showProducts(category.id)" class="btn btn-secondary" />
+                        <div v-if="visibleCat.includes(category.id)">
+                            <div v-for="product in catProducts[category.id]" :key="product.id">
+                                <img :src="getImageUrl(product.image_path)" alt="" class="w-25">
+                                <p>Nome: {{ product.name }}</p>
+                                <p>Preço: {{ product.price }}Kg</p>
+                                <p>Estoque: {{ product.stock }}Kg</p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column gap-1 position-absolute top-0 end-0">
+                            <ButtonComponent icon="pi pi-pen-to-square text-info fs-4" class="btn" @click="openModal(category)"/>
+                            <!--excluir categorias-->
+                            <ButtonComponent icon="pi pi-trash text-danger fs-4" class="btn" @click="deleteCategory(category)"/>
                         </div>
                     </div>
-                    <div class="d-flex flex-column gap-1 position-absolute top-0 end-0">
-                        <ButtonComponent icon="pi pi-pen-to-square text-info fs-4" class="btn" @click="openModal(category)"/>
-                        <!--excluir categorias-->
-                        <ButtonComponent icon="pi pi-trash text-danger fs-4" class="btn" @click="deleteCategory(category)"/>
-                    </div>
                 </div>
-        </section>
-        <div class="model fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            </div>
+        </div>
+        <div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ isEditing ? 'Alterar Dados' : 'Criar Nova Categoria' }}</h5>
+                        <h5 class="modal-title">{{ isEditing ? 'Alterar Dados' : 'Nova Categoria' }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                     </div>
                     <div class="modal-body">
+                        <h6>{{ isEditing ? 'Edite os dados:' : 'Preencha os campos:' }}</h6>
                         <form @submit.prevent="saveCategory">
                             <InputComponent type="text" placeholder="Nome" v-model="editedCat.name" required/>
                             <InputComponent type="text" placeholder="Descrição" v-model="editedCat.description"/>
                             <InputComponent type="file" @change="handleImage"/>
                             <ButtonComponent type="submit" :text="isEditing? 'Alterar' :'Criar Categoria'" class="btn btn-primary rounded-1"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Categoria {{ nameCategory?.name }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h6>Novo Produto</h6>
+                        <form @submit.prevent="submitNewProduct">
+                            <InputComponent type="text" placeholder="Nome" v-model="newProd.name" required/>
+                            <InputComponent type="number" placeholder="Preço" v-model="newProd.price"/>
+                            <InputComponent type="int" placeholder="Estoque disponível" v-model="newProd.stock" required/>
+                            <InputComponent type="file" @change="handleImage"/>
+                            <ButtonComponent type="submit" text="Adicionar Produto" class="btn btn-primary"/>
                         </form>
                     </div>
                 </div>
@@ -65,12 +81,15 @@ import { onMounted, reactive, ref } from 'vue';
 import { Modal } from 'bootstrap';
 
 let modalInstance;
+let addProdModalInstance;
+let showProdsModalInstance;
 
 const productsStore = useProductsStore();
 const authStore = useAuthStore();
 const userCategories = ref([]);
 const catProducts = reactive({});
 const visibleCat = ref([]);
+const nameCategory = ref(null);
 const isEditing = ref(false);
 const editedCat = reactive({
     name:'',
@@ -107,27 +126,6 @@ async function showProducts(categoryId){
     };
 }
 
-async function newProduct() {
-    const formData = new FormData();
-    formData.append('name', newProd.name);
-    formData.append('description', newProd.description);
-    formData.append('price', newProd.price);
-    formData.append('stock', newProd.stock);
-    formData.append('category_id', newProd.id);
-    formData.append('image', newProd.image);
-
-
-    console.log('DADOS DO PRODUTO');
-    for (const pair of formData.entries()) {
-        console.log(pair[0], pair[1]);
-    }
-
-    await productsStore.updateProducts({
-            action: 'create',
-            productData: formData
-        });
-}
-
 function handleImage(event){
     editedCat.image = event.target.files[0];
     newProd.image = event.target.files[0];
@@ -152,6 +150,34 @@ const openModal = (category = null) => {
 
     modalInstance.show();
 };
+
+const openAddProdModal = (categoryId) => {
+    const category = userCategories.value.find(cat => cat.id === categoryId);
+    nameCategory.value = category;
+    newProd.id = categoryId;
+    if(!addProdModalInstance){
+        const modalEl = document.getElementById('addProductModal');
+        addProdModalInstance = new Modal(modalEl);
+    }
+    addProdModalInstance.show();
+}
+
+const submitNewProduct = async () =>  {
+    const formData = new FormData();
+    formData.append('name', newProd.name);
+    formData.append('description', newProd.description);
+    formData.append('price', newProd.price);
+    formData.append('stock', newProd.stock);
+    formData.append('category_id', newProd.id);
+    formData.append('image', newProd.image);
+
+    await productsStore.updateProducts({
+        action: 'create',
+        productData: formData
+    });
+
+    addProdModalInstance.hide();
+}
 
 async function saveCategory() {
     const formData = new FormData();
