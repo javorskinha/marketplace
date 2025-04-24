@@ -6,7 +6,7 @@
         </div>
         <div class="card-body d-flex flex-column justify-content-between">
             <div>
-                <h5 class="card-title">{{ name }}</h5>
+                <h5 class="card-title card-text-limit">{{ name }}</h5>
                 <p class="card-text text-muted small card-text-limit">{{ description }}</p>
             </div>
             <div>
@@ -25,7 +25,7 @@
 
 <script setup>
 import ButtonComponent from './ButtonComponent.vue';
-import { defineProps, computed, toRef } from 'vue';
+import { defineProps, computed } from 'vue';
 import { useOrdersStore } from '@/stores/OrdersStore';
 
 const orderStore = useOrdersStore();
