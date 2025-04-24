@@ -1,7 +1,11 @@
 <template>
     <div class="container">
-        <h3>Suas Categorias</h3>
-        <ButtonComponent class="btn btn-info" text="Criar nova categoria" @click="openModal()" />
+        <div class="d-flex justify-content-between">
+            <h3>Suas Categorias</h3>
+            <div>
+                <ButtonComponent class="btn btn-info" text="Criar nova categoria" icon="pi pi-plus" @click="openModal()"/>
+            </div>
+        </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 mt-3">
             <div v-for="category in userCategories" :key="category.id" class="col">
                 <!--exibe as categorias que o usuário criou/possui-->
@@ -9,17 +13,11 @@
                     <div class="card-body position-relative">
                         <img :src="getImageUrl(category.image_path)" alt="" class="costum-image">
                         <h4>{{ category.name }}</h4>
-                        <p><span class="text-secondary">Descrição:</span> {{ category.description }}</p>
-                        <ButtonComponent text="Adicionar produto a categoria" @click="openAddProdModal(category.id)"  class="btn btn-success"/>
-                        <ButtonComponent text="Exibir produtos da categoria" @click="showProducts(category.id)" class="btn btn-secondary" />
-                        <div v-if="visibleCat.includes(category.id)">
-                            <div v-for="product in catProducts[category.id]" :key="product.id">
-                                <img :src="getImageUrl(product.image_path)" alt="" class="w-25">
-                                <p>Nome: {{ product.name }}</p>
-                                <p>Preço: {{ product.price }}Kg</p>
-                                <p>Estoque: {{ product.stock }}Kg</p>
-                            </div>
-                        </div>
+                        <p class="mb-1"><span class="text-secondary">Descrição:</span> {{ category.description }}</p>
+                        <router-link :to="{name: 'admProdutos', query: {category: category.name}}" class="w-100 d-flex justify-content-end nav-link mb-2 hover">
+                            <strong>Ver Produtos <i class="pi pi-arrow-right"></i></strong>
+                        </router-link>
+                        <ButtonComponent text="Adicionar Produto" @click="openAddProdModal(category.id)"  class="btn btn-outline-info"/>
                         <div class="d-flex flex-column gap-1 position-absolute top-0 end-0">
                             <ButtonComponent icon="pi pi-pen-to-square text-info fs-4" class="btn" @click="openModal(category)"/>
                             <!--excluir categorias-->
@@ -82,7 +80,6 @@ import { Modal } from 'bootstrap';
 
 let modalInstance;
 let addProdModalInstance;
-let showProdsModalInstance;
 
 const productsStore = useProductsStore();
 const authStore = useAuthStore();
@@ -110,21 +107,6 @@ const newProd = reactive({
     id: null,
     image: null
 })
-
-async function showProducts(categoryId){
-    const visible = visibleCat.value.includes(categoryId);
-
-    if(visible){
-        visibleCat.value = visibleCat.value.filter(id => id !== categoryId)
-    } else {
-        if(!catProducts[categoryId]){
-            const result = await productsStore.fetchProducts(null, categoryId, null);
-        console.log('RESULTADO', result)
-        catProducts[categoryId] = result;
-        };
-        visibleCat.value.push(categoryId)
-    };
-}
 
 function handleImage(event){
     editedCat.image = event.target.files[0];

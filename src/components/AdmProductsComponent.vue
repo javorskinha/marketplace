@@ -4,10 +4,10 @@
             <h4>Produtos Cadastrados</h4>
             <div class="mb-3">
                 <label class="form-label"><i class="pi pi-filter"></i> Categoria:</label>
-                <select v-model="selectedCategory" class="ms-2 border rounded-1 w-auto d-inline-block">
+                <select v-model="filteredCategory" class="ms-2 border rounded-1 w-auto d-inline-block">
                     <option value="">Todas</option>
-                    <option v-for="cat in categoriesNames" :key="cat" :value="cat">
-                        {{ cat }}
+                    <option v-for="cat in allCategories" :key="cat.id" :value="cat.name">
+                        {{ cat.name }}
                     </option>
                 </select>
             </div>
@@ -64,21 +64,25 @@ import { useProductsStore } from '@/stores/ProductsStore';
 import { useAuthStore } from '@/stores/AuthStore';
 import { computed, onMounted, ref } from 'vue';
 import { baseURL } from "@/services/HttpService";
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
 
 const productsStore = useProductsStore();
 const authStore = useAuthStore();
 const isEditing = ref({});
 const userAdm = computed(()=> authStore.user.role === 'ADMIN');
 const allProducts = computed (()=> productsStore.products);
-const filteredCategory = ref('');
+const allCategories = computed(() => productsStore.categories);
+const filteredCategory = ref(route.query.category || '');
 const filteredProducts = computed(() => {
     if(!filteredCategory.value) return allProducts.value;
-    return allProducts.value.filter(p => p.category_id == filteredCategory.value)
-})
 
-const categoriesNames = computed(() => {
-    const ids = allProducts.value.map(p => p.category_id);
-    return [...new Set(ids)];
+    const selectedCategory = allCategories.value.find(cat => cat.name === filteredCategory.value);
+
+    if(!selectedCategory) return []
+
+    return allProducts.value.filter(p => p.category_id === selectedCategory.id)
 })
 
 function toggleEdit(productId){
