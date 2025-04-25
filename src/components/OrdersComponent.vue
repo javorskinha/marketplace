@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div class="m-2">
         <h3>Seus Pedidos</h3>
         <div v-for="order in orders" :key="order.id" class="d-flex flex-column flex-md-row w-100 justify-content-between border p-2 p-md-4" :class="order.status === 'CANCELED'? 'disabled-order' : ''">
             <div class="w-100 w-md-25">
@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <h6 v-else class="text-secondary">Status: {{ statusName(order.status) }}</h6>
-                <button @click="delThisOrder(order.id)" class="bg-white text-danger mt-2 d-flex align-items-center border p-1 rounded-1 fw-light"><i class="pi pi-times"></i>Cancelar</button>
+                <button @click="delThisOrder(order.id)" class="bg-white btn btn-sm text-danger mt-2 d-flex align-items-center border p-1 rounded-1 fw-light"><i class="pi pi-times"></i>Cancelar</button>
             </div>
             <div class="w-100 w-md-75 mt-4 d-flex">
                 <div v-for="(step, index) in statusSteps" :key="step" class="text-center custom-width">

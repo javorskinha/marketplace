@@ -2,8 +2,11 @@
     <div class="container">
         <div class="w-100 d-flex justify-content-between">
             <h4>Produtos Cadastrados</h4>
-            <div class="mb-3">
-                <label class="form-label"><i class="pi pi-filter"></i> Categoria:</label>
+            <div class="mb-3 d-flex align-items-center">
+                <label class="d-flex align-items-center">
+                    <i class="pi pi-filter"></i>
+                    <span class="d-none d-md-flex"> Categoria:</span>
+                </label>
                 <select v-model="filteredCategory" class="ms-2 border rounded-1 w-auto d-inline-block">
                     <option value="">Todas</option>
                     <option v-for="cat in allCategories" :key="cat.id" :value="cat.name">

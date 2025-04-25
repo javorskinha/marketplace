@@ -1,7 +1,7 @@
 <template>
     <div class="container">
-        <div class="d-flex justify-content-between">
-            <h3>Suas Categorias</h3>
+        <div class="d-flex justify-content-between mt-3">
+            <h3 class="w-75">Suas Categorias</h3>
             <div>
                 <ButtonComponent class="btn btn-info" text="Criar nova categoria" icon="pi pi-plus" @click="openModal()"/>
             </div>

@@ -1,23 +1,27 @@
 <template>
     <div class="container-fluid w-100">
-        <h3 class="ms-4 mt-4 fw-bold">Minha Sacola <i class="pi pi-shopping-bag"></i></h3>
+        <h3 class="ms-md-4 mt-4 fw-bold">Minha Sacola <i class="pi pi-shopping-bag"></i></h3>
         <div class="row min-vh-75">
-            <div class="col-12 col-md-8 bg-white p-4 border m-4">
-                <div class="border-bottom d-flex justify-content-between text-secondary">
-                    <h4>Produto</h4>
-                    <h4>Valor</h4>
-                    <h4>Quantidade</h4>
+            <div class="col-12 col-md-8 bg-white p-1 p-md-4 border m-md-4">
+                <div class="border-bottom d-none d-md-flex justify-content-between text-secondary">
+                    <h4 class="custom-w-1">Produto</h4>
+                    <h4 class="custom-w-2">Preço</h4>
+                    <h4 class="custom-w-2 text-end">Quantidade</h4>
                 </div>
-                <div v-for="item in intItem" :key="item.id" class="d-flex justify-content-between border-bottom align-items-center">
-                    <img :src="getImageUrl(item.image_path)" alt="" class="custom-img-w rounded-circle shadow m-3">
-                    <h4>{{ item.name }}</h4>
-                    <p>R$ {{ item.unit_price }}</p>
-                    <div class="d-flex w-25 justify-content-end align-items-center">
-                        <i class="pi pi-minus text-primary bg-light p-1 rounded-circle me-3" @click="decreaseQty(item)"></i>
-                        <input type="number" class="text-center" min="1" v-model.number="item.quantity" @change="alterQuantity(item)" style="width: 25px;">
-                        <i class="pi pi-plus text-primary bg-light p-1 rounded-circle" @click="increaseQty(item)"></i>
+                <div v-for="item in intItem" :key="item.id" class="d-flex align-items-center">
+                    <div class="d-flex align-items-center custom-w-1">
+                        <img :src="getImageUrl(item.image_path)" alt="" class="custom-img-w rounded-circle shadow m-3">
+                        <h6>{{ item.name }}</h6>
                     </div>
-                    <i class="pi pi-times-circle" @click="removeProduct(item)"></i>
+                    <p class="custom-w-2 d-flex justify-content-start m-0">R$ {{ item.unit_price }}</p>
+                    <div class="custom-w-2 d-flex align-items-center justify-content-end">
+                        <div class="d-flex w-25 justify-content-end align-items-center">
+                            <i class="pi pi-minus text-primary bg-light p-1 rounded-circle me-md-3" @click="decreaseQty(item)"></i>
+                            <input type="number" class="text-center" min="1" v-model.number="item.quantity" @change="alterQuantity(item)" style="width: 25px;">
+                            <i class="pi pi-plus text-primary bg-light p-1 rounded-circle" @click="increaseQty(item)"></i>
+                        </div>
+                        <i class="pi pi-times-circle ms-1 ms-md-3" @click="removeProduct(item)"></i>
+                    </div>
                 </div>
             </div>
             <div class="col-12 col-md-4 col-lg-3 p-4 border m-4 ms-0">
@@ -38,7 +42,7 @@
                     <div class="mt-5">
                         <h6>Selecione a forma de Pagamento:</h6>
                         <div class="border d-flex align-items-center p-2">
-                            <i class="pi pi-circle"></i>
+                            <i @click="selectPayment('cartao')" :class="payment === 'cartao' ? 'pi pi-circle-fill' : 'pi pi-circle'"></i>
                             <div>
                                 <img src="../../public/payments/visa-logo.png" alt="" class="custom-logo-h m-1 ms-3">
                                 <img src="../../public/payments/elo-logo.png" alt="" class="custom-logo-h m-1">
@@ -46,14 +50,14 @@
                                 <img src="../../public/payments/hipercard-logo.png" alt="" class="custom-logo-h m-1">
                             </div>
                         </div>
-                        <div class="border d-flex align-items-center p-2">
-                            <i class="pi pi-circle"></i>
+                        <div class="border d-flex align-items-center p-2" id="002">
+                            <i @click="selectPayment('pix')" :class="payment === 'pix' ? 'pi pi-circle-fill' : 'pi pi-circle'"></i>
                             <div>
                                 <img src="../../public/payments/pix-logo.png" alt="" class="custom-logo-h m-1 ms-3">
                             </div>
                         </div>
-                        <div class="border d-flex align-items-center p-2">
-                            <i class="pi pi-circle"></i>
+                        <div class="border d-flex align-items-center p-2" id="003">
+                            <i @click="selectPayment('boleto')" :class="payment === 'boleto' ? 'pi pi-circle-fill' : 'pi pi-circle'"></i>
                             <div>
                                 <img src="../../public/payments/boleto-logo.png" alt="" class="custom-logo-h m-1 ms-3">
                             </div>
@@ -86,6 +90,7 @@ const orderStore = useOrdersStore();
 const userStore = useUserStore();
 const intItem = ref([]);
 const totalAmount = ref();
+const payment = ref('');
 const sendAddress = computed(() => userStore.defaultAddress);
 
 async function showCartItems() {
@@ -102,24 +107,6 @@ const getImageUrl = (path) => {
 
 async function alterQuantity(item) {
     await orderStore.updateCartItem({product_id: item.product_id}, false, item.quantity);
-}
-
-async function sendOrder(addressId) {
-    const orderData = {
-        "address_id": addressId,
-        "coupon_id": null
-    }
-
-    try{
-        await orderStore.newOrder(orderData);
-        window.alert('Pedido enviado com sucesso!')
-        await orderStore.updateCartItem(false);
-    } catch (error){
-        window.alert('erro ao enviar pedido');
-        console.error(error);
-    }
-
-    showCartItems();
 }
 
 function decreaseQty(item) {
@@ -141,6 +128,33 @@ async function removeProduct(item) {
     showCartItems();
 }
 
+function selectPayment(type){
+    payment.value = type;
+}
+
+async function sendOrder(addressId) {
+    const orderData = {
+        "address_id": addressId,
+        "coupon_id": null
+    }
+
+    if (payment.value === ''){
+        window.alert('Selecione uma forma de Pagamento')
+    } else {
+        try{
+        await orderStore.newOrder(orderData);
+        window.alert('Pedido enviado com sucesso!')
+        await orderStore.updateCartItem(false);
+        payment.value === ''
+    } catch (error){
+        window.alert('erro ao enviar pedido');
+        console.error(error);
+    }
+    }
+
+    showCartItems();
+}
+
 onMounted(()=>{
     showCartItems();
 })
@@ -156,5 +170,12 @@ onMounted(()=>{
     .custom-logo-h{
         width: auto;
         height: 20px;
+    }
+
+    .custom-w-1{
+        width: 70%;
+    }
+    .custom-w-2{
+        width: 20%;
     }
 </style>

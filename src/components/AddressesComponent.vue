@@ -4,7 +4,7 @@
             <h3 class="ms-3">Endereços Registrados</h3>
             <div v-if="addresses.length > 0">
                 <div v-for="addr in addresses" :key="addr.id" class="m-2 p-md-3 rounded-3">
-                    <div class="fs-5 d-flex align-items-center justify-content-between w-100 border-bottom border-info">
+                    <div class="fs-5 d-flex align-items-center justify-content-between w-100 border-bottom border-info mt-3 mt-md-0 pb-3">
                         <div class="d-flex align-items-center">
                             <i class="pi pi-map-marker text-info d-none d-md-block"></i>
                             <div class="ms-2">
@@ -18,11 +18,11 @@
                         <div class="custom-width">
                             <div>
                                 <p v-if="!isDefault(addr)" @click="setAsDefault(addr)" class="text-black m-0"><i class="pi pi-circle-off"></i> Tornar padrão</p>
-                                <p v-else class="text-info border-bottom border-info m-0"><i class="pi pi-check-circle"></i> Endereço padrão</p>
+                                <p v-else class="text-info border-bottom border-info m-0"><i class="pi pi-check-circle"></i>Endereço padrão</p>
                             </div>
-                            <div class="d-flex justify-content-end">
-                                <ButtonComponent @click="editAddress(addr)" icon="pi pi-pen-to-square fs-5" class="my-1 text-secondary" text="Editar"/>
-                                <ButtonComponent @click="deletAdress(addr.id)" icon="pi pi-trash text-danger fs-5" class="my-1 text-secondary" text="Excluir"/>
+                            <div class="d-flex flex-column flex-md-row justify-content-end">
+                                <ButtonComponent @click="editAddress(addr)" icon="pi pi-pen-to-square" class="my-md-1 text-secondary" text="Editar"/>
+                                <ButtonComponent @click="deletAdress(addr.id)" icon="pi pi-trash text-danger" class="my-md-1 text-secondary" text="Excluir"/>
                             </div>
                         </div>
                     </div>
