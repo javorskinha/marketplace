@@ -27,8 +27,12 @@
 import ButtonComponent from './ButtonComponent.vue';
 import { defineProps, computed } from 'vue';
 import { useOrdersStore } from '@/stores/OrdersStore';
+import { useAuthStore } from '@/stores/AuthStore';
+import { useRouter } from 'vue-router';
 
 const orderStore = useOrdersStore();
+const authStore = useAuthStore();
+const router = useRouter();
 
 const props = defineProps({
     id: Number,
@@ -47,9 +51,14 @@ const isInCart = computed (()=>
 )
 
 async function toggleCart() {
-    console.log("ToggleCart chamado")
+    if(!authStore.isAuthenticated){
+        const confirm = window.confirm('Realizar login para adicionar itens à sacola?')
+        if(!confirm) return;
 
-    console.log("isInCart:", isInCart.value);
+        router.push({ name: 'login', query: { redirect: router.currentRoute.value.fullPath } });
+        
+        return;
+    }
 
     const itemData = {
         "product_id": Number(props.id),

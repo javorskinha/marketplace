@@ -20,7 +20,7 @@
                         <a href="/cart" class="nav-link text-black hover">
                             <i class="pi pi-shopping-bag fs-4"></i>
                         </a>
-                        <a href="/account" class="nav-link text-black hover">
+                        <a href="/dashboard" class="nav-link text-black hover">
                             <i class="pi pi-user fs-4"></i>
                         </a>
                     </div>

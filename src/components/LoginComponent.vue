@@ -73,9 +73,11 @@ import { ref } from 'vue';
 import ButtonComponent from './ButtonComponent.vue';
 import InputComponent from './InputComponent.vue';
 import { useAuthStore } from "@/stores/AuthStore";
+import { useRouter } from 'vue-router';
 
 const active = ref(false);
 const authStore = useAuthStore();
+const router = useRouter();
 
 const name = ref('');
 const email = ref('');
@@ -88,27 +90,33 @@ function changeActive(){
 
 async function hadleLogin() {
     try{
-
-        console.log("Enviando dados para login:", { email: email.value, password: password.value });
-
         await authStore.login({ email: email.value, password: password.value});
-        window.alert('Login realizado com sucesso')
+
+        window.alert('Login realizado com sucesso');
+
+        router.push('/');
+
     } catch (error){
+
         errorMessage.value = 'Não foi possível fazer login. Verifique os dados inseridos.'
+
         window.alert('Não foi possível fazer login. Verifique os dados inseridos.')
     }
 }
 
 async function hadleRegister() {
     try{
-
-        console.log("Enviando dados para registro:", { name: name.value, email: email.value, password: password.value });
-
         await authStore.register({ name: name.value, email: email.value, password: password.value});
-        window.alert('Registro realizado com sucesso')
+
+        window.alert('Registro realizado com sucesso');
+
+        router.push('/');
+
     } catch (error){
         console.error("Erro no registro:", error.response ? error.response.data : error);
+
         errorMessage.value = 'Não foi possível fazer cadastro. Verifique os dados inseridos.'
+
         window.alert('Não foi possível fazer cadastro. Verifique os dados inseridos.')
     }
 }
