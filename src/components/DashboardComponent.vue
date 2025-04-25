@@ -18,13 +18,15 @@
             </nav>
         </div>
         <div class="row min-vh-75">
-            <button @click="handleLogout" class="d-none btn text-danger m-0 mt-3 d-md-flex justify-content-end align-items-center">Logout<i class="pi pi-sign-out ms-2"></i></button>
-            <aside class="d-none d-md-block col-12 col-md-3 col-lg-2 p-4 border m-4">
+            <div class="d-none d-md-flex justify-content-end my-1">
+                <ButtonComponent @click="handleLogout" class="d-flex justify-content-end w-25 btn text-danger align-items-center">Logout<i class="pi pi-sign-out ms-2"></i></ButtonComponent>
+            </div>
+            <aside class="d-none d-md-block col-12 col-md-3 col-lg-2 p-4 border m-4 mt-0">
                 <h3 class="mb-4">Olá, {{ firstName }}</h3>
                 <nav class="nav flex-column gap-2">
                     <router-link to="/dashboard/perfil" class="nav-link"><i class="pi pi-user me-2"></i>Meu Perfil</router-link>
-                    <router-link to="/dashboard/enderecos" class="nav-link"><i class="pi pi-map-marker"></i>Endereços</router-link>
-                    <router-link to="/dashboard/carrinho" class="nav-link"><i class="pi pi-shopping-cart me-2"></i>Carrinho</router-link>
+                    <router-link to="/dashboard/enderecos" class="nav-link"><i class="pi pi-map-marker"></i> Endereços</router-link>
+                    <router-link to="/dashboard/carrinho" class="nav-link"><i class="pi pi-shopping-bag me-2"></i>Sacola</router-link>
                     <!--<router-link to="/dashboard/favoritos" class="nav-link"><i class="pi pi-heart me-2"></i>Favoritos</router-link>-->
                     <router-link to="/dashboard/pedidos" class="nav-link"><i class="pi pi-truck me-2"></i>Pedidos</router-link>
                     <div v-if="userAdm || userModerator" class="mt-4">
@@ -37,7 +39,7 @@
                     </div>
                 </nav>
             </aside>
-            <main class="col bg-white p-0 p-md-4 border m-1 m-md-4 ms-md-0">
+            <main class="col bg-white p-0 p-md-4 border m-1 m-md-4 ms-md-0 mt-md-0">
                 <Router-View />
             </main>
         </div>
@@ -59,6 +61,6 @@ const firstName = computed(()=>{
 
 const handleLogout = ()=>{
     authStore.logout();
-    router.push('/account')
+    router.push('/')
 }
 </script>
