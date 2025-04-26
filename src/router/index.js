@@ -45,12 +45,12 @@ const router = createRouter({
       children: [
         { path: '', redirect: 'dashboard/perfil' },
         { path: 'perfil', component: () => import('../components/UserDataComponent.vue') },
-        { path: 'enderecos', component: () => import('../components/AddressesComponent.vue') },
+        { path: 'enderecos', component: () => import('../components/dashboard/AddressesComponent.vue') },
         { path: 'carrinho', component: () => import('../components/CartComponent.vue') },
         //{ path: 'favoritos', component: () => import('../') },
-        { path: 'pedidos', component: () => import('../components/OrdersComponent.vue') },
+        { path: 'pedidos', component: () => import('../components/dashboard/OrdersComponent.vue') },
         { path: 'categorias', component: () => import('../components/AdmCategoriesComponent.vue') },
-        { path: 'produtos', name: 'admProdutos', component: () => import('../components/AdmProductsComponent.vue') },
+        { path: 'produtos', name: 'admProdutos', component: () => import('../components/dashboard/AdmProductsComponent.vue') },
         { path: 'moderator', component: () => import('../components/ModeratorComponent.vue') },
       ]
     },
