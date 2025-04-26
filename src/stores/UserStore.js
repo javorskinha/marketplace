@@ -30,7 +30,6 @@ export const useUserStore = defineStore('user', ()=>{
             await deleteUser();
             user.value = {};
             addresses.value = [];
-            await deleteCart();
         } catch (error){
             console.error('Erro ao deletar dados', error);
             throw error;

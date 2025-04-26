@@ -21,17 +21,26 @@
             </div>
         </div>
     </div>
+    <ConfirmModal 
+        :show="showConfirmModal" 
+        title="Faça login" 
+        message="É necessário fazer login para adicionar itens á sacola." 
+        @confirm="onConfirm" 
+        @cancel="onCancel"
+    />
 </template>
 
 <script setup>
 import ButtonComponent from './ButtonComponent.vue';
-import { defineProps, computed } from 'vue';
+import ConfirmModal from "./ConfirmModal.vue";
+import { defineProps, computed, ref } from 'vue';
 import { useOrdersStore } from '@/stores/OrdersStore';
 import { useAuthStore } from '@/stores/AuthStore';
 import { useRouter } from 'vue-router';
 
 const orderStore = useOrdersStore();
 const authStore = useAuthStore();
+const showConfirmModal = ref(false);
 const router = useRouter();
 
 const props = defineProps({
@@ -50,13 +59,18 @@ const isInCart = computed (()=>
     orderStore.cart.items.some(item => Number(item.product_id) === Number(props.id))
 )
 
+function onConfirm(){
+    showConfirmModal.value = false;
+    router.push({ name: 'login', query: { redirect: router.currentRoute.value.fullPath } });
+}
+
+function onCancel(){
+    showConfirmModal.value = false;
+}
+
 async function toggleCart() {
     if(!authStore.isAuthenticated){
-        const confirm = window.confirm('Realizar login para adicionar itens à sacola?')
-        if(!confirm) return;
-
-        router.push({ name: 'login', query: { redirect: router.currentRoute.value.fullPath } });
-        
+        showConfirmModal.value = true;
         return;
     }
 

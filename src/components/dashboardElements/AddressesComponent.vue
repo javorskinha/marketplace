@@ -127,12 +127,6 @@ function resetForm() {
 }
 
 async function deletAdress(id) {
-    const confirmation = window.confirm('Tem certeza que deseja excluir esse endereço?');
-
-    if(!confirmation){
-        return;
-    }
-
     await userStore.delAddress(id);
     toast('Endereço excluído');
     await userStore.userAddresses();

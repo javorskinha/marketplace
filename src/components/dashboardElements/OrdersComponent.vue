@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <h6 v-else class="text-secondary">Status: {{ statusName(order.status) }}</h6>
-                <button @click="delThisOrder(order.id)" class="bg-white btn btn-sm text-danger mt-2 d-flex align-items-center border p-1 rounded-1 fw-light"><i class="pi pi-times"></i>Cancelar</button>
+                <button @click="confirmExclusion(order.id)" class="bg-white btn btn-sm text-danger mt-2 d-flex align-items-center border p-1 rounded-1 fw-light"><i class="pi pi-times"></i>Cancelar</button>
             </div>
             <div class="w-100 w-md-75 mt-4 d-flex">
                 <div v-for="(step, index) in statusSteps" :key="step" class="text-center custom-width">
@@ -43,16 +43,22 @@
                 </div>
             </div>
         </div>
+        <ConfirmModal :show="showConfirmModal" title="Confirmar Cancelamento" message="Deseja realmente cancelar seu pedido?" 
+        @confirm="onConfirm" 
+        @cancel="onCancel" />
     </div>
 </template>
 
 <script setup>
 import { useOrdersStore } from '@/stores/OrdersStore';
 import { useAuthStore } from '@/stores/AuthStore';
+import ConfirmModal from "../elements/ConfirmModal.vue";
 import { onMounted, computed, ref } from 'vue';
 
 const orderStore = useOrdersStore();
 const authStore = useAuthStore();
+const showConfirmModal = ref(false);
+const orderToDelete = ref(null);
 const userAdm = computed(()=> authStore.user.role === 'ADMIN');
 const userModerator = computed(()=> authStore.user.role === 'MODERATOR');
 const orders = computed(() => orderStore.order);
@@ -106,12 +112,23 @@ async function getAllOrders() {
     await orderStore.fetchOrder();
 }
 
-async function delThisOrder(orderId) {
-    const confirmation = window.confirm('Deseja realmente excluir seu pedido? Esta ação não pode ser desfeita.');
+async function confirmExclusion(order){
+    showConfirmModal.value = true;
+    orderToDelete.value = order;
+}
 
-    if(!confirmation){
-        return;
-    }
+function onConfirm(){
+    showConfirmModal.value = false;
+    if (orderToDelete.value){
+        delThisOrder(orderToDelete.value);
+    };
+}
+
+function onCancel(){
+    showConfirmModal.value = false;
+}
+
+async function delThisOrder(orderId) {
     await orderStore.delOrder(orderId);
 
     getAllOrders();

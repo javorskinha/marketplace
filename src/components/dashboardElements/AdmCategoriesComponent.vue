@@ -8,10 +8,9 @@
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 mt-3">
             <div v-for="category in userCategories" :key="category.id" class="col">
-                <!--exibe as categorias que o usuário criou/possui-->
                 <div class="card h-100 shadow border-0">
                     <div class="card-body position-relative">
-                        <img :src="getImageUrl(category.image_path)" alt="" class="costum-image">
+                        <img :src="getImageUrl(category.image_path)" alt="" class="custom-image">
                         <h4>{{ category.name }}</h4>
                         <p class="mb-1"><span class="text-secondary">Descrição:</span> {{ category.description }}</p>
                         <router-link :to="{name: 'admProdutos', query: {category: category.name}}" class="w-100 d-flex justify-content-end nav-link mb-2 hover">
@@ -21,12 +20,18 @@
                         <div class="d-flex flex-column gap-1 position-absolute top-0 end-0">
                             <ButtonComponent icon="pi pi-pen-to-square text-info fs-4" class="btn" @click="openModal(category)"/>
                             <!--excluir categorias-->
-                            <ButtonComponent icon="pi pi-trash text-danger fs-4" class="btn" @click="deleteCategory(category)"/>
+                            <ButtonComponent icon="pi pi-trash text-danger fs-4" class="btn" @click="confirmExclusion(category)"/>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <ConfirmModal
+        :show="showConfirmModal" title="Confirmar Exclusão" 
+        message="Tem certeza que deseja excluir a categoria? Esta ação não pode ser desfeita." 
+        @confirm="onConfirm" 
+        @cancel="onCancel"
+        />
         <div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
@@ -58,7 +63,7 @@
                         <form @submit.prevent="submitNewProduct">
                             <InputComponent type="text" placeholder="Nome" v-model="newProd.name" required/>
                             <InputComponent type="number" placeholder="Preço" v-model="newProd.price"/>
-                            <InputComponent type="int" placeholder="Estoque disponível" v-model="newProd.stock" required/>
+                            <InputComponent type="number" placeholder="Estoque disponível" v-model="newProd.stock" required/>
                             <InputComponent type="file" @change="handleImage"/>
                             <ButtonComponent type="submit" text="Adicionar Produto" class="btn btn-primary"/>
                         </form>
@@ -75,17 +80,22 @@ import { useAuthStore } from '@/stores/AuthStore';
 import { baseURL } from "@/services/HttpService";
 import ButtonComponent from '../elements/ButtonComponent.vue';
 import InputComponent from '../elements/InputComponent.vue';
+import ConfirmModal from "../elements/ConfirmModal.vue"
 import { onMounted, reactive, ref } from 'vue';
 import { Modal } from 'bootstrap';
+import { useToast } from 'vue-toastification';
 
 let modalInstance;
 let addProdModalInstance;
 
 const productsStore = useProductsStore();
 const authStore = useAuthStore();
+const showConfirmModal = ref(false);
+const toast = useToast();
 const userCategories = ref([]);
 const nameCategory = ref(null);
 const isEditing = ref(false);
+const categoryToDelete = ref(null);
 const editedCat = reactive({
     name:'',
     description:'',
@@ -183,6 +193,8 @@ async function saveCategory() {
     modalInstance.hide();
     resetForm();
     getUserCategories();
+
+    toast.success('Os dados foram atualizados');
 }
 
 const getImageUrl = (path) => {
@@ -194,15 +206,28 @@ async function getUserCategories() {
     userCategories.value = response;
 }
 
-async function deleteCategory(catData) {
-    const confirmation = window.confirm('Tem certeza que deseja excluir a categoria?');
+async function confirmExclusion(category){
+    categoryToDelete.value = category
+    showConfirmModal.value = true;
+}
 
-    if(!confirmation){
-        return;
+function onConfirm(){
+    showConfirmModal.value = false;
+    if(categoryToDelete.value) {
+        deleteCategory(categoryToDelete.value);
     }
+}
 
+function onCancel(){
+    showConfirmModal.value = false;
+    categoryToDelete.value = null;
+}
+
+async function deleteCategory(catData) {
     await productsStore.updateCategories({action: 'delete', categoryData: catData})
     getUserCategories();
+    categoryToDelete.value = null;
+    toast.success('Categoria Deletada')
 }
 
 function resetForm(){
@@ -218,7 +243,7 @@ onMounted(()=>{
 </script>
 
 <style>
-    .costum-image{
+    .custom-image{
         width: 170px;
         height: 170px;
         object-fit: cover;

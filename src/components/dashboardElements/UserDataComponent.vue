@@ -42,22 +42,29 @@
             </div>
         </div>
         <div class="d-flex justify-content-end">
-            <button @click="excludeAccount" class="btn"><small>Excluir Conta</small><i class="pi pi-trash text-danger ms-1"></i></button>
+            <button @click="confirmExclusion" class="btn"><small>Excluir Conta</small><i class="pi pi-trash text-danger ms-1"></i></button>
         </div>
+        <ConfirmModal :show="showConfirmModal" title="Confirmar Exclusão" message="Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita." 
+        @confirm="onConfirm" 
+        @cancel="onCancel" />
     </div>
 </template>
 
 <script setup>
 import InputComponent from "../elements/InputComponent.vue";
 import ButtonComponent from "../elements/ButtonComponent.vue";
+import ConfirmModal from "../elements/ConfirmModal.vue";
 import { useAuthStore } from "@/stores/AuthStore";
 import { useUserStore } from "@/stores/UserStore";
 import { ref, onMounted } from "vue";
 import { baseURL } from "@/services/HttpService";
+import { useRouter } from "vue-router";
 import { useToast } from 'vue-toastification';
 
 const authStore = useAuthStore();
 const userStore = useUserStore();
+const router = useRouter();
+const showConfirmModal = ref(false);
 const toast = useToast();
 const name = ref('');
 const email = ref('');
@@ -92,15 +99,23 @@ const getImageUrl = (path) => {
     return `${baseURL}${path.replace(/^\/+/, '')}`
 };
 
+async function confirmExclusion(){
+    showConfirmModal.value = true;
+}
+
+function onConfirm(){
+    showConfirmModal.value = false;
+    excludeAccount();
+}
+
+function onCancel(){
+    showConfirmModal.value = false;
+}
+
 async function excludeAccount(){
-    const confirmation = window.confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.');
-
-    if(!confirmation){
-        return;
-    }
-
     await userStore.delUser();
-
+    authStore.logout();
+    router.push('/')
     toast('Conta deletada');
 }
 
