@@ -31,7 +31,14 @@
 
 <script setup>
 import { useProductsStore } from '@/stores/ProductsStore';
-import { ref, computed } from 'vue';
+import { ref, computed, defineProps, defineEmits, watchEffect } from 'vue';
+
+const props = defineProps({
+    selectedFilters: {
+        type: Object,
+        required: true
+    }
+})
 
 const productsStore = useProductsStore();
 const categories = computed (()=> productsStore.categories);
@@ -40,9 +47,9 @@ const categories = computed (()=> productsStore.categories);
 
 const emit = defineEmits(['updateFilters']);
 
-const selectedCategories = ref([]);
-const selectedTags = ref([]);
-const onlyOffers = ref(false);
+const selectedCategories = ref([...props.selectedFilters.categories || []]);
+//const selectedTags = ref([]);
+//const onlyOffers = ref(false);
 
 function applyFilters(){
     emit('updateFilters', {
@@ -51,4 +58,8 @@ function applyFilters(){
         //offers: onlyOffers.value
     });
 };
+
+watchEffect(() => {
+    selectedCategories.value = [...props.selectedFilters.categories || []];
+});
 </script>

@@ -3,7 +3,9 @@
         <div class="row">
             <div class="col-12 col-md-3 mb-4">
                 <div class="position-sticky" style="top: 40px;">
-                    <FiltersComponent @updateFilters="handleUpdateFilters"/>
+                    <FiltersComponent
+                    :selectedFilters="filters"
+                    @updateFilters="handleUpdateFilters"/>
                 </div>
             </div>
             <div class="col-12 col-md-9">
@@ -27,10 +29,12 @@
 import CardComponent from './elements/CardComponent.vue';
 import FiltersComponent from './elements/FiltersComponent.vue';
 import { useProductsStore } from '@/stores/ProductsStore';
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, onMounted, watch } from 'vue';
 import { baseURL } from "@/services/HttpService";
+import { useRoute } from 'vue-router';
 
 const productsStore = useProductsStore();
+const route = useRoute();
 const allProducts = computed (()=> productsStore.products);
 
 const filters = ref({
@@ -72,5 +76,16 @@ const filteredProducts = computed(() => {
     return result;
 })
 
-onMounted(getAllProducts);
+onMounted( async ()=>{
+    await getAllProducts();
+    if(route.query.categoryId){
+        filters.value.categories = [Number(route.query.categoryId)];
+    };
+});
+
+watch(() => route.query.categoryId, (newCategoryId) => {
+    if (newCategoryId) {
+        filters.value.categories = [Number(newCategoryId)];
+    }
+});
 </script>

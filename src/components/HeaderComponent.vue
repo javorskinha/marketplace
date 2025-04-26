@@ -96,7 +96,7 @@ const productsStore = useProductsStore();
 const allCategories = computed(()=> productsStore.categories);
 
 const goToCategory = (categoryId) =>{
-    router.push({ name: 'categoryProducts', params: { categoryId } });
+    router.push({ name: 'products', query: { categoryId } });
 }
 
 function toggleDropdown(){

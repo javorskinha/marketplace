@@ -7,7 +7,7 @@
         <div class="container">
             <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4">
                 <div v-for="category in allCategories" :key="category.id" class="col">
-                    <router-link :to="{name: 'categoryProducts', params: {categoryId: category.id}}" class="col text-decoration-none">
+                    <router-link :to="{name: 'products', query: {categoryId: category.id}}" class="col text-decoration-none">
                         <div class="card text-center border shadow-sm p-3">
                             <img :src="getImageUrl(category.image_path)" alt="" class="mb-3 mx-auto">
                             <h6 class="fw-semibold mb-0 text-black">{{ category.name }}</h6>
