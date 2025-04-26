@@ -6,6 +6,8 @@ export const useProductsStore = defineStore('products', ()=>{
     const categories  = ref([]);
     const products = ref([]);
 
+    const adminId = 17;
+
     // categories
     async function fetchCategories(userId, categoryId) {
         try{
@@ -49,7 +51,7 @@ export const useProductsStore = defineStore('products', ()=>{
         }
     }
 
-    async function fetchProducts(userId = null, categoryId = null, productId = null) {
+    async function fetchProducts(userId = adminId, categoryId = null, productId = null) {
         try{
             const result = await getProducts(userId, categoryId, productId);
             products.value = result;
@@ -88,7 +90,7 @@ export const useProductsStore = defineStore('products', ()=>{
                 default:
                     throw new Error ('Ação não encontrada!')
             }
-            await fetchProducts();
+            await fetchProducts(17, null, null);
         } catch (error){
             console.error('Erro detalhado:', error.response?.data);
         }
