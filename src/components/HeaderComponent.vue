@@ -87,8 +87,8 @@
 import { ref, computed, onMounted } from 'vue';
 import { useProductsStore } from '@/stores/ProductsStore';
 import { useRouter } from 'vue-router';
-import ButtonComponent from './ButtonComponent.vue';
-import InputComponent from './InputComponent.vue';
+import ButtonComponent from './elements/ButtonComponent.vue';
+import InputComponent from './elements/InputComponent.vue';
 
 const isOpen = ref(false);
 const router = useRouter();

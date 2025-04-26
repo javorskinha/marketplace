@@ -70,8 +70,8 @@
 
 <script setup>
 import { ref } from 'vue';
-import ButtonComponent from './ButtonComponent.vue';
-import InputComponent from './InputComponent.vue';
+import ButtonComponent from './elements/ButtonComponent.vue';
+import InputComponent from './elements/InputComponent.vue';
 import { useAuthStore } from "@/stores/AuthStore";
 import { useRouter } from 'vue-router';
 

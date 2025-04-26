@@ -93,7 +93,7 @@ function toggleEdit(productId){
 };
 
 async function getAllProducts() {
-    await productsStore.fetchProducts(17);
+    await productsStore.fetchProducts();
 };
 
 const getImageUrl = (path) => {

@@ -24,7 +24,7 @@
 <script setup>
 import { computed, onMounted, defineProps } from 'vue';
 import CardComponent from '../components/CardComponent.vue';
-import ButtonComponent from './ButtonComponent.vue';
+import ButtonComponent from './elements/ButtonComponent.vue';
 import { useProductsStore } from '@/stores/ProductsStore';
 import { baseURL } from "@/services/HttpService";
 

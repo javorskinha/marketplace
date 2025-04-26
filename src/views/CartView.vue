@@ -5,5 +5,5 @@
 
 <script setup>
 import CartComponent from '@/components/CartComponent.vue';
-import UpdatedComponent from '@/components/UpdatedComponent.vue';
+import UpdatedComponent from '@/components/elements/UpdatedComponent.vue';
 </script>

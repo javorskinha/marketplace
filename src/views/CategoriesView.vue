@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import CategoriesComponent from '@/components/CategoriesComponent.vue';
+import CategoriesComponent from '@/components/elements/CategoriesComponent.vue';
 import CategoryProducts from '@/components/CategoryProducts.vue';
-import UpdatedComponent from '@/components/UpdatedComponent.vue';
+import UpdatedComponent from '@/components/elements/UpdatedComponent.vue';
 </script>
