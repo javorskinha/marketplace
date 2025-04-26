@@ -70,14 +70,15 @@ import { baseURL } from "@/services/HttpService";
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
-
 const productsStore = useProductsStore();
 const authStore = useAuthStore();
+
 const isEditing = ref({});
 const userAdm = computed(()=> authStore.user.role === 'ADMIN');
 const allProducts = computed (()=> productsStore.products);
 const allCategories = computed(() => productsStore.categories);
 const filteredCategory = ref(route.query.category || '');
+
 const filteredProducts = computed(() => {
     if(!filteredCategory.value) return allProducts.value;
 

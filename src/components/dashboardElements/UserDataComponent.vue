@@ -54,9 +54,11 @@ import { useAuthStore } from "@/stores/AuthStore";
 import { useUserStore } from "@/stores/UserStore";
 import { ref, onMounted } from "vue";
 import { baseURL } from "@/services/HttpService";
+import { useToast } from 'vue-toastification';
 
 const authStore = useAuthStore();
 const userStore = useUserStore();
+const toast = useToast();
 const name = ref('');
 const email = ref('');
 
@@ -99,7 +101,7 @@ async function excludeAccount(){
 
     await userStore.delUser();
 
-    window.alert('Conta deletada');
+    toast('Conta deletada');
 }
 
 onMounted(() => {

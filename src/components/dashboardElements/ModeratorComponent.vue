@@ -34,9 +34,11 @@ import { ref } from 'vue';
 import InputComponent from '../elements/InputComponent.vue';
 import { useUserStore } from '@/stores/UserStore';
 import ButtonComponent from '../elements/ButtonComponent.vue';
+import { useToast } from 'vue-toastification';
 
 const userStore = useUserStore();
 const checked = ref(false);
+const toast = useToast();
 
 const modData = ref({
     'name': '',
@@ -47,7 +49,7 @@ const modData = ref({
 
 async function newModerator() {
     if (!checked.value) {
-        window.alert('É necessário concordar com os termos.');
+        toast.warning('É necessário concordar com os termos.');
         return;
     }
     await userStore.createModerator(modData.value);

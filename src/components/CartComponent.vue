@@ -85,9 +85,11 @@ import { useUserStore } from "@/stores/UserStore";
 import ButtonComponent from './elements/ButtonComponent.vue';
 import { onMounted, ref, watch, computed } from 'vue';
 import { baseURL } from "@/services/HttpService";
+import { useToast } from 'vue-toastification';
 
 const orderStore = useOrdersStore();
 const userStore = useUserStore();
+const toast = useToast();
 const intItem = ref([]);
 const totalAmount = ref();
 const payment = ref('');
@@ -138,15 +140,15 @@ async function sendOrder(addressId) {
     }
 
     if (payment.value === ''){
-        window.alert('Selecione uma forma de Pagamento')
+        toast.warning('Selecione uma forma de Pagamento')
     } else {
         try{
         await orderStore.newOrder(orderData);
-        window.alert('Pedido enviado com sucesso!')
+        toast.success('Pedido enviado com sucesso!')
         await orderStore.updateCartItem(false);
         payment.value === ''
     } catch (error){
-        window.alert('erro ao enviar pedido');
+        toast.error('erro ao enviar pedido');
         console.error(error);
     }
     }

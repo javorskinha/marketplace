@@ -92,11 +92,6 @@ const editedCat = reactive({
     image:null,
     id: ''
 });
-const catForProduct = ref(null)
-const addProduct = (categoryId) => {
-    newProd.id = categoryId;
-    catForProduct.value = categoryId;
-}
 const newProd = reactive({
     name: '',
     description: '',

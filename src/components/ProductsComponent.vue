@@ -18,21 +18,15 @@
 <script setup>
 import CardComponent from './elements/CardComponent.vue';
 import { useProductsStore } from '@/stores/ProductsStore';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted } from 'vue';
 import { baseURL } from "@/services/HttpService";
 
 const productsStore = useProductsStore();
 const allProducts = computed (()=> productsStore.products);
-const categoryProducts = ref([]);
 
 async function getAllProducts() {
     await productsStore.fetchProducts(17);
 };
-
-async function getCategoryProducts(categoryId) {
-    const result = await productsStore.fetchProducts(null, categoryId);
-    categoryProducts.value = result;
-}
 
 const getImageUrl = (path) => {
     return `${baseURL}${path.replace(/^\/+/, '')}`

@@ -65,9 +65,10 @@ import InputComponent from "../elements/InputComponent.vue";
 import ButtonComponent from "../elements/ButtonComponent.vue";
 import { useUserStore } from "@/stores/UserStore";
 import { computed, onMounted, ref } from "vue";
+import { useToast } from 'vue-toastification';
 
 const userStore = useUserStore();
-
+const toast = useToast();
 const addresses = computed (() => userStore.addresses);
 const defaultAddress = computed(() => userStore.defaultAddress);
 
@@ -97,10 +98,10 @@ function scrollToForm(){
 async function saveAddress() {
     if(isEditing.value){
         await userStore.changeAddressData(editedAddress.value.id, editedAddress.value);
-        window.alert('Endereço alterado com sucesso');
+        toast.success('Endereço alterado com sucesso');
     } else {
         await userStore.postAddress(editedAddress.value);
-        window.alert('Endereço adicionado com sucesso');
+        toast.success('Endereço adicionado com sucesso');
     };
 
     resetForm();
@@ -133,13 +134,13 @@ async function deletAdress(id) {
     }
 
     await userStore.delAddress(id);
-    window.alert('endereço deletado');
+    toast('Endereço excluído');
     await userStore.userAddresses();
 }
 
 async function setAsDefault(addr) {
     userStore.turnDefault(addr);
-    window.alert('Endereço definido como padrão!');
+    toast.success('Endereço definido como padrão!');
 }
 
 function isDefault(addr){
