@@ -9,7 +9,7 @@
                         <p><small>Entrega grátis a partir de R$150,00</small></p>
                     </div>
                     <div class="me-4">
-                        <ButtonComponent text="Ver Mais" class="btn bg-white rounded-5 text-primary p-2" icon="pi pi-chevron-right"/>
+                        <ButtonComponent text="Ver Mais" class="btn btn-light rounded-5 text-primary p-2" icon="pi pi-chevron-right"/>
                     </div>
                 </div>
             </div>
@@ -19,7 +19,7 @@
                         <p class="mt-3 mb-1"><small>Super Outono</small></p>
                         <h3 class="fw-bold">75%OFF</h3>
                         <p class="text-secondary">Frutas e Vegetais</p>
-                        <ButtonComponent text="Ver Mais" icon="pi pi-chevron-right" class="text-primary"/>
+                        <ButtonComponent text="Ver Mais" icon="pi pi-chevron-right" class="btn text-primary"/>
                     </div>
                 </div>
                 <div class="bg-image-3 custom-height rounded-2 text-white">
@@ -68,5 +68,14 @@ import ButtonComponent from "./ButtonComponent.vue";
 
     .content-box{
         width: 50%;
+    }
+
+    .btn:hover{
+        transform: scale(1.1);
+        transition: 0.3s ease-in-out;
+    }
+
+    .btn-light:hover{
+        background-color: #2c742f;
     }
 </style>

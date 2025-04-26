@@ -45,4 +45,9 @@ onMounted(() =>{
         width: auto;
         height: 5em;
     }
+
+    .col:hover{
+        transform: scale(1.05);
+        transition: 0.3s ease-in-out;
+    }
 </style>

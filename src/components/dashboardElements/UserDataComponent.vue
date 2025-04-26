@@ -26,7 +26,7 @@
                     <div class="d-flex align-items-center">
                         <InputComponent type="file" @change="handleImage" class="w-100"/>
                         <div>
-                            <ButtonComponent type="submit" text="Enviar" class="bg-primary h-50 rounded-1 ms-2 d-flex text-black" @click="updateImage"></ButtonComponent>
+                            <ButtonComponent type="submit" text="Enviar" class="btn btn-primary h-50 rounded-1 ms-2 d-flex text-black" @click="updateImage"></ButtonComponent>
                         </div>
                     </div>
                     <div class="position-relative">
@@ -48,8 +48,8 @@
 </template>
 
 <script setup>
-import InputComponent from "./InputComponent.vue";
-import ButtonComponent from "./ButtonComponent.vue";
+import InputComponent from "../elements/InputComponent.vue";
+import ButtonComponent from "../elements/ButtonComponent.vue";
 import { useAuthStore } from "@/stores/AuthStore";
 import { useUserStore } from "@/stores/UserStore";
 import { ref, onMounted } from "vue";
