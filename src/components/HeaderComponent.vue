@@ -113,14 +113,6 @@ onMounted (() => {
         transition: transform 0.7s ease-in-out;
     }
 
-    @media (min-width: 768px) {
-        .max-width-desktop {
-            max-width: 1500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-    }
-
     .dropdown:hover .dropdown-menu{
         display: block;
         margin-top: 0;
