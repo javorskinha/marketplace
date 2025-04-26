@@ -73,8 +73,8 @@
 import { useProductsStore } from '@/stores/ProductsStore';
 import { useAuthStore } from '@/stores/AuthStore';
 import { baseURL } from "@/services/HttpService";
-import ButtonComponent from './ButtonComponent.vue';
-import InputComponent from './InputComponent.vue';
+import ButtonComponent from '../elements/ButtonComponent.vue';
+import InputComponent from '../elements/InputComponent.vue';
 import { onMounted, reactive, ref } from 'vue';
 import { Modal } from 'bootstrap';
 
@@ -84,8 +84,6 @@ let addProdModalInstance;
 const productsStore = useProductsStore();
 const authStore = useAuthStore();
 const userCategories = ref([]);
-const catProducts = reactive({});
-const visibleCat = ref([]);
 const nameCategory = ref(null);
 const isEditing = ref(false);
 const editedCat = reactive({

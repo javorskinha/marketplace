@@ -61,8 +61,8 @@
 </template>
 
 <script setup>
-import InputComponent from "./InputComponent.vue";
-import ButtonComponent from "./ButtonComponent.vue";
+import InputComponent from "../elements/InputComponent.vue";
+import ButtonComponent from "../elements/ButtonComponent.vue";
 import { useUserStore } from "@/stores/UserStore";
 import { computed, onMounted, ref } from "vue";
 

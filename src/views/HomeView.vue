@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import BannerComponent from '../components/BannerComponent.vue';
+import BannerComponent from '../components/elements/BannerComponent.vue';
 import CategoriesComponent from '@/components/elements/CategoriesComponent.vue';
 import EnphasisComponent from '@/components/elements/EnphasisComponent.vue';
 import UpdatedComponent from '@/components/elements/UpdatedComponent.vue';

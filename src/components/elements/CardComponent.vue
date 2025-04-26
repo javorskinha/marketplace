@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import ButtonComponent from './elements/ButtonComponent.vue';
+import ButtonComponent from './ButtonComponent.vue';
 import { defineProps, computed } from 'vue';
 import { useOrdersStore } from '@/stores/OrdersStore';
 import { useAuthStore } from '@/stores/AuthStore';

@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import CardComponent from './CardComponent.vue';
+import CardComponent from './elements/CardComponent.vue';
 import { useProductsStore } from '@/stores/ProductsStore';
 import { onMounted, ref, watch } from 'vue';
 import { baseURL } from "@/services/HttpService";

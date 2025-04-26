@@ -31,9 +31,9 @@
 
 <script setup>
 import { ref } from 'vue';
-import InputComponent from './InputComponent.vue';
+import InputComponent from '../elements/InputComponent.vue';
 import { useUserStore } from '@/stores/UserStore';
-import ButtonComponent from './ButtonComponent.vue';
+import ButtonComponent from '../elements/ButtonComponent.vue';
 
 const userStore = useUserStore();
 const checked = ref(false);
