@@ -17,7 +17,7 @@
                     <div class="custom-w-2 d-flex align-items-center justify-content-end">
                         <div class="d-flex w-25 justify-content-end align-items-center">
                             <i class="pi pi-minus text-primary bg-light p-1 rounded-circle me-md-3" @click="decreaseQty(item)"></i>
-                            <input type="number" class="text-center" min="1" v-model.number="item.quantity" @change="alterQuantity(item)" style="width: 25px;">
+                            <input type="number" class="text-center" min="1" v-model.number="item.quantity" @change="alterQuantity(item)" style="width: 35px;">
                             <i class="pi pi-plus text-primary bg-light p-1 rounded-circle" @click="increaseQty(item)"></i>
                         </div>
                         <i class="pi pi-times-circle ms-1 ms-md-3" @click="removeProduct(item)"></i>
@@ -82,7 +82,7 @@
 <script setup>
 import { useOrdersStore } from '@/stores/OrdersStore';
 import { useUserStore } from "@/stores/UserStore";
-import ButtonComponent from './ButtonComponent.vue';
+import ButtonComponent from './elements/ButtonComponent.vue';
 import { onMounted, ref, watch, computed } from 'vue';
 import { baseURL } from "@/services/HttpService";
 
@@ -94,9 +94,8 @@ const payment = ref('');
 const sendAddress = computed(() => userStore.defaultAddress);
 
 async function showCartItems() {
-    console.log('itens do carrinho', intItem.value)
     await orderStore.fetchCart();
-    intItem.value = orderStore.cart.items;
+    intItem.value = orderStore.cart.items.sort((a, b) => a.name.localeCompare(b.name));
     totalAmount.value = orderStore.cart.total_amount;
     console.log('defaultAddress', sendAddress);
 }
