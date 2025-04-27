@@ -97,4 +97,4 @@ export const useProductsStore = defineStore('products', ()=>{
     }
 
     return {categories, products, fetchCategories, updateCategories, fetchProducts, updateProducts}
-})
+}, {persist: true})

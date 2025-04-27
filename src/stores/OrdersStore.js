@@ -71,4 +71,4 @@ export const useOrdersStore = defineStore ('orders', ()=> {
     }
 
     return {cart, order, fetchCart, fetchOrder, newOrder, delOrder, updateOrder, updateCartItem}
-})
+}, {persist: true})
