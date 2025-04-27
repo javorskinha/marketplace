@@ -63,6 +63,7 @@
                         <form @submit.prevent="submitNewProduct">
                             <InputComponent type="text" placeholder="Nome" v-model="newProd.name" required/>
                             <InputComponent type="number" placeholder="Preço" v-model="newProd.price"/>
+                            <InputComponent type="text" placeholder="Descrição" v-model="newProd.description" required/>
                             <InputComponent type="number" placeholder="Estoque disponível" v-model="newProd.stock" required/>
                             <InputComponent type="file" @change="handleImage"/>
                             <ButtonComponent type="submit" text="Adicionar Produto" class="btn btn-primary"/>

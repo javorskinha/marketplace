@@ -1,5 +1,5 @@
 <template>
-    <div class="card shadow-sm" :id="id">
+    <div class="card shadow-sm" :id="id" @click="productsDetails">
         <div class="position-relative">
             <img :src="src" class="card-img-top" :alt="alt">
             <span class="position-absolute top-0 start-0 m-3 fs-3"><i class="pi pi-heart text-info"></i></span>
@@ -11,11 +11,12 @@
             </div>
             <div>
                 <p class="card-text fw-bold fs-5 text-primary">R$ {{ price }}</p>
-                <div class="d-flex flex-column gap-2" @click="toggleCart()">
+                <div class="d-flex flex-column gap-2">
                     <ButtonComponent
                     :text="isInCart ? 'Na sacola' : 'Adicionar a sacola'"
                     :class="isInCart ? 'btn btn-success' : 'btn btn-info'"
                     icon="pi pi-shopping-bag"
+                    @click.stop="toggleCart()"
                     />
                 </div>
             </div>
@@ -87,6 +88,10 @@ async function toggleCart() {
     } else {
         await orderStore.updateCartItem(itemData, true);
     }
+}
+
+function productsDetails(){
+    router.push({ name: 'product-details', params: { id: props.id } });
 }
 
 </script>
