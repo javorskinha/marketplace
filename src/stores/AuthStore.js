@@ -1,13 +1,31 @@
 import { defineStore } from "pinia";
-import { postCart, postLogin, postRegister } from "@/services/HttpService";
+import { postCart, postLogin, postRegister, postRenewToken } from "@/services/HttpService";
 import { computed, ref } from "vue";
 
 export const useAuthStore = defineStore('auth', ()=>{
     const token = ref(localStorage.getItem('token') || null);
     const user = ref(JSON.parse(localStorage.getItem('user')) || null);
     const isAuthenticated = computed(()=> !!token.value);
+    let refreshTimeout;
 
-    //authentication 
+    function parseExp(token){
+        try {
+            const [, payload] = token.split('.');
+            return JSON.parse(atob(payload)).exp * 1000; // milissegundos
+        } catch {
+            return null;
+        }
+    }
+
+    function brandRenewToken(){
+        if (!token.value) return;
+        const exp = parseExp(token.value);
+        if (!exp) return;
+
+        const timeUntilRefresh = exp - Date.now() - 10 * 60 * 1000;
+        clearTimeout(refreshTimeout);
+        refreshTimeout = setTimeout(renewToken, Math.max(timeUntilRefresh, 0));
+    }
 
     async function login(credentials) {
         try{
@@ -16,6 +34,7 @@ export const useAuthStore = defineStore('auth', ()=>{
             localStorage.setItem('token', response.token);
             user.value = response.user;
             localStorage.setItem('user', JSON.stringify(response.user));
+            brandRenewToken();
         } catch (error){
             console.error('Erro ao fazer login', error);
             throw error;
@@ -34,26 +53,31 @@ export const useAuthStore = defineStore('auth', ()=>{
         }
     };
 
-    // async function renewToken() {
-    //     try{
-    //         const response = await postRenewToken(token.value);
-    //         token.value = response.token;
-    //         localStorage.setItem('token', response.token);
-    //     } catch (error){
-    //         console.error('Erro ao renovar token', error);
-    //         throw error;
-    //     };
-    // };
-
-    //verify-token
-
+    async function renewToken() {
+        try{
+            const response = await postRenewToken();
+            token.value = response.token;
+            localStorage.setItem('token', response.token);
+            brandRenewToken();
+        } catch (error){
+            console.error('Erro ao renovar token', error);
+            throw error;
+        };
+    };
 
     function logout(){
         token.value = null;
         user.value = null;
+        clearTimeout(refreshTimeout);
         localStorage.removeItem('token');
         localStorage.removeItem('user');
     };
 
-    return{ token, user, isAuthenticated, login, register, logout};
+    function initialize() {
+        if (token.value) {
+            brandRenewToken();
+        }
+    }
+
+    return{ token, user, isAuthenticated, initialize, login, register, logout};
 }, {persist: true})

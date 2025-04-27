@@ -3,11 +3,10 @@ import 'bootstrap';
 import './assets/main.css';
 import "vue-toastification/dist/index.css";
 import Toast, { POSITION } from "vue-toastification";
-
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
-
+import { useAuthStore } from '@/stores/AuthStore';
 import App from './App.vue';
 import router from './router';
 
@@ -22,3 +21,6 @@ app.use(Toast, {
 });
 
 app.mount('#app');
+
+const authStore = useAuthStore();
+authStore.initialize();

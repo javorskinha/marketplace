@@ -47,17 +47,15 @@ export async function postRegister(userData) {
     }
 }
 
-// export async function postRenewToken() {
-//     try{
-//         const response = await api.post('/renew-token',);
-//         return response.data;
-//     } catch(error){
-//         console.error('erro ao renovar token', error);
-//         throw error;
-//     }
-// }
-
-//verify-token
+ export async function postRenewToken() {
+    try{
+        const response = await api.post('/renew-token');
+        return response.data;
+    } catch(error){
+        console.error('erro ao renovar token', error);
+        throw error;
+    }
+ }
 
 //função auxiliar para realizar as requisições
 async function request(method, url, data = null) {
