@@ -32,6 +32,24 @@
                 </div>
             </div>
         </div>
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-around rounded-2 p-md-5 shadow px-md-3">
+            <div class="d-flex align-items-center justify-content-around w-md-25 px-5 my-2 border-md-end">
+                <i class="pi pi-calendar fs-3 text-info"></i>
+                <p class="m-0 w-75">Compre uma vez ou <strong class="text-info">assine qualquer item</strong></p>
+            </div>
+            <div class="d-flex align-items-center justify-content-around w-md-25 px-5 my-2 border-md-end">
+                <i class="pi pi-tag fs-3 text-info"></i>
+                <p class="m-0 w-75">Assinantes têm <strong class="text-info">10% de desconto</strong> em todo o site</p>
+            </div>
+            <div class="d-flex align-items-center justify-content-around w-md-25 px-5 my-2 border-endmd-">
+                <i class="pi pi-clock fs-3 text-info"></i>
+                <p class="m-0 w-75">Peça até às 12h e <strong class="text-info">receba amanhã</strong></p>
+            </div>
+            <div class="d-flex align-items-center justify-content-around w-md-25 px-5 my-2">
+                <i class="pi pi-shopping-bag fs-3 text-info"></i>
+                <p class="m-0 w-75">Monte seu pedido ou escolha uma cesta pronta</p>
+            </div>
+        </div>
     </div>
 </template>
 

@@ -25,8 +25,8 @@
                         </a>
                     </div>
                 </section>
-                <div class="d-none d-md-flex align-items-center bg-dark w-100">
-                    <ul class="navbar-nav flex-row gap-3 fs-5 max-width-desktop">
+                <div class="d-none d-md-flex align-items-center bg-dark w-100 py-2">
+                    <ul class="navbar-nav flex-row gap-3 fs-5 w-50 d-flex justify-content-between m-auto">
                         <li class="nav-item dropdown position-relative">
                             <a class="nav-link costum-color dropdown-toggle" href="#">Categorias</a>
                             <ul class="dropdown-menu hover">

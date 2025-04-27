@@ -1,8 +1,7 @@
 <template>
     <div>
-        <div class="p-5 text-center">
+        <div class="p-5 pb-3 text-center">
             <h2 class="text-black">{{ title }}</h2>
-            <p class="text-secondary">{{ paragraph }}</p>
         </div>
         <div class="row g-4 mx-5 d-flex justify-content-center">
             <div v-for="product in randomProducts" :key="product.id" class="col-12 col-sm-6 col-md-4 col-lg-2 d-flex">

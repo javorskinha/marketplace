@@ -7,7 +7,6 @@
         <div class="card-body d-flex flex-column justify-content-between">
             <div>
                 <h5 class="card-title card-text-limit">{{ name }}</h5>
-                <p class="card-text text-muted small card-text-limit">{{ description }}</p>
             </div>
             <div>
                 <p class="card-text fw-bold fs-5 text-primary">R$ {{ price }}</p>
@@ -101,7 +100,8 @@ onMounted(() => {
 
 <style scoped>
     .card{
-        width: 18rem;;
+        width: 18rem;
+        height: auto;
     }
 
     .card-text-limit {

@@ -1,52 +1,50 @@
 <template>
-    <div class="categories w-75 m-auto">
-        <div class="text-center my-5">
-            <h2 class="fw-bold color-black">Compre por Categorias</h2>
-            <p class="text-secondary">Navegue por nossas categorias e encontre o que você precisa.</p>
+    <div>
+        <div class="p-5 pb-3 d-flex w-50" style="margin-left: 170px;">
+            <h2 class="text-black fs-3">{{ category?.name }}</h2>
+            <button class="btn text-info hover d-flex align-items-center">Ver Mais<i class="pi pi-arrow-right ms-2"></i></button>
         </div>
-        <div class="container">
-            <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4">
-                <div v-for="category in allCategories" :key="category.id" class="col">
-                    <router-link :to="{name: 'products', query: {categoryId: category.id}}" class="col text-decoration-none">
-                        <div class="card text-center border shadow-sm p-3">
-                            <img :src="getImageUrl(category.image_path)" alt="" class="mb-3 mx-auto">
-                            <h6 class="fw-semibold mb-0 text-black">{{ category.name }}</h6>
-                        </div>
-                    </router-link>
-                </div>
+        <div class="row g-4 mx-5 d-flex justify-content-center">
+            <div v-for="product in categoryProducts" :key="product.id" class="col-12 col-sm-6 col-md-4 col-lg-2 d-flex">
+                <CardComponent
+                :id="product.id"
+                :src="getImageUrl(product.image_path)"
+                :name="product.name"
+                :description="product.description"
+                :price="product.price"
+                />
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { useProductsStore } from "@/stores/ProductsStore";
-import { onMounted, computed } from "vue";
+import { defineProps, computed } from 'vue';
+import CardComponent from './CardComponent.vue';
+import ButtonComponent from './ButtonComponent.vue';
+import { useProductsStore } from '@/stores/ProductsStore';
 import { baseURL } from "@/services/HttpService";
 
-const productsStore = useProductsStore();
-const allCategories = computed (()=> productsStore.categories);
+const props = defineProps({
+    categoryId: Number
+})
 
-async function getAllCategories() {
-    await productsStore.fetchCategories(17);
-}
+const productsStore = useProductsStore();
+
+const categoryProducts = computed(() => {
+    return productsStore.products.filter(product => product.category_id === props.categoryId).slice(0,5);
+});
+const category = computed(() => {
+    return productsStore.categories.find(cat => cat.id === props.categoryId);
+});
 
 const getImageUrl = (path) => {
     return `${baseURL}${path.replace(/^\/+/, '')}`
 };
-
-onMounted(() =>{
-    getAllCategories();
-})
 </script>
 
 <style scoped>
-    img{
-        width: auto;
-        height: 5em;
-    }
-
-    .col:hover{
+    .hover:hover{
         transform: scale(1.05);
         transition: 0.3s ease-in-out;
     }

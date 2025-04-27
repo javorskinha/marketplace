@@ -1,9 +1,9 @@
 <template>
     <BannerComponent />
-    <CategoriesComponent />
+    <CategoriesComponent :categoryId="140"/>
+    <CategoriesComponent :categoryId="141"/>
     <EnphasisComponent 
     title="Produtos em destaque"
-    paragraph="Descubra nossa seleção de produtos premium."
     button="VEJA TODOS OS PRODUTOS"
     />
     <UpdatedComponent />
