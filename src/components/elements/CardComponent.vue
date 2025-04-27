@@ -34,7 +34,7 @@
 <script setup>
 import ButtonComponent from './ButtonComponent.vue';
 import ConfirmModal from "./ConfirmModal.vue";
-import { defineProps, computed, ref } from 'vue';
+import { defineProps, computed, ref, onMounted } from 'vue';
 import { useOrdersStore } from '@/stores/OrdersStore';
 import { useAuthStore } from '@/stores/AuthStore';
 import { useRouter } from 'vue-router';
@@ -94,6 +94,9 @@ function productsDetails(){
     router.push({ name: 'product-details', params: { id: props.id } });
 }
 
+onMounted(() => {
+    orderStore.fetchCart();
+})
 </script>
 
 <style scoped>
