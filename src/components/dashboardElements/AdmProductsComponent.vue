@@ -1,7 +1,12 @@
 <template>
     <div class="container">
         <div class="w-100 d-flex justify-content-between">
-            <h4>Produtos Cadastrados</h4>
+            <div class="d-flex">
+                <h4>Produtos Cadastrados</h4>
+                <div class="ms-3">
+                    <ButtonComponent text="Produto" icon="pi pi-plus" @click="openAddProdModal()" class="btn btn-outline-info"/>
+                </div>
+            </div>
             <div class="mb-3 d-flex align-items-center">
                 <label class="d-flex align-items-center">
                     <i class="pi pi-filter"></i>
@@ -59,25 +64,67 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Novo Produto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h6>Cadastro:</h6>
+                        <form @submit.prevent="submitNewProduct">
+                            <div class="d-flex">
+                                <InputComponent class="w-75" type="text" placeholder="Nome" v-model="newProd.name" required/>
+                                <select v-model="newProd.category_id" required class="w-25 ms-3 border border-success rounded-2 my-2">
+                                    <option value="" selected>Selecionar categoria</option>
+                                    <option v-for="category in allCategories" :value="category.id">{{category.name}}</option>
+                                </select>
+                            </div>
+                            <InputComponent type="number" placeholder="Preço" v-model="newProd.price"/>
+                            <InputComponent type="text" placeholder="Descrição" v-model="newProd.description" required/>
+                            <InputComponent type="number" placeholder="Estoque disponível" v-model="newProd.stock" required/>
+                            <InputComponent type="file" @change="handleImage"/>
+                            <ButtonComponent type="submit" text="Adicionar Produto" class="btn btn-primary"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script setup>
+import InputComponent from '../elements/InputComponent.vue';
+import ButtonComponent from '../elements/ButtonComponent.vue';
 import { useProductsStore } from '@/stores/ProductsStore';
 import { useAuthStore } from '@/stores/AuthStore';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, reactive } from 'vue';
 import { baseURL } from "@/services/HttpService";
+import { Modal } from 'bootstrap';
 import { useRoute } from 'vue-router';
+import { useToast } from 'vue-toastification';
 
 const route = useRoute();
 const productsStore = useProductsStore();
 const authStore = useAuthStore();
+const toast = useToast();
+
+let addProdModalInstance;
 
 const isEditing = ref({});
 const userAdm = computed(()=> authStore.user.role === 'ADMIN');
 const allProducts = computed (()=> productsStore.products);
 const allCategories = computed(() => productsStore.categories);
 const filteredCategory = ref(route.query.category || '');
+const newProd = reactive({
+    name: '',
+    description: '',
+    price: null,
+    stock: null,
+    category_id: null,
+    image: null
+})
 
 const filteredProducts = computed(() => {
     if(!filteredCategory.value) return allProducts.value;
@@ -100,6 +147,48 @@ async function getAllProducts() {
 const getImageUrl = (path) => {
     return `${baseURL}${path.replace(/^\/+/, '')}`
 };
+
+function handleImage(event){
+    newProd.image = event.target.files[0];
+}
+
+const openAddProdModal = () => {
+    if(!addProdModalInstance){
+        const modalEl = document.getElementById('addProductModal');
+        addProdModalInstance = new Modal(modalEl);
+    }
+    addProdModalInstance.show();
+}
+
+const submitNewProduct = async () =>  {
+    console.log("Categoria selecionada:", newProd);
+
+    const formData = new FormData();
+    formData.append('name', newProd.name);
+    formData.append('description', newProd.description);
+    formData.append('price', newProd.price);
+    formData.append('stock', newProd.stock);
+    formData.append('category_id', newProd.category_id);
+    formData.append('image', newProd.image);
+
+    await productsStore.updateProducts({
+        action: 'create',
+        productData: formData
+    });
+
+    addProdModalInstance.hide();
+    toast.success('Produto adicionado')
+    resetForm();
+}
+
+function resetForm(){
+    newProd.name = '',
+    newProd.description = '',
+    newProd.price = null,
+    newProd.stock = null,
+    newProd.category_id = null,
+    newProd.image = null
+}
 
 async function saveNewData(product) {
     try {
@@ -125,12 +214,19 @@ async function saveNewData(product) {
         newProData: stockData
     });
 
-
     isEditing.value[product.id] = false;
+    toast.success('Dados Atualizados')
 
     } catch (error) {
         console.error("Erro ao salvar produto:", error);
     }
+}
+
+async function delProd(product) {
+    await productsStore.updateProducts({
+        action: "delete",
+        productData: { id: product.id },
+    });
 }
 
 onMounted(()=>{
