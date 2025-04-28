@@ -45,6 +45,8 @@ const router = createRouter({
         { path: 'pedidos', component: () => import('../components/dashboardElements/OrdersComponent.vue') },
         { path: 'categorias', component: () => import('../components/dashboardElements/AdmCategoriesComponent.vue') },
         { path: 'produtos', name: 'admProdutos', component: () => import('../components/dashboardElements/AdmProductsComponent.vue') },
+        { path: 'descontos', name: 'admDescontos', component: () => import('../components/dashboardElements/DiscountsComponent.vue') },
+        { path: 'cupons', name: 'admCupons', component: () => import('../components/dashboardElements/CouponsComponent.vue') },
         { path: 'moderator', component: () => import('../components/dashboardElements/ModeratorComponent.vue') },
       ]
     },

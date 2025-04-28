@@ -102,7 +102,14 @@ export async function getCategories(userId = null, categoryId = null) {
     return request('get', url);
 }
 export const postCategory = (categoryData) => request("post", "/categories", categoryData);
-export const putCategory = (id, updatedCategory) => request("put", `/categories/${id}`, updatedCategory);
+export async function putCategory(id, updatedCategory, image = null) {
+    let url = `/categories/${id}`
+
+    if(image) url += "/image";
+
+    return request("put", url, updatedCategory);
+}
+//export const putCategory = (id, updatedCategory) => request("put", `/categories/${id}`, updatedCategory);
 export const deleteCategory = (id) => request("delete", `/categories/${id}`);
 
 // discounts requests

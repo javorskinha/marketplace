@@ -32,6 +32,8 @@
                     <div v-if="userAdm || userModerator" class="mt-4">
                         <h6 class="text-muted">Administrar</h6>
                         <router-link to="/dashboard/produtos" class="nav-link"><i class="pi pi-box me-2"></i>Produtos</router-link>
+                        <router-link to="/dashboard/descontos" class="nav-link"><i class="pi pi-percentage me-2"></i>Descontos</router-link>
+                        <router-link to="/dashboard/cupons" class="nav-link"><i class="pi pi-gift me-2"></i>Cupons</router-link>
                     </div>
                     <div v-if="userAdm">
                         <router-link to="/dashboard/categorias" class="nav-link"><i class="pi pi-tags me-2"></i>Categorias</router-link>
