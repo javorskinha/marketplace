@@ -72,21 +72,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                     </div>
                     <div class="modal-body">
-                        <h6>Cadastro:</h6>
-                        <form @submit.prevent="addNewProduct">
-                            <div class="d-flex">
-                                <InputComponent class="w-75" type="text" placeholder="Nome" v-model="newProd.name" required/>
-                                <select v-model="newProd.category_id" required class="w-25 ms-3 border border-success rounded-2 my-2">
-                                    <option value="" selected>Selecionar categoria</option>
-                                    <option v-for="category in allCategories" :value="category.id">{{category.name}}</option>
-                                </select>
-                            </div>
-                            <InputComponent type="number" placeholder="Preço" v-model="newProd.price"/>
-                            <InputComponent type="text" placeholder="Descrição" v-model="newProd.description" required/>
-                            <InputComponent type="number" placeholder="Estoque disponível" v-model="newProd.stock" required/>
-                            <InputComponent type="file" @change="handleImage"/>
-                            <ButtonComponent type="submit" text="Adicionar Produto" class="btn btn-primary"/>
-                        </form>
+                        <DefaultForm 
+                        title="Cadastrar:"
+                        :fields="fields"
+                        :formData="newProd"
+                        @submit="addNewProduct"
+                        />
                     </div>
                 </div>
             </div>
@@ -97,6 +88,7 @@
 <script setup>
 import InputComponent from '../elements/InputComponent.vue';
 import ButtonComponent from '../elements/ButtonComponent.vue';
+import DefaultForm from '../elements/DefaultForm.vue';
 import { useProductsStore } from '@/stores/ProductsStore';
 import { useAuthStore } from '@/stores/AuthStore';
 import { computed, onMounted, ref, reactive } from 'vue';
@@ -124,7 +116,7 @@ const newProd = reactive({
     stock: null,
     category_id: null,
     image: null
-})
+});
 
 const filteredProducts = computed(() => {
     if(!filteredCategory.value) return allProducts.value;
@@ -134,7 +126,16 @@ const filteredProducts = computed(() => {
     if(!selectedCategory) return []
 
     return allProducts.value.filter(p => p.category_id === selectedCategory.id)
-})
+});
+
+const fields = [
+    { type: 'text', model: 'name', label: 'Nome', placeholder: 'Nome do produto' },
+    { type: 'text', model: 'description', label: 'Descrição', placeholder: 'Descrição do produto' },
+    { type: 'number', model: 'price', label: 'Preço', placeholder: 'Preço' },
+    { type: 'number', model: 'stock', label: 'Estoque', placeholder: 'Estoque disponível' },
+    { type: 'select', model: 'category_id', label: 'Categoria', options: allCategories.value },
+    { type: 'image', model: 'image', label: 'Imagem'}
+];
 
 function toggleEdit(productId){
     isEditing.value[productId] = !isEditing.value[productId];

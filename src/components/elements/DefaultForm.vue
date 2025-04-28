@@ -27,8 +27,14 @@
                 labelField="name" 
                 defaultOption="Selecione"
                 />
+                <ImageInput 
+                v-if="field.type === 'image'"
+                v-model="formData[field.model]"
+                :id="field.model"
+                :label="field.label"
+                />
             </div>
-            <ButtonComponent text="Salvar" type="submit" icon="pi pi-save" class="btn btn-primary"/>
+            <ButtonComponent text="Salvar" type="submit" icon="pi pi-save" class="btn btn-primary mt-2"/>
         </form>
     </div>
 </template>
@@ -38,6 +44,7 @@ import ButtonComponent from './ButtonComponent.vue';
 import DatePicker from './DatePicker.vue';
 import InputComponent from './InputComponent.vue';
 import SelectComponent from './SelectComponent.vue';
+import ImageInput from './ImageInput.vue';
 import { defineProps, defineEmits } from 'vue';
 import { useToast } from 'vue-toastification';
 
