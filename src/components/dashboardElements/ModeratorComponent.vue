@@ -2,7 +2,7 @@
     <div class="h-100 d-flex flex-column align-items-center justify-content-center">
         <div class="m-2">
             <h5 class="text-danger">*Atenção</h5>
-            <p>Usuários moderadores tem permissão para criar, atualizar e excluir tags, criar e atualizar produtos, gerir estoque e atualizar produtos.</p>
+            <p>Usuários moderadores tem permissão para criar, atualizar e excluir tags, criar e atualizar produtos, gerir estoque e atualizar pedidos.</p>
         </div>
         <form @submit.prevent="newModerator" class="w-md-50 my-2 mx-2 border border-success rounded-1 p-4 h-100 d-flex flex-column justify-content-between">
             <div>

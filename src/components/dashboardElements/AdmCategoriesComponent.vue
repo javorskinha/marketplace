@@ -81,7 +81,7 @@ import { useAuthStore } from '@/stores/AuthStore';
 import { baseURL } from "@/services/HttpService";
 import ButtonComponent from '../elements/ButtonComponent.vue';
 import InputComponent from '../elements/InputComponent.vue';
-import ConfirmModal from "../elements/ConfirmModal.vue"
+import ConfirmModal from "../elements/ConfirmModal.vue";
 import { onMounted, reactive, ref } from 'vue';
 import { Modal } from 'bootstrap';
 import { useToast } from 'vue-toastification';
