@@ -19,38 +19,13 @@
                     </p>
                 </div>
             </div>
-            <div class="border rounded-1 p-3 h-100">
-                <form @submit.prevent="saveNewData(newDiscount)">
-                    <h5>Criar Novo Desconto</h5>
-                    <div class="mb-2">
-                        <label for="form-label">Descrição</label>
-                        <input v-model="newDiscount.description" class="form-control"/>
-                    </div>
-                    <div class="mb-2 d-flex">
-                        <label for="form-label">Porcentagem</label>
-                        <input v-model="newDiscount.discount_percentage" class="form-control w-25 mx-3"/>
-                    </div>
-                    <div class="w-100 d-flex">
-                        <div class="mb-2 d-flex align-items-baseline">
-                            <label for="form-label">Início</label>
-                            <input type="date" v-model="newDiscount.start_date" class="form-control mx-3 h-75"/>
-                        </div>
-                        <div class="mb-2 d-flex align-items-baseline">
-                            <label for="form-label">Término</label>
-                            <input type="date" v-model="newDiscount.end_date" class="form-control mx-3 h-75"/>
-                        </div>
-                    </div>
-                    <div class="mb-2">
-                        <label for="select">Produto</label>
-                        <select v-model="newDiscount.product_id" required class="w-75 ms-2 border border-success rounded-2">
-                            <option value="" selected>Selecionar produto</option>
-                            <option v-for="product in products" :value="product.id">{{product.name}}</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-info w-100 mt-2 h-25">
-                        Salvar
-                    </button>
-                </form>
+            <div class="border rounded-1">
+                <DefaultForm
+                title="Criar Novo Desconto"
+                :fields="fields"
+                :formData="formData"
+                @submit="handleFormSubmit"
+                />
             </div>
         </div>
     </div>
@@ -59,17 +34,32 @@
 <script setup>
 import { useProductsStore } from '@/stores/ProductsStore';
 import { computed, onMounted, reactive } from 'vue';
+import DefaultForm from '../elements/DefaultForm.vue';
 
 const productsStore = useProductsStore();
 const products = computed(() => productsStore.products)
 const allDiscounts = computed (()=> productsStore.discounts || []);
-const newDiscount = reactive({
+
+const formData = reactive({
     description: '',
     discount_percentage: null,
     start_date: '',
     end_date: '',
     product_id: null
 });
+
+const fields = [
+    { type: 'text', label: 'Descrição', model: 'description', placeholder: 'Digite a descrição' },
+    { type: 'number', label: 'Porcentagem', model: 'discount_percentage', placeholder: 'Digite a porcentagem' },
+    { type: 'date', label: 'Data de Início', model: 'start_date' },
+    { type: 'date', label: 'Data de Término', model: 'end_date' },
+    { type: 'select', label: 'Produto', model: 'product_id', options: products.value }
+];
+
+const handleFormSubmit = (formData) => {
+    console.log('Form data:', formData);
+    saveNewData(formData);
+};
 
 const getProductNameById = (id) => {
     const product = products.value.find(p => p.id === id);
@@ -82,18 +72,13 @@ async function getAllDiscounts() {
     });
 };
 
-const formatDate = (date) => {
-    const d = new Date(date);
-    return d.toISOString();
-};
-
 async function saveNewData(newDiscount) {
     try {
         const payload = {
             description: newDiscount.description,
             discount_percentage: newDiscount.discount_percentage,
-            start_date: formatDate(newDiscount.start_date),
-            end_date: formatDate(newDiscount.end_date),
+            start_date: newDiscount.start_date,
+            end_date: newDiscount.end_date,
             product_id: newDiscount.product_id
         };
 
