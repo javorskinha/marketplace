@@ -39,6 +39,9 @@ import DatePicker from './DatePicker.vue';
 import InputComponent from './InputComponent.vue';
 import SelectComponent from './SelectComponent.vue';
 import { defineProps, defineEmits } from 'vue';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 const props = defineProps({
   title: String,
@@ -49,6 +52,15 @@ const props = defineProps({
 const emit = defineEmits();
 
 const handleSubmit = () => {
+  const hasEmptyField = Object.values(props.formData).some(value => {
+    return value === '' || value === null || value === undefined;
+  });
+
+  if (hasEmptyField) {
+    toast.error('Por favor, preencha todos os campos.');
+    return;
+  }
+  
   emit('submit', props.formData);
 };
 </script>

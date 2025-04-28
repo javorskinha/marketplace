@@ -103,6 +103,7 @@ export const useProductsStore = defineStore('products', ()=>{
                 case 'show':
                     discounts.value = await getDiscounts();
                     console.log('PRODUCTS STORE Descontos pegos pela store');
+                    console.log('Descontos recebidos:', discounts.value);
                     break;
 
                 case 'create':
@@ -159,5 +160,5 @@ export const useProductsStore = defineStore('products', ()=>{
         }
     }
 
-    return {categories, products, fetchCategories, updateCategories, fetchProducts, updateProducts, updateDiscounts, updateCoupons}
+    return {categories, products, discounts, fetchCategories, updateCategories, fetchProducts, updateProducts, updateDiscounts, updateCoupons}
 }, {persist: true})
