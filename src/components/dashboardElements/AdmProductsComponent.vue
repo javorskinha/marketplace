@@ -73,7 +73,7 @@
                     </div>
                     <div class="modal-body">
                         <h6>Cadastro:</h6>
-                        <form @submit.prevent="submitNewProduct">
+                        <form @submit.prevent="addNewProduct">
                             <div class="d-flex">
                                 <InputComponent class="w-75" type="text" placeholder="Nome" v-model="newProd.name" required/>
                                 <select v-model="newProd.category_id" required class="w-25 ms-3 border border-success rounded-2 my-2">
@@ -160,9 +160,7 @@ const openAddProdModal = () => {
     addProdModalInstance.show();
 }
 
-const submitNewProduct = async () =>  {
-    console.log("Categoria selecionada:", newProd);
-
+async function addNewProduct(){
     const formData = new FormData();
     formData.append('name', newProd.name);
     formData.append('description', newProd.description);
