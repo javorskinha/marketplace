@@ -26,9 +26,8 @@ const router = createRouter({
       component: () => import('../views/CartView.vue'),
     },
     {
-      path: '/copuns',
+      path: '/coupons',
       name: 'cupons',
-      meta: { requiresAuth: true },
       component: () => import('../views/CouponsView.vue'),
     },
     {
