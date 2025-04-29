@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { onMounted, computed, ref } from 'vue';
+import { onMounted, computed, ref, watch } from 'vue';
 import ButtonComponent from './elements/ButtonComponent.vue';
 import ConfirmModal from './elements/ConfirmModal.vue';
 import { useProductsStore } from '@/stores/ProductsStore';
@@ -58,11 +58,11 @@ const authStore = useAuthStore();
 const showConfirmModal = ref(false);
 const route = useRoute();
 const router = useRouter();
-const id = route.params.id;
+const id = computed(() => route.params.id);
 const quantity = ref(1);
 
 const product = computed(() => {
-    return productsStore.products.find(prod => prod.id == id) || {};
+    return productsStore.products.find(prod => prod.id == id.value) || {};
 });
 
 const getImageUrl = (path) => {
@@ -119,6 +119,11 @@ onMounted(async () => {
     await productsStore.fetchProducts();
     console.log('produto no componente', product.value)
     orderStore.fetchCart();
+});
+
+watch(id, async (newId) => {
+  await productsStore.fetchProducts();
+  orderStore.fetchCart();
 });
 </script>
 
