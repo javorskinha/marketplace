@@ -28,7 +28,7 @@
 
 <script setup>
 import { useProductsStore } from '@/stores/ProductsStore';
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useToast } from 'vue-toastification';
 import ButtonComponent from './elements/ButtonComponent.vue';
 
@@ -49,4 +49,14 @@ function copyCode(code) {
   navigator.clipboard.writeText(code);
   toast.success(`Código "${code}" copiado!`);
 }
+
+async function getAllCoupons() {
+    await productsStore.updateCoupons({
+        action: "show"
+    });
+};
+
+onMounted(() => {
+  getAllCoupons();
+})
 </script>

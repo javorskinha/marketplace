@@ -29,15 +29,23 @@
                     <h4 class="mb-4">Total</h4>
                     <div class="d-flex border-bottom justify-content-between">
                         <p class="m-0">Subtotal:</p>
-                        <p class="m-0">R${{ totalAmount }}</p>
+                        <p class="m-0">R${{ totalAmount?.toFixed(2) }}</p>
                     </div>
                     <div class="d-flex border-bottom justify-content-between">
                         <p class="m-0">Frete:</p>
-                        <p class="m-0 text-primary">Grátis</p>
+                        <p class="m-0" :class="frete === 0 ? 'text-primary' : 'text-black'">{{ frete === 0 ? 'Grátis' : `R$ ${frete?.toFixed(2)}` }}</p>
                     </div>
                     <div class="d-flex justify-content-between mt-2">
                         <h6>Total:</h6>
-                        <h6>R${{ totalAmount }}</h6>
+                        <h6>R${{ totalFinal?.toFixed(2) }}</h6>
+                    </div>
+                    <div class="d-flex align-items-baseline justify-content-between">
+                        <p>CUPOM:</p>
+                        <div class="ms-2 w-100">
+                            <InputComponent v-model="couponCode"/>
+                            <p v-if="isCouponValid" class="text-success"><small>cupom "{{ couponCode }}" aplicado com sucesso!</small></p>
+                            <p v-else-if="couponCode" class="text-danger"><small>cupom inválido.</small></p>
+                        </div>
                     </div>
                     <div class="mt-5">
                         <h6>Selecione a forma de Pagamento:</h6>
@@ -65,10 +73,15 @@
                     </div>
                     <div class="mt-5 fs-5">
                         <h5>Entregar em:</h5> 
-                        <p class="m-0 text-secondary">Rua: {{ sendAddress.street }}, {{ sendAddress.number }}</p>
-                        <p class="m-0 text-secondary">CEP: {{ sendAddress.zip }}</p>
-                        <p class="m-0 text-secondary">{{ sendAddress.city }} - {{ sendAddress.state }} / {{ sendAddress.country }}</p>
-                        <p class="d-flex justify-content-end"><button class="btn text-info"><router-link to="/dashboard/enderecos">Trocar Endereço</router-link></button></p>
+                        <div v-if="sendAddress?.id">
+                            <p class="m-0 text-secondary">Rua: {{ sendAddress.street }}, {{ sendAddress.number }}</p>
+                            <p class="m-0 text-secondary">CEP: {{ sendAddress.zip }}</p>
+                            <p class="m-0 text-secondary">{{ sendAddress.city }} - {{ sendAddress.state }} / {{ sendAddress.country }}</p>
+                        </div>
+                        <div v-else>
+                            <p class="text-danger">Por favor, defina um endereço padrão.</p>
+                        </div>
+                        <p class="d-flex justify-content-end"><button class="btn text-info"><router-link to="/dashboard/enderecos">{{ sendAddress.id? 'Trocar Endereço' : 'Definir Endereço'}}</router-link></button></p>
                         <ButtonComponent text="Enviar Pedido" class="btn btn-primary" icon="pi pi-arrow-right" @click="sendOrder(sendAddress.id)"/>
                     </div>
                 </div>
@@ -82,18 +95,41 @@
 <script setup>
 import { useOrdersStore } from '@/stores/OrdersStore';
 import { useUserStore } from "@/stores/UserStore";
+import { useProductsStore } from '@/stores/ProductsStore';
 import ButtonComponent from './elements/ButtonComponent.vue';
-import { onMounted, ref, watch, computed } from 'vue';
+import { onMounted, ref, computed, watch } from 'vue';
 import { baseURL } from "@/services/HttpService";
 import { useToast } from 'vue-toastification';
+import InputComponent from './elements/InputComponent.vue';
 
 const orderStore = useOrdersStore();
 const userStore = useUserStore();
+const productsStore = useProductsStore();
 const toast = useToast();
 const intItem = ref([]);
 const totalAmount = ref();
 const payment = ref('');
+const couponCode = ref('');
+const coupons = computed(() => productsStore.coupons);
+const isCouponValid = ref(false);
+const couponId = ref(null);
+const couponDiscount = ref(0);
 const sendAddress = computed(() => userStore.defaultAddress);
+
+const frete = computed(() => {
+    if (totalAmount.value > 150) {
+        return 0;
+    }
+    return totalAmount.value * 0.2;
+});
+
+const discountAmount = computed(() => {
+    return (totalAmount.value * (couponDiscount.value / 100));
+});
+
+const totalFinal = computed(() => {
+    return totalAmount.value - discountAmount.value + frete.value;
+});
 
 async function showCartItems() {
     await orderStore.fetchCart();
@@ -136,17 +172,20 @@ function selectPayment(type){
 async function sendOrder(addressId) {
     const orderData = {
         "address_id": addressId,
-        "coupon_id": null
+        "coupon_id": couponId.value
     }
 
     if (payment.value === ''){
         toast.warning('Selecione uma forma de Pagamento')
+    } else if (!sendAddress.value?.id){
+        toast.warning('Defina o endereço de entrega')
     } else {
         try{
         await orderStore.newOrder(orderData);
         toast.success('Pedido enviado com sucesso!')
         await orderStore.updateCartItem(false);
-        payment.value === ''
+        payment.value = ''
+        couponCode.value = ''
     } catch (error){
         toast.error('erro ao enviar pedido');
         console.error(error);
@@ -160,6 +199,17 @@ onMounted(()=>{
     showCartItems();
 })
 
+watch(couponCode, (newCode) => {
+    const coupon = coupons.value.find(c => c.code.toLowerCase() === newCode.trim().toLowerCase());
+    isCouponValid.value = !!coupon;
+    if (coupon) {
+        couponId.value = coupon.id;
+        couponDiscount.value = coupon.discount_percentage;
+    } else {
+        couponId.value = null;
+        couponDiscount.value = 0;
+    }
+});
 </script>
 
 <style>
