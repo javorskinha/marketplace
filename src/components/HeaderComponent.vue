@@ -68,8 +68,8 @@
                         </li>
                     </transition>
                     <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="/products">Produtos</a><i class="pi pi-chevron-right"></i></li>
-                    <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Ofertas</a><i class="pi pi-chevron-right"></i></li>
-                    <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Cupons</a><i class="pi pi-chevron-right"></i></li>
+                    <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#" @click.prevent="goToOffers()">Ofertas>Ofertas</a><i class="pi pi-chevron-right"></i></li>
+                    <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="/coupons">Cupons</a><i class="pi pi-chevron-right"></i></li>
                     <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Frete Grátis</a><i class="pi pi-chevron-right"></i></li>
                     <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Sobre</a><i class="pi pi-chevron-right"></i></li>
                     <li class="d-flex align-items-center justify-content-between border-bottom mb-2"><a class="nav-link pb-0" href="#">Contato</a><i class="pi pi-chevron-right"></i></li>
