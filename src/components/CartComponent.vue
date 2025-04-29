@@ -8,20 +8,26 @@
                     <h4 class="custom-w-2">Preço</h4>
                     <h4 class="custom-w-2 text-end">Quantidade</h4>
                 </div>
-                <div v-for="item in intItem" :key="item.id" class="d-flex align-items-center">
-                    <div class="d-flex align-items-center custom-w-1">
-                        <img :src="getImageUrl(item.image_path)" alt="" class="custom-img-w rounded-circle shadow m-3">
-                        <h6>{{ item.name }}</h6>
-                    </div>
-                    <p class="custom-w-2 d-flex justify-content-start m-0">R$ {{ item.unit_price }}</p>
-                    <div class="custom-w-2 d-flex align-items-center justify-content-end">
-                        <div class="d-flex w-25 justify-content-end align-items-center">
-                            <i class="pi pi-minus text-primary bg-light p-1 rounded-circle me-md-3" @click="decreaseQty(item)"></i>
-                            <input type="number" class="text-center" min="1" v-model.number="item.quantity" @change="alterQuantity(item)" style="width: 35px;">
-                            <i class="pi pi-plus text-primary bg-light p-1 rounded-circle" @click="increaseQty(item)"></i>
+                <div v-if="intItem.length > 0">
+                    <div v-for="item in intItem" :key="item.id" class="d-flex align-items-center">
+                        <div class="d-flex align-items-center custom-w-1">
+                            <img :src="getImageUrl(item.image_path)" alt="" class="custom-img-w rounded-circle shadow m-3">
+                            <h6>{{ item.name }}</h6>
                         </div>
-                        <i class="pi pi-times-circle ms-1 ms-md-3" @click="removeProduct(item)"></i>
+                        <p class="custom-w-2 d-flex justify-content-start m-0">R$ {{ item.unit_price }}</p>
+                        <div class="custom-w-2 d-flex align-items-center justify-content-end">
+                            <div class="d-flex w-25 justify-content-end align-items-center">
+                                <i class="pi pi-minus text-primary bg-light p-1 rounded-circle me-md-3" @click="decreaseQty(item)"></i>
+                                <input type="number" class="text-center" min="1" v-model.number="item.quantity" @change="alterQuantity(item)" style="width: 35px;">
+                                <i class="pi pi-plus text-primary bg-light p-1 rounded-circle" @click="increaseQty(item)"></i>
+                            </div>
+                            <i class="pi pi-times-circle ms-1 ms-md-3" @click="removeProduct(item)"></i>
+                        </div>
                     </div>
+                </div>
+                <div v-else>
+                    <p class="fs-5 fw-light m-0">Sacola vazia</p>
+                    <p class="text-info fs-5"><a class="nav-link" href="/products">Ver produtos <i class="pi pi-arrow-right"></i></a></p>
                 </div>
             </div>
             <div class="col-12 col-md-4 col-lg-3 p-4 border m-4 ms-0">
