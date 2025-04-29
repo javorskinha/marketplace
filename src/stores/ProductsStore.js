@@ -6,6 +6,7 @@ export const useProductsStore = defineStore('products', ()=>{
     const categories  = ref([]);
     const products = ref([]);
     const discounts = ref([]);
+    const coupons = ref([]);
 
     const adminId = 17;
 
@@ -76,6 +77,8 @@ export const useProductsStore = defineStore('products', ()=>{
                     if ('stock' in newProData && Object.keys(newProData).length === 1){
                         console.log(newProData)
                         await putProducts(productData.id, newProData, true);
+                    } else if ('image' in newProData && Object.keys(newProData).length === 1){
+                        await putProducts(productData.id, newProData, false, true);
                     } else {
                         console.log(newProData)
                         await putProducts(productData.id, newProData);
@@ -133,7 +136,7 @@ export const useProductsStore = defineStore('products', ()=>{
         try{
             switch (action){
                 case 'show':
-                    discounts.value = await getCoupons();
+                    coupons.value = await getCoupons();
                     console.log('PRODUCTS STORE Cupons pegos pela store');
                     break;
 
@@ -160,5 +163,5 @@ export const useProductsStore = defineStore('products', ()=>{
         }
     }
 
-    return {categories, products, discounts, fetchCategories, updateCategories, fetchProducts, updateProducts, updateDiscounts, updateCoupons}
+    return {categories, products, discounts, coupons, fetchCategories, updateCategories, fetchProducts, updateProducts, updateDiscounts, updateCoupons}
 }, {persist: true})

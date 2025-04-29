@@ -139,8 +139,14 @@ export async function getProducts(userId = null, categoryId = null, productId = 
     return request('get', url);
 }
 export const postProduct = (productData) => request("post", "/products", productData);
-export async function putProducts(productId = null, data = {},  stock = false) {
-    return request('put', stock? `/products/${productId}/stock` : `/products/${productId}`, data)
+export async function putProducts(productId = null, data = {},  stock = false, image = false) {
+    let url = '/products'
+
+    if(stock) url += `/${productId}/stock`;
+    else if (image) url += `/${productId}/image`;
+    else url += `/${productId}`
+
+    return request('put', url, data)
 }
 export const deleteProduct = (id) => request("delete", `/products/${id}`);
 

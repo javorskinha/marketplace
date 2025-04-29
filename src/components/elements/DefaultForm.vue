@@ -59,15 +59,6 @@ const props = defineProps({
 const emit = defineEmits();
 
 const handleSubmit = () => {
-  const hasEmptyField = Object.values(props.formData).some(value => {
-    return value === '' || value === null || value === undefined;
-  });
-
-  if (hasEmptyField) {
-    toast.error('Por favor, preencha todos os campos.');
-    return;
-  }
-  
   emit('submit', props.formData);
 };
 </script>
