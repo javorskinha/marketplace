@@ -87,12 +87,21 @@ function handleImage(event){
 }
 
 async function updateImage() {
+    if (!userImage.value) return;
+
     const formData = new FormData();
     formData.append('image', userImage.value);
 
-    await userStore.userPic(formData);
+    try {
+        const updatedUser = await userStore.userPic(formData);
 
-    await showUserData();
+        authStore.user.image_path = updatedUser.image_path;
+
+        toast.success('Imagem atualizada com sucesso!');
+    } catch (error) {
+        toast.error('Erro ao atualizar imagem');
+        console.error('Erro ao enviar imagem', error);
+    }
 }
 
 const getImageUrl = (path) => {

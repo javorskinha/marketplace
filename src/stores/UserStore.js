@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { deleteUser, getUser, putUser, putUserPic, postModerator, getAddresses, postAddresses, putAddress, deleteAddress, deleteCart } from "@/services/HttpService";
+import { deleteUser, putUser, putUserPic, postModerator, getAddresses, postAddresses, putAddress, deleteAddress } from "@/services/HttpService";
 import { ref } from "vue";
 
 export const useUserStore = defineStore('user', ()=>{
@@ -9,7 +9,14 @@ export const useUserStore = defineStore('user', ()=>{
 
     // user data
     async function userPic(picture) {
-        await putUserPic(picture);
+        try {
+            const updatedUser = await putUserPic(picture);
+            user.value = updatedUser;
+            return updatedUser;
+        } catch (error) {
+            console.error('Erro ao atualizar imagem de perfil:', error);
+            throw error;
+        }
     }
 
     async function changeUserData(userData) {
