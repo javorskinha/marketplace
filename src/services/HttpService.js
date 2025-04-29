@@ -47,7 +47,7 @@ export async function postRegister(userData) {
     }
 }
 
- export async function postRenewToken() {
+export async function postRenewToken() {
     try{
         const response = await api.post('/renew-token');
         return response.data;
@@ -55,7 +55,7 @@ export async function postRegister(userData) {
         console.error('erro ao renovar token', error);
         throw error;
     }
- }
+}
 
 //função auxiliar para realizar as requisições
 async function request(method, url, data = null) {
@@ -102,14 +102,13 @@ export async function getCategories(userId = null, categoryId = null) {
     return request('get', url);
 }
 export const postCategory = (categoryData) => request("post", "/categories", categoryData);
-export async function putCategory(id, updatedCategory, image = null) {
+export async function putCategory(id, updatedCategory, image = false) {
     let url = `/categories/${id}`
 
     if(image) url += "/image";
 
     return request("put", url, updatedCategory);
 }
-//export const putCategory = (id, updatedCategory) => request("put", `/categories/${id}`, updatedCategory);
 export const deleteCategory = (id) => request("delete", `/categories/${id}`);
 
 // discounts requests

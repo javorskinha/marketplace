@@ -173,11 +173,17 @@ async function saveCategory() {
         formData.append('image', editedCat.image);
     }
 
-    if(isEditing.value){
+    if(isEditing.value && !editedCat.image){
         await productsStore.updateCategories({
             action: 'update',
             categoryData: editedCat,
             newCatData: editedCat
+        });
+    } else if (isEditing.value && editedCat.image){
+        await productsStore.updateCategories({
+            action: 'update',
+            categoryData: { id: editedCat.id },
+            newCatData: formData
         });
     } else {
         await productsStore.updateCategories({

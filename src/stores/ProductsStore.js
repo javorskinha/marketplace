@@ -35,8 +35,12 @@ export const useProductsStore = defineStore('products', ()=>{
                     break;
 
                 case 'update':
-                    await putCategory(categoryData.id, newCatData, newCatData.image);
-                    console.log('PRODUCTS STORE categoria foi alterada');
+                    if ('image' in newCatData){
+                        console.log(newCatData)
+                        await putCategory(categoryData.id, newCatData, true);} else{
+                            await putCategory(categoryData.id, newCatData, false);
+                            console.log('PRODUCTS STORE categoria foi alterada');
+                        }
                     break;
 
                 case 'delete':
