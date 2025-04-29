@@ -4,7 +4,7 @@
             <div class="d-flex">
                 <h4>Produtos Cadastrados</h4>
                 <div class="ms-3">
-                    <ButtonComponent text="Produto" icon="pi pi-plus" @click="openAddProdModal()" class="btn btn-outline-info"/>
+                    <ButtonComponent text="Produto" icon="pi pi-plus" @click="openModal" class="btn btn-outline-info"/>
                 </div>
             </div>
             <div class="mb-3 d-flex align-items-center">
@@ -27,28 +27,13 @@
                         <div class="d-flex justify-content-center mb-3">
                             <img :src="getImageUrl(product.image_path)" alt="" class="img-fluid rounded" style="width: 170px; height: 170px; object-fit: cover;">
                         </div>
-                        <div v-if="isEditing[product.id]">
-                            <form @submit.prevent="saveNewData(product)">
-                                <div class="mb-2">
-                                    <label for="form-label">Nome</label>
-                                    <input v-model="product.name" class="form-control"/>
-                                </div>
-                                <div class="mb-2">
-                                    <label for="form-label">Preço</label>
-                                    <input v-model="product.price" class="form-control"/>
-                                </div>
-                                <div class="mb-2">
-                                    <label for="form-label">Estoque</label>
-                                    <input v-model="product.stock" class="form-control"/>
-                                </div>
-                                <div class="mb-2">
-                                    <label for="form-label">Categoria</label>
-                                    <input v-model="product.category_id" class="form-control"/>
-                                </div>
-                                <button type="submit" class="btn btn-info w-100 mt-2 h-25">
-                                    Salvar
-                                </button>
-                            </form>
+                        <div v-if="isEditing === product.id">
+                            <DefaultForm 
+                            title="Editar:"
+                            :fields="fields"
+                            :formData="editedProd"
+                            @submit="saveNewData"
+                            />
                         </div>
                         <div v-else>
                             <h5 class="card-title mb-2">{{ product.name }}</h5>
@@ -64,36 +49,25 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Novo Produto</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                    </div>
-                    <div class="modal-body">
-                        <DefaultForm 
-                        title="Cadastrar:"
-                        :fields="fields"
-                        :formData="newProd"
-                        @submit="addNewProduct"
-                        />
-                    </div>
-                </div>
-            </div>
-        </div>
+        <DefaultModal :isVisible="isModalOpen" title="Adicionar Novo Produto" @close="closeModal">
+            <DefaultForm 
+            title="Cadastrar:"
+            :fields="fields"
+            :formData="newProd"
+            @submit="addNewProduct"
+            />
+        </DefaultModal>
     </div>
 </template>
 
 <script setup>
-import InputComponent from '../elements/InputComponent.vue';
 import ButtonComponent from '../elements/ButtonComponent.vue';
 import DefaultForm from '../elements/DefaultForm.vue';
 import { useProductsStore } from '@/stores/ProductsStore';
 import { useAuthStore } from '@/stores/AuthStore';
 import { computed, onMounted, ref, reactive } from 'vue';
 import { baseURL } from "@/services/HttpService";
-import { Modal } from 'bootstrap';
+import DefaultModal from '../elements/DefaultModal.vue'
 import { useRoute } from 'vue-router';
 import { useToast } from 'vue-toastification';
 
@@ -101,15 +75,25 @@ const route = useRoute();
 const productsStore = useProductsStore();
 const authStore = useAuthStore();
 const toast = useToast();
+const isModalOpen = ref(false);
+const openModal = () => isModalOpen.value = true;
+const closeModal = () => isModalOpen.value = false;
 
-let addProdModalInstance;
-
-const isEditing = ref({});
+const isEditing = ref(null);
 const userAdm = computed(()=> authStore.user.role === 'ADMIN');
 const allProducts = computed (()=> productsStore.products);
 const allCategories = computed(() => productsStore.categories);
 const filteredCategory = ref(route.query.category || '');
 const newProd = reactive({
+    name: '',
+    description: '',
+    price: null,
+    stock: null,
+    category_id: null,
+    image: null,
+});
+
+const editedProd = reactive({
     name: '',
     description: '',
     price: null,
@@ -138,7 +122,20 @@ const fields = [
 ];
 
 function toggleEdit(productId){
-    isEditing.value[productId] = !isEditing.value[productId];
+    if (isEditing.value === productId) {
+        isEditing.value = null;
+    } else {
+        const product = allProducts.value.find(p => p.id === productId);
+        editedProd.name = product.name;
+        editedProd.description = product.description;
+        editedProd.price = product.price;
+        editedProd.stock = product.stock;
+        editedProd.category_id = product.category_id;
+        editedProd.image = null;
+        editedProd.id = product.id;
+        
+        isEditing.value = productId;
+    }
 };
 
 async function getAllProducts() {
@@ -148,18 +145,6 @@ async function getAllProducts() {
 const getImageUrl = (path) => {
     return `${baseURL}${path.replace(/^\/+/, '')}`
 };
-
-function handleImage(event){
-    newProd.image = event.target.files[0];
-}
-
-const openAddProdModal = () => {
-    if(!addProdModalInstance){
-        const modalEl = document.getElementById('addProductModal');
-        addProdModalInstance = new Modal(modalEl);
-    }
-    addProdModalInstance.show();
-}
 
 async function addNewProduct(){
     const formData = new FormData();
@@ -175,7 +160,7 @@ async function addNewProduct(){
         productData: formData
     });
 
-    addProdModalInstance.hide();
+    closeModal();
     toast.success('Produto adicionado')
     resetForm();
 }
@@ -187,34 +172,55 @@ function resetForm(){
     newProd.stock = null,
     newProd.category_id = null,
     newProd.image = null
+
+    editedProd.name = '';
+    editedProd.description = '';
+    editedProd.price = null;
+    editedProd.stock = null;
+    editedProd.category_id = null;
+    editedProd.image = null;
+    editedProd.id = '';
 }
 
-async function saveNewData(product) {
+async function saveNewData() {
     try {
         const productData = {
-        price: product.price,
-        name: product.name,
-        category_id: product.category_id
+        price: editedProd.price,
+        name: editedProd.name,
+        description: editedProd.description,
+        category_id: editedProd.category_id
     };
 
     const stockData = {
-        stock: product.stock
+        stock: editedProd.stock
     };
 
     await productsStore.updateProducts({
         action: "update",
-        productData: { id: product.id },
+        productData: { id: editedProd.id },
         newProData: productData
     });
 
     await productsStore.updateProducts({
         action: "update",
-        productData: { id: product.id },
+        productData: { id: editedProd.id },
         newProData: stockData
     });
 
-    isEditing.value[product.id] = false;
-    toast.success('Dados Atualizados')
+    if (editedProd.image) {
+    const formData = new FormData();
+    formData.append('image', editedProd.image);
+
+    await productsStore.updateProducts({
+        action: "update",
+        productData: { id: editedProd.id },
+        newProData: formData
+    });
+}
+
+    isEditing.value = false;
+    toast.success('Dados Atualizados');
+    resetForm();
 
     } catch (error) {
         console.error("Erro ao salvar produto:", error);
