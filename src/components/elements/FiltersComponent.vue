@@ -11,6 +11,7 @@
                 {{ category.name }}
             </div>
         </div>
+        <!--
         <div class="mb-3">
             <h6>Marcadores</h6>
             <div v-for="tag in tags" :key="tag.id">
@@ -18,6 +19,7 @@
                 {{ tag.name }}
             </div>
         </div>
+        -->
         <div class="mb-3">
             <h6>Produtos em Oferta</h6>
             <div>

@@ -96,16 +96,18 @@ function scrollToForm(){
 }
 
 async function saveAddress() {
-    if(isEditing.value){
-        await userStore.changeAddressData(editedAddress.value.id, editedAddress.value);
-        toast.success('Endereço alterado com sucesso');
-    } else {
-        await userStore.postAddress(editedAddress.value);
-        toast.success('Endereço adicionado com sucesso');
-    };
-
-    resetForm();
-    await userStore.userAddresses();
+    try {
+        if (isEditing.value) {
+            await userStore.changeAddressData(editedAddress.value.id, editedAddress.value);
+            toast.success('Endereço alterado com sucesso');
+        } else {
+            await userStore.postAddress(editedAddress.value);
+            toast.success('Endereço adicionado com sucesso');
+        }
+        resetForm();
+    } catch (error) {
+        toast.error('Erro ao salvar endereço.');
+    }
 }
 
 function editAddress(addr){
@@ -127,9 +129,12 @@ function resetForm() {
 }
 
 async function deletAdress(id) {
-    await userStore.delAddress(id);
-    toast('Endereço excluído');
-    await userStore.userAddresses();
+    try {
+        await userStore.delAddress(id);
+        toast('Endereço excluído');
+    } catch (error) {
+        toast.error('Erro ao excluir endereço');
+    }
 }
 
 async function setAsDefault(addr) {

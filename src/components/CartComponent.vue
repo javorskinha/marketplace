@@ -106,8 +106,8 @@ const orderStore = useOrdersStore();
 const userStore = useUserStore();
 const productsStore = useProductsStore();
 const toast = useToast();
-const intItem = ref([]);
-const totalAmount = ref();
+const intItem = computed(() => orderStore.cart.items.sort((a, b) => a.name.localeCompare(b.name)))
+const totalAmount = computed(() => orderStore.cart.total_amount)
 const payment = ref('');
 const couponCode = ref('');
 const coupons = computed(() => productsStore.coupons);
@@ -133,9 +133,6 @@ const totalFinal = computed(() => {
 
 async function showCartItems() {
     await orderStore.fetchCart();
-    intItem.value = orderStore.cart.items.sort((a, b) => a.name.localeCompare(b.name));
-    totalAmount.value = orderStore.cart.total_amount;
-    console.log('defaultAddress', sendAddress);
 }
 
 const getImageUrl = (path) => {
@@ -150,19 +147,17 @@ function decreaseQty(item) {
     if (item.quantity > 1) {
         item.quantity--;
         alterQuantity(item);
-        showCartItems();
     }
 }
 
 function increaseQty(item) {
     item.quantity++;
     alterQuantity(item);
-    showCartItems();
 }
 
 async function removeProduct(item) {
     await orderStore.updateCartItem(item);
-    showCartItems();
+
 }
 
 function selectPayment(type){
@@ -191,8 +186,6 @@ async function sendOrder(addressId) {
         console.error(error);
     }
     }
-
-    showCartItems();
 }
 
 onMounted(()=>{

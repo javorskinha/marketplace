@@ -52,8 +52,6 @@ const props = defineProps({
     price: String, 
 })
 
-console.log(orderStore.cart.items);
-
 const isInCart = computed (()=>
     Array.isArray(orderStore.cart.items) &&
     orderStore.cart.items.some(item => Number(item.product_id) === Number(props.id))
@@ -82,7 +80,6 @@ async function toggleCart() {
 
     if(isInCart.value){
         const itemToRemove = orderStore.cart.items.find(item => item.product_id === props.id);
-        console.log('estrutura item to remove', itemToRemove)
         await orderStore.updateCartItem(itemToRemove, false);
     } else {
         await orderStore.updateCartItem(itemData, true);

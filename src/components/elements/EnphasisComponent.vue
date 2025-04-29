@@ -35,8 +35,6 @@ const props = defineProps({
 
 const productsStore = useProductsStore();
 
-console.log('Produtos da store:', productsStore.products);
-
 const randomProducts = computed (()=> getRandomProducts(productsStore.products))
 
 function getRandomProducts(products, quantity = 5){
