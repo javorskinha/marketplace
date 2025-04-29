@@ -77,18 +77,16 @@ const filteredProducts = computed(() => {
     return result;
 })
 
-onMounted( async ()=>{
-    await getAllProducts();
-});
+onMounted(getAllProducts);
 
 watch(
     () => route.query,
-  (query) => {
+    (query) => {
     filters.value = {
-      categories: query.categoryId ? [Number(query.categoryId)] : [],
-      offers: query.offers === 'true'
+        categories: query.categoryId ? [Number(query.categoryId)] : [],
+        offers: query.offers === 'true'
     };
-  },
-  { immediate: true }
+    },
+    { immediate: true }
 );
 </script>
