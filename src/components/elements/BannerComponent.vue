@@ -9,7 +9,7 @@
                         <p><small>Entrega grátis a partir de R$150,00</small></p>
                     </div>
                     <div class="me-4">
-                        <ButtonComponent text="Ver Mais" class="btn btn-light rounded-5 text-primary p-2" icon="pi pi-chevron-right"/>
+                        <ButtonComponent @click.prevent="goToOffers()" text="Ver Mais" class="btn btn-light rounded-5 text-primary p-2" icon="pi pi-chevron-right"/>
                     </div>
                 </div>
             </div>
@@ -19,7 +19,7 @@
                         <p class="mt-3 mb-1"><small>Super Outono</small></p>
                         <h3 class="fw-bold">75%OFF</h3>
                         <p class="text-secondary">Frutas e Vegetais</p>
-                        <ButtonComponent text="Ver Mais" icon="pi pi-chevron-right" class="btn text-primary"/>
+                        <ButtonComponent @click.prevent="goToOffers()" text="Ver Mais" icon="pi pi-chevron-right" class="btn text-primary"/>
                     </div>
                 </div>
                 <div class="bg-image-3 custom-height rounded-2 text-white">
@@ -27,7 +27,7 @@
                         <p><small>SUPER PROMO</small></p>
                         <h3 class="fw-bold">Produtos Especiais</h3>
                         <h3 class="fw-bold">Ofertas do mês</h3>
-                        <ButtonComponent text="Ver Mais" icon="pi pi-chevron-right" class="text-primary"/>
+                        <ButtonComponent @click.prevent="goToOffers()" text="Ver Mais" icon="pi pi-chevron-right" class="text-primary"/>
                     </div>
                 </div>
             </div>
@@ -55,6 +55,13 @@
 
 <script setup>
 import ButtonComponent from "./ButtonComponent.vue";
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const goToOffers = () =>{
+    router.push({ name: 'products', query: { offers: true } });
+}
 </script>
 
 <style scoped>

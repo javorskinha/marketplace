@@ -43,23 +43,24 @@ const props = defineProps({
 const productsStore = useProductsStore();
 const categories = computed (()=> productsStore.categories);
 //const tags = computed(() => productsStore.tags);
-//const offers = computed(() => productsStore.offers);
+const offers = computed(() => productsStore.discounts);
 
 const emit = defineEmits(['updateFilters']);
 
 const selectedCategories = ref([...props.selectedFilters.categories || []]);
 //const selectedTags = ref([]);
-//const onlyOffers = ref(false);
+const onlyOffers = ref(false);
 
 function applyFilters(){
     emit('updateFilters', {
         categories: selectedCategories.value,
         //tags: selectedTags.value,
-        //offers: onlyOffers.value
+        offers: onlyOffers.value
     });
 };
 
 watchEffect(() => {
     selectedCategories.value = [...props.selectedFilters.categories || []];
+    onlyOffers.value = props.selectedFilters.offers ?? false;
 });
 </script>

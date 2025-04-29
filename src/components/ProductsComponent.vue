@@ -40,7 +40,7 @@ const allProducts = computed (()=> productsStore.products);
 const filters = ref({
     categories: [],
     //tags: [],
-    //offers: false
+    offers: false
 })
 
 async function getAllProducts() {
@@ -69,23 +69,26 @@ const filteredProducts = computed(() => {
     //    });
     //}
 
-    //if (filters.value.offers) {
-    //    result = result.filter(product => product.is_offer === true);
-    //}
+    if (filters.value.offers) {
+        const discountedProductIds = productsStore.discounts.map(d => d.product_id);
+        result = result.filter(product => discountedProductIds.includes(product.id));
+    }
 
     return result;
 })
 
 onMounted( async ()=>{
     await getAllProducts();
-    if(route.query.categoryId){
-        filters.value.categories = [Number(route.query.categoryId)];
-    };
 });
 
-watch(() => route.query.categoryId, (newCategoryId) => {
-    if (newCategoryId) {
-        filters.value.categories = [Number(newCategoryId)];
-    }
-});
+watch(
+    () => route.query,
+  (query) => {
+    filters.value = {
+      categories: query.categoryId ? [Number(query.categoryId)] : [],
+      offers: query.offers === 'true'
+    };
+  },
+  { immediate: true }
+);
 </script>

@@ -34,8 +34,7 @@
                             </ul>
                         </li>
                         <li class="nav-item"><a class="nav-link costum-color" href="/products">Produtos</a></li>
-                        <li class="nav-item"><a class="nav-link costum-color" href="#">Ofertas</a></li>
-                        <li class="nav-item"><a class="nav-link costum-color" href="#">Cupons</a></li>
+                        <li class="nav-item"><a class="nav-link costum-color" href="#" @click.prevent="goToOffers()">Ofertas</a></li>
                         <li class="nav-item"><a class="nav-link costum-color" href="#">Frete Grátis</a></li>
                         <li class="nav-item"><a class="nav-link costum-color" href="#">Sobre</a></li>
                         <li class="nav-item"><a class="nav-link costum-color" href="#">Contato</a></li>
@@ -97,6 +96,10 @@ const allCategories = computed(()=> productsStore.categories);
 
 const goToCategory = (categoryId) =>{
     router.push({ name: 'products', query: { categoryId } });
+}
+
+const goToOffers = () =>{
+    router.push({ name: 'products', query: { offers: true } });
 }
 
 function toggleDropdown(){
