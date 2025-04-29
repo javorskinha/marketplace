@@ -35,6 +35,7 @@
                         </li>
                         <li class="nav-item"><a class="nav-link costum-color" href="/products">Produtos</a></li>
                         <li class="nav-item"><a class="nav-link costum-color" href="#" @click.prevent="goToOffers()">Ofertas</a></li>
+                        <li class="nav-item"><a class="nav-link costum-color" href="/cupons">Cupons</a></li>
                         <li class="nav-item"><a class="nav-link costum-color" href="#">Frete Grátis</a></li>
                         <li class="nav-item"><a class="nav-link costum-color" href="#">Sobre</a></li>
                         <li class="nav-item"><a class="nav-link costum-color" href="#">Contato</a></li>
