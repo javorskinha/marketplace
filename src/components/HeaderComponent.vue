@@ -10,7 +10,17 @@
                         <h1 class="d-flex align-items-center"><img src="../../public/images/logo.png" class="w-25 h-25 me-2"><a class="navbar-brand fw-bold fs-3" href="/">Ecobuy</a></h1>
                     </div>
                     <div class="d-none d-md-flex w-50 position-relative ps-4">
-                        <InputComponent type="text" placeholder="Buscar" class="w-100"></InputComponent>
+                        <InputComponent v-model="searchTerm" type="text" placeholder="Buscar" class="w-100"></InputComponent>
+                        <ul v-if="filteredProducts.length" class="list-group position-absolute top-100 w-100 z-3">
+                                <li
+                                v-for="product in filteredProducts"
+                                :key="product.id"
+                                class="list-group-item list-group-item-action"
+                                @click="goToProduct(product.id)"
+                                >
+                                {{ product.name }}
+                                </li>
+                            </ul>
                         <i class="pi pi-search position-absolute end-0 top-50 translate-middle"></i>
                     </div>
                     <div class="d-flex align-items-center gap-4">
@@ -51,7 +61,17 @@
             <div class="offcanvas-body d-flex flex-column justify-content-between">
             <div>
                 <div  class="position-relative">
-                    <InputComponent type="text" placeholder="Buscar"/>
+                    <InputComponent v-model="searchTerm" type="text" placeholder="Buscar"/>
+                    <ul v-if="filteredProducts.length" class="list-group position-absolute top-100 w-100 z-3">
+                        <li
+                        v-for="product in filteredProducts"
+                        :key="product.id"
+                        class="list-group-item list-group-item-action"
+                        @click="goToProduct(product.id)"
+                        >
+                        {{ product.name }}
+                        </li>
+                    </ul>
                     <i class="pi pi-search position-absolute end-0 top-50 translate-middle"></i>
                 </div>
                 <ul class="navbar-nav d-flex flex-column justify-content-around fs-5">
@@ -94,6 +114,19 @@ const isOpen = ref(false);
 const router = useRouter();
 const productsStore = useProductsStore();
 const allCategories = computed(()=> productsStore.categories);
+const allProducts = computed(() => productsStore.products);
+const searchTerm = ref('');
+const filteredProducts = computed(() => {
+  if (!searchTerm.value) return [];
+  return allProducts.value.filter(product =>
+    product.name.toLowerCase().includes(searchTerm.value.toLowerCase())
+  );
+});
+
+const goToProduct = (productId) => {
+    router.push({ name: 'product-details', params: { id: productId } });
+  searchTerm.value = '';
+};
 
 const goToCategory = (categoryId) =>{
     router.push({ name: 'products', query: { categoryId } });
@@ -109,6 +142,7 @@ function toggleDropdown(){
 
 onMounted (() => {
     productsStore.fetchCategories(17);
+    productsStore.fetchProducts();
 })
 </script>
 
