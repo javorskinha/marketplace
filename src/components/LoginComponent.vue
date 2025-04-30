@@ -39,6 +39,10 @@
                         <InputComponent v-model="password" type="password" placeholder="Senha" required class="input"/>
                         <i class="pi pi-lock"></i>
                     </div>
+                    <div class="input-box">
+                        <InputComponent v-model="confirmPassword" type="password" placeholder="Confirme a senha" required class="input"/>
+                        <i class="pi pi-lock"></i>
+                    </div>
                     <ButtonComponent text="Cadastrar" class="btn btn-primary rounded-1" type="submit"/>
                     <p class="mt-3">Ou cadastre-se com suas redes sociais</p>
                     <div class="fs-3">
@@ -84,7 +88,7 @@ const toast = useToast();
 const name = ref('');
 const email = ref('');
 const password = ref('');
-const errorMessage = ref('');
+const confirmPassword = ref('');
 
 function changeActive(){
     active.value = !active.value;
@@ -98,13 +102,15 @@ async function hadleLogin() {
         router.push('/');
 
     } catch (error){
-        errorMessage.value = 'Não foi possível fazer login. Verifique os dados inseridos.'
-
         toast.error('Não foi possível fazer login. Verifique os dados inseridos.')
     }
 }
 
 async function hadleRegister() {
+    if (password.value !== confirmPassword.value) {
+        toast.error('As senhas não conferem');
+        return;
+    }
     try{
         await authStore.register({ name: name.value, email: email.value, password: password.value});
 
@@ -112,8 +118,6 @@ async function hadleRegister() {
         router.push('/');
 
     } catch (error){
-        errorMessage.value = 'Não foi possível fazer cadastro. Verifique os dados inseridos.'
-
         toast.error('Não foi possível realizar cadastro. Verifique os dados inseridos.')
     }
 }
