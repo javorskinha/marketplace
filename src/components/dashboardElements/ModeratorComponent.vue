@@ -53,5 +53,13 @@ async function newModerator() {
         return;
     }
     await userStore.createModerator(modData.value);
+    toast.success('Usuário moderador criado')
+    resetForm();
+}
+
+function resetForm(){
+    modData.name = '',
+    modData.email = '',
+    modData.password = ''
 }
 </script>
