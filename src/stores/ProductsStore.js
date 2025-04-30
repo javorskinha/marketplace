@@ -115,6 +115,7 @@ export const useProductsStore = defineStore('products', ()=>{
 
                 case 'create':
                     await postDiscount(discountData);
+                    discounts.value.push(discountData);
                     console.log('PRODUCTS STORE Desconto Criado');
                     break;
 
@@ -146,6 +147,7 @@ export const useProductsStore = defineStore('products', ()=>{
 
                 case 'create':
                     await postCoupon(couponData);
+                    coupons.value.push(couponData);
                     console.log('PRODUCTS STORE Cupom Criado');
                     break;
 

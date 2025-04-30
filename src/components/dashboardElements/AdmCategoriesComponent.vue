@@ -82,7 +82,7 @@ import { baseURL } from "@/services/HttpService";
 import ButtonComponent from '../elements/ButtonComponent.vue';
 import InputComponent from '../elements/InputComponent.vue';
 import ConfirmModal from "../elements/ConfirmModal.vue";
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref, computed } from 'vue';
 import { Modal } from 'bootstrap';
 import { useToast } from 'vue-toastification';
 
@@ -93,7 +93,7 @@ const productsStore = useProductsStore();
 const authStore = useAuthStore();
 const showConfirmModal = ref(false);
 const toast = useToast();
-const userCategories = ref([]);
+const userCategories = computed(() => productsStore.categories)
 const nameCategory = ref(null);
 const isEditing = ref(false);
 const categoryToDelete = ref(null);
@@ -192,15 +192,9 @@ async function saveCategory() {
         });
     }
 
-    console.log('dados da categoria que estão sendo enviados:');
-    for (const pair of formData.entries()) {
-        console.log(pair[0], pair[1]);
-    }
-
     modalInstance.hide();
-    resetForm();
     getUserCategories();
-
+    resetForm();
     toast.success('Os dados foram atualizados');
 }
 
@@ -209,8 +203,7 @@ const getImageUrl = (path) => {
 };
 
 async function getUserCategories() {
-    const response = await productsStore.fetchCategories(authStore.user.id);
-    userCategories.value = response;
+    await productsStore.fetchCategories(authStore.user.id);
 }
 
 async function confirmExclusion(category){

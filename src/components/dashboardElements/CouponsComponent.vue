@@ -44,8 +44,10 @@ import { useProductsStore } from '@/stores/ProductsStore';
 import { computed, onMounted, reactive, ref } from 'vue';
 import DefaultForm from '../elements/DefaultForm.vue';
 import DefaultModal from '../elements/DefaultModal.vue';
+import { useToast } from 'vue-toastification';
 
 const productsStore = useProductsStore();
+const toast = useToast();
 const isModalOpen = ref(false);
 const isEditing = ref(false);
 const currentCouponId = ref(null);
@@ -119,8 +121,7 @@ const handleFormSubmit = async (formData) => {
                 couponData: payload
             });
         }
-
-        await getAllCoupons();
+        
         closeModal();
 
     } catch (error) {
@@ -140,7 +141,11 @@ async function delCoupon(coupon) {
         couponData: { id: coupon.id },
     });
 
-    getAllCoupons();
+    const index = allCoupons.value.findIndex(c => c.id === coupon.id);
+    if (index !== -1) {
+        allCoupons.value.splice(index, 1);
+    }
+    toast.success("Cupom deletado com sucesso!");
 }
 
 onMounted(()=>{

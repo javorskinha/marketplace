@@ -134,8 +134,6 @@ const handleFormSubmit = async (formData) => {
                 discountData: payload
             });
         }
-
-        await getAllDiscounts();
         closeModal();
 
     } catch (error) {
@@ -154,8 +152,6 @@ async function delDiscount(discount) {
         action: "delete",
         discountData: { id: discount.id },
     });
-
-    getAllDiscounts();
 }
 
 onMounted(()=>{
