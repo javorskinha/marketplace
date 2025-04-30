@@ -15,7 +15,7 @@
                     </div>
                     <div class="d-flex">
                         <p class="me-3">Tipo de Conta: </p>
-                        <p>{{ authStore.user.role }}</p>
+                        <p>{{ getRoleName(authStore.user.role) }}</p>
                     </div>
                 </div>
             </div>
@@ -107,6 +107,15 @@ async function updateImage() {
 const getImageUrl = (path) => {
     return `${baseURL}${path.replace(/^\/+/, '')}`
 };
+
+function getRoleName(role) {
+    const roles = {
+        CLIENT: "Cliente",
+        ADMIN: "Administrador",
+        MODERATOR: "Moderador"
+    };
+    return roles[role] || role;
+}
 
 async function confirmExclusion(){
     showConfirmModal.value = true;
