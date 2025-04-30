@@ -1,7 +1,9 @@
 <template>
   <div>
     <HeaderComponent />
-    <RouterView class="max-width-desktop"/>
+    <div class="min-vh-100">
+      <RouterView class="max-width-desktop"/>
+    </div>
     <FooterComponent />
   </div>
 </template>
