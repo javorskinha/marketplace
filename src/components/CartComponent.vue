@@ -88,7 +88,7 @@
                             <p class="text-danger">Por favor, defina um endereço padrão.</p>
                         </div>
                         <p class="d-flex justify-content-end"><button class="btn text-info"><router-link to="/dashboard/enderecos">{{ sendAddress.id? 'Trocar Endereço' : 'Definir Endereço'}}</router-link></button></p>
-                        <ButtonComponent text="Enviar Pedido" class="btn btn-primary" icon="pi pi-arrow-right" @click="sendOrder(sendAddress.id)"/>
+                        <ButtonComponent text="Enviar Pedido" class="btn btn-primary" icon="pi pi-arrow-right" @click="sendOrder(sendAddress.id)" :disabled="intItem.length === 0"/>
                     </div>
                 </div>
             </div>
