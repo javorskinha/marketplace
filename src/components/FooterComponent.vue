@@ -1,6 +1,5 @@
 <template>
     <div>
-        <hr class="m-0">
         <div class="p-3 bg-dark">
             <div class="d-flex flex-column justify-content-around flex-md-row w-md-50 w-75 m-auto">
                 <div>
