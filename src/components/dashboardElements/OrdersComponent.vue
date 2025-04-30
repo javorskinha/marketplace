@@ -114,7 +114,6 @@ async function handleNewStatus(orderId) {
 }
 
 async function getAllOrders() {
-    console.log('os dados de orderStore.order', orderStore.order)
     await orderStore.fetchOrder();
 }
 
