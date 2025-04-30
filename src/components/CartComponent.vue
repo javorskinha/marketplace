@@ -107,11 +107,13 @@ import { onMounted, ref, computed, watch } from 'vue';
 import { baseURL } from "@/services/HttpService";
 import { useToast } from 'vue-toastification';
 import InputComponent from './elements/InputComponent.vue';
+import { useRouter } from 'vue-router';
 
 const orderStore = useOrdersStore();
 const userStore = useUserStore();
 const productsStore = useProductsStore();
 const toast = useToast();
+const router = useRouter();
 const intItem = computed(() => orderStore.cart.items.sort((a, b) => a.name.localeCompare(b.name)))
 const totalAmount = computed(() => orderStore.cart.total_amount)
 const payment = ref('');
@@ -182,15 +184,16 @@ async function sendOrder(addressId) {
         toast.warning('Defina o endereço de entrega')
     } else {
         try{
-        await orderStore.newOrder(orderData);
-        toast.success('Pedido enviado com sucesso!')
-        await orderStore.updateCartItem(false);
-        payment.value = ''
-        couponCode.value = ''
-    } catch (error){
-        toast.error('erro ao enviar pedido');
-        console.error(error);
-    }
+            await orderStore.newOrder(orderData);
+            toast.success('Pedido enviado com sucesso!')
+            await orderStore.updateCartItem(false);
+            payment.value = '';
+            couponCode.value = '';
+            router.push({ name: 'dashboard-pedidos' });
+        } catch (error){
+            toast.error('erro ao enviar pedido');
+            console.error(error);
+        }
     }
 }
 
