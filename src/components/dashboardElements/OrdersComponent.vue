@@ -19,7 +19,10 @@
                         </div>
                     </div>
                     <h6 v-else class="text-secondary">Status: {{ statusName(order.status) }}</h6>
-                    <button @click="confirmExclusion(order.id)" class="bg-white btn btn-sm text-danger mt-2 d-flex align-items-center border p-1 rounded-1 fw-light"><i class="pi pi-times"></i>Cancelar</button>
+                    <div class="d-flex">
+                        <button @click="openModal(order.id)" class="btn btn-outline-info">Ver Detalhes</button>
+                        <button @click="confirmExclusion(order.id)" class="btn btn-sm text-danger hover-btn-danger mt-2 d-flex align-items-center fw-light">Cancelar Pedido</button>
+                    </div>
                 </div>
                 <div class="w-100 w-md-75 mt-4 d-flex">
                     <div v-for="(step, index) in statusSteps" :key="step" class="text-center custom-width">
@@ -52,6 +55,9 @@
         <ConfirmModal :show="showConfirmModal" title="Confirmar Cancelamento" message="Deseja realmente cancelar seu pedido?" 
         @confirm="onConfirm" 
         @cancel="onCancel" />
+        <DefaultModal title="Detalhes do Pedido" :isVisible="isModalOpen" @close="closeModal">
+            <OrderDetails v-if="selectedOrderId" :orderId="selectedOrderId"/>
+        </DefaultModal>
     </div>
 </template>
 
@@ -60,14 +66,24 @@ import { useOrdersStore } from '@/stores/OrdersStore';
 import { useAuthStore } from '@/stores/AuthStore';
 import ConfirmModal from "../elements/ConfirmModal.vue";
 import { onMounted, computed, ref } from 'vue';
+import DefaultModal from '../elements/DefaultModal.vue';
+import OrderDetails from './OrderDetails.vue';
 
 const orderStore = useOrdersStore();
 const authStore = useAuthStore();
+const isModalOpen = ref(false);
+const selectedOrderId = ref(null);
+const openModal = (orderId) => {
+    selectedOrderId.value = orderId;
+    console.log('Abrindo modal para o pedido:', selectedOrderId.value);
+    isModalOpen.value = true;
+};
+const closeModal = () => {isModalOpen.value = false};
 const showConfirmModal = ref(false);
 const orderToDelete = ref(null);
 const userAdm = computed(()=> authStore.user.role === 'ADMIN');
 const userModerator = computed(()=> authStore.user.role === 'MODERATOR');
-const orders = computed(() => orderStore.order);
+const orders = computed(() => orderStore.orders);
 const orderStatus = {
     PENDING: 'Recebido',
     PROCESSING: 'Em Preparo',
@@ -135,7 +151,6 @@ function onCancel(){
 
 async function delThisOrder(orderId) {
     await orderStore.delOrder(orderId);
-
     getAllOrders();
 }
 

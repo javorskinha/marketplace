@@ -4,7 +4,8 @@ import { ref } from "vue";
 
 export const useOrdersStore = defineStore ('orders', ()=> {
     const cart = ref([]);
-    const order = ref([]);
+    const orders = ref([]);
+    const selectedOrder = ref(null);
 
     //carrinho
     async function fetchCart(cartItems = true) {
@@ -36,9 +37,15 @@ export const useOrdersStore = defineStore ('orders', ()=> {
     //pedidos
     async function fetchOrder(orderId = null) {
         try{
-            const result = await getOrders(orderId);
-            order.value = result;
-            return order.value;
+            if(orderId != null){
+                const result = await getOrders(orderId);
+                selectedOrder.value = result;
+                return selectedOrder.value;
+            } else {
+                const result = await getOrders(orderId);
+                orders.value = result;
+                return orders.value;
+            }
         } catch (error){
             console.error('OrdersStore erro exibir pedido', error);
         }
@@ -47,7 +54,7 @@ export const useOrdersStore = defineStore ('orders', ()=> {
     async function newOrder(orderData){
         try {
             const result = await postOrder(orderData);
-            order.value = result;
+            orders.value = result;
         } catch (error){
             console.error('OrdersStore erro enviar pedido', error);
         }
@@ -56,7 +63,6 @@ export const useOrdersStore = defineStore ('orders', ()=> {
     async function updateOrder(id, status){
         try {
             await putOrder(id, status);
-            window.alert('Status atualizado!');
         } catch (error){
             console.error('OrdersStore erro update order', error);
         }
@@ -70,5 +76,5 @@ export const useOrdersStore = defineStore ('orders', ()=> {
         }
     }
 
-    return {cart, order, fetchCart, fetchOrder, newOrder, delOrder, updateOrder, updateCartItem}
+    return {cart, orders, selectedOrder, fetchCart, fetchOrder, newOrder, delOrder, updateOrder, updateCartItem}
 }, {persist: true})
