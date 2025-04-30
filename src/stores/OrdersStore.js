@@ -73,7 +73,9 @@ export const useOrdersStore = defineStore ('orders', ()=> {
 
     async function updateOrder(id, status){
         try {
-            await putOrder(id, status);
+            const result = await putOrder(id, status);
+            orders.value = result;
+            return orders;
         } catch (error){
             console.error('OrdersStore erro update order', error);
         }

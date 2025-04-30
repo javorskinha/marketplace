@@ -9,7 +9,7 @@
                     <div v-if="userAdm || userModerator">
                         <h6>Atualizar Status do Pedido</h6>
                         <div class="d-flex">
-                            <select v-model="newStatus[order.id]" class="form-select w-50 me-2">
+                            <select v-model="newStatus[order.id]" :value="newStatus[order.id] || order.status" class="form-select w-50 me-2">
                                 <option value="PENDING">Recebido</option>
                                 <option value="PROCESSING">Em Preparo</option>
                                 <option value="SHIPPED">A Caminho</option>
@@ -133,7 +133,6 @@ function statusName (status){
 async function handleNewStatus(orderId) {
     const updatedStatus = newStatus.value[orderId];
     await orderStore.updateOrder(orderId, {status: updatedStatus});
-    getAllOrders();
 }
 
 async function getStoreOrders() {
