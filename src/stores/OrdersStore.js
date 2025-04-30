@@ -1,11 +1,12 @@
 import { defineStore } from "pinia";
-import { getCart, postCart, deleteCart, getOrders, putCart, postOrder, putOrder, deleteOrder } from "@/services/HttpService";
-import { ref } from "vue";
+import { getCart, postCart, deleteCart, getOrders, putCart, postOrder, putOrder, deleteOrder, getStoreOrders } from "@/services/HttpService";
+import {  ref } from "vue";
 
 export const useOrdersStore = defineStore ('orders', ()=> {
     const cart = ref([]);
     const orders = ref([]);
     const selectedOrder = ref(null);
+    const storeOrders = ref([]);
 
     //carrinho
     async function fetchCart(cartItems = true) {
@@ -51,6 +52,16 @@ export const useOrdersStore = defineStore ('orders', ()=> {
         }
     }
 
+    async function fetchStoreOrders(adminId) {
+        try{
+            const result = await getStoreOrders(adminId)
+            storeOrders.value = result;
+            return storeOrders.value;
+        } catch (error){
+            console.error('OrdersStore erro buscar pedidos da loja', error);
+        }
+    }
+
     async function newOrder(orderData){
         try {
             const result = await postOrder(orderData);
@@ -76,5 +87,5 @@ export const useOrdersStore = defineStore ('orders', ()=> {
         }
     }
 
-    return {cart, orders, selectedOrder, fetchCart, fetchOrder, newOrder, delOrder, updateOrder, updateCartItem}
+    return {cart, orders, selectedOrder, storeOrders, fetchCart, fetchOrder, newOrder, delOrder, updateOrder, fetchStoreOrders, updateCartItem}
 }, {persist: true})

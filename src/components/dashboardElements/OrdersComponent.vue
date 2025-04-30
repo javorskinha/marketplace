@@ -1,8 +1,8 @@
 <template>
     <div class="m-2">
-        <h3>Seus Pedidos</h3>
-        <div v-if="orders.length > 0">
-            <div v-for="order in orders" :key="order.id" class="d-flex flex-column flex-md-row w-100 justify-content-between border p-2 p-md-4" :class="order.status === 'CANCELED'? 'disabled-order' : ''">
+        <h3>Pedidos</h3>
+        <div v-if="filteredOrders.length > 0">
+            <div v-for="order in filteredOrders" :key="order.id" class="d-flex flex-column flex-md-row w-100 justify-content-between border p-2 p-md-4" :class="order.status === 'CANCELED'? 'disabled-order' : ''">
                 <div class="w-100 w-md-25">
                     <h5 class="text-info">Pedido número: {{ order.id }}</h5>
                     <h6 class="text-secondary">Realizado em: {{ dataFormat(order.order_date) }}</h6>
@@ -71,6 +71,7 @@ import OrderDetails from './OrderDetails.vue';
 
 const orderStore = useOrdersStore();
 const authStore = useAuthStore();
+const idAdm = 17;
 const isModalOpen = ref(false);
 const selectedOrderId = ref(null);
 const openModal = (orderId) => {
@@ -83,7 +84,13 @@ const showConfirmModal = ref(false);
 const orderToDelete = ref(null);
 const userAdm = computed(()=> authStore.user.role === 'ADMIN');
 const userModerator = computed(()=> authStore.user.role === 'MODERATOR');
-const orders = computed(() => orderStore.orders);
+const filteredOrders = computed(() => {
+    if (userAdm.value || userModerator.value) {
+      return orderStore.storeOrders;
+    } else {
+      return orderStore.orders;
+    }
+});
 const orderStatus = {
     PENDING: 'Recebido',
     PROCESSING: 'Em Preparo',
@@ -129,6 +136,10 @@ async function handleNewStatus(orderId) {
     getAllOrders();
 }
 
+async function getStoreOrders() {
+    await orderStore.fetchStoreOrders(idAdm);
+}
+
 async function getAllOrders() {
     await orderStore.fetchOrder();
 }
@@ -154,8 +165,12 @@ async function delThisOrder(orderId) {
     getAllOrders();
 }
 
-onMounted(()=> {
-    getAllOrders();
+onMounted(async () => {
+    if (userAdm.value || userModerator.value) {
+        await getStoreOrders();
+    } else {
+        await getAllOrders();
+    }
 })
 </script>
 

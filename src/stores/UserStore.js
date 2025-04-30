@@ -5,6 +5,7 @@ import { ref } from "vue";
 export const useUserStore = defineStore('user', ()=>{
     const addresses = ref([]);
     const defaultAddress = ref({});
+    const address = ref({})
     const user = ref({})
 
     // user data
@@ -52,16 +53,21 @@ export const useUserStore = defineStore('user', ()=>{
     }
 
     // user addresses
-    async function userAddresses(id) {
+    async function userAddresses(id = null) {
         try{
-            const result = await getAddresses(id);
-            addresses.value = result;
+            if (id) {
+                const result = await getAddresses(id);
+                address.value = result
+                return address;
+            } else {
+                const allAddresses = await getAddresses();
+                addresses.value = allAddresses;
+                return addresses.value;
+            }
         } catch (error){
             console.error('Erro ao exibir endereços', error);
             throw error;
         };
-
-        return addresses.value;
     }
 
     async function postAddress(addressData) {
@@ -108,5 +114,5 @@ export const useUserStore = defineStore('user', ()=>{
         defaultAddress.value = addressData;
     }
 
-    return {addresses, defaultAddress, userPic, changeUserData, delUser, createModerator, userAddresses, postAddress, changeAddressData, delAddress, turnDefault}
+    return {addresses, user,  defaultAddress, address, userPic, changeUserData, delUser, createModerator, userAddresses, postAddress, changeAddressData, delAddress, turnDefault}
 }, {persist: true})

@@ -166,6 +166,7 @@ export async function deleteCart(itemId) {
 export async function getOrders(orderId = null) {
     return request('get', orderId? `/orders/${orderId}` : '/orders')
 }
+export const getStoreOrders = (adminId) => request('get', `/orders/all/${adminId}`, adminId)
 export const postOrder = (orderData) => request("post", "/orders", orderData);
 export const putOrder = (id, updatedOrder) => request("put", `/orders/${id}`, updatedOrder);
 export const deleteOrder = (id) => request("delete", `/orders/${id}`);
