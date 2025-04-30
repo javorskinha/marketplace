@@ -27,15 +27,7 @@
                         <div class="d-flex justify-content-center mb-3">
                             <img :src="getImageUrl(product.image_path)" alt="" class="img-fluid rounded" style="width: 170px; height: 170px; object-fit: cover;">
                         </div>
-                        <div v-if="isEditing === product.id">
-                            <DefaultForm 
-                            title="Editar:"
-                            :fields="fields"
-                            :formData="editedProd"
-                            @submit="saveNewData"
-                            />
-                        </div>
-                        <div v-else>
+                        <div>
                             <h5 class="card-title mb-2">{{ product.name }}</h5>
                             <p class="mb-1"><strong>Preço:</strong> {{ product.price }}</p>
                             <p class="mb-1"><strong>Estoque:</strong> {{ product.stock }}</p>
@@ -49,14 +41,16 @@
                 </div>
             </div>
         </div>
-        <DefaultModal :isVisible="isModalOpen" title="Adicionar Novo Produto" @close="closeModal">
-            <DefaultForm 
-            title="Cadastrar:"
-            :fields="fields"
-            :formData="newProd"
-            @submit="addNewProduct"
-            />
-        </DefaultModal>
+        <DefaultModal :isVisible="isModalOpen" :title="isEditing ? 'Editar Produto' : 'Adicionar Novo Produto'" @close="closeModal">
+                <div class="border rounded-1">
+                    <DefaultForm
+                    :title="isEditing ? 'Edite os Dados' : 'Preencha os Dados'"
+                    :fields="fields"
+                    :formData="formData"
+                    @submit="handleFormSubmit"
+                    />
+                </div>
+            </DefaultModal>
     </div>
 </template>
 
@@ -76,30 +70,19 @@ const productsStore = useProductsStore();
 const authStore = useAuthStore();
 const toast = useToast();
 const isModalOpen = ref(false);
-const openModal = () => isModalOpen.value = true;
-const closeModal = () => isModalOpen.value = false;
-
-const isEditing = ref(null);
+const isEditing = ref(false);
 const userAdm = computed(()=> authStore.user.role === 'ADMIN');
 const allProducts = computed (()=> productsStore.products);
 const allCategories = computed(() => productsStore.categories);
 const filteredCategory = ref(route.query.category || '');
-const newProd = reactive({
+const formData = reactive({
     name: '',
     description: '',
     price: null,
     stock: null,
     category_id: null,
     image: null,
-});
-
-const editedProd = reactive({
-    name: '',
-    description: '',
-    price: null,
-    stock: null,
-    category_id: null,
-    image: null
+    id: null
 });
 
 const filteredProducts = computed(() => {
@@ -121,21 +104,28 @@ const fields = [
     { type: 'image', model: 'image', label: 'Imagem'}
 ];
 
+function openModal() {
+    resetForm();
+    isEditing.value = false;
+    isModalOpen.value = true;
+}
+
+const closeModal = () => isModalOpen.value = false;
+
 function toggleEdit(productId){
-    if (isEditing.value === productId) {
-        isEditing.value = null;
-    } else {
-        const product = allProducts.value.find(p => p.id === productId);
-        editedProd.name = product.name;
-        editedProd.description = product.description;
-        editedProd.price = product.price;
-        editedProd.stock = product.stock;
-        editedProd.category_id = product.category_id;
-        editedProd.image = null;
-        editedProd.id = product.id;
-        
-        isEditing.value = productId;
-    }
+    const product = allProducts.value.find(p => p.id === productId);
+    if (!product) return;
+
+    formData.name = product.name;
+    formData.description = product.description;
+    formData.price = product.price;
+    formData.stock = product.stock;
+    formData.category_id = product.category_id;
+    formData.image = null;
+    formData.id = product.id;
+
+    isEditing.value = true;
+    openModal();
 };
 
 async function getAllProducts() {
@@ -147,83 +137,87 @@ const getImageUrl = (path) => {
 };
 
 async function addNewProduct(){
-    const formData = new FormData();
-    formData.append('name', newProd.name);
-    formData.append('description', newProd.description);
-    formData.append('price', newProd.price);
-    formData.append('stock', newProd.stock);
-    formData.append('category_id', newProd.category_id);
-    formData.append('image', newProd.image);
-
-    await productsStore.updateProducts({
-        action: 'create',
-        productData: formData
-    });
-
-    closeModal();
-    toast.success('Produto adicionado')
-    resetForm();
+    try {
+        const data = new FormData();
+        data.append('name', formData.name);
+        data.append('description', formData.description);
+        data.append('price', formData.price);
+        data.append('stock', formData.stock);
+        data.append('category_id', formData.category_id);
+        data.append('image', formData.image);
+    
+        await productsStore.updateProducts({
+          action: 'create',
+          productData: data
+        });
+    
+        closeModal();
+        toast.success('Produto adicionado com sucesso');
+        resetForm();
+    } catch (error) {
+        console.error("Erro ao adicionar produto:", error);
+        toast.error('Erro ao adicionar produto');
+    }
 }
 
 function resetForm(){
-    newProd.name = '',
-    newProd.description = '',
-    newProd.price = null,
-    newProd.stock = null,
-    newProd.category_id = null,
-    newProd.image = null
-
-    editedProd.name = '';
-    editedProd.description = '';
-    editedProd.price = null;
-    editedProd.stock = null;
-    editedProd.category_id = null;
-    editedProd.image = null;
-    editedProd.id = '';
+    formData.name = '';
+    formData.description = '';
+    formData.price = null;
+    formData.stock = null;
+    formData.category_id = null;
+    formData.image = null;
+    formData.id = null;
 }
 
 async function saveNewData() {
     try {
         const productData = {
-        price: editedProd.price,
-        name: editedProd.name,
-        description: editedProd.description,
-        category_id: editedProd.category_id
-    };
+            price: formData.price,
+            name: formData.name,
+            description: formData.description,
+            category_id: formData.category_id
+        };
 
-    const stockData = {
-        stock: editedProd.stock
-    };
+        const stockData = { stock: formData.stock };
 
-    await productsStore.updateProducts({
-        action: "update",
-        productData: { id: editedProd.id },
+        await productsStore.updateProducts({
+            action: "update",
+            productData: { id: formData.id },
         newProData: productData
-    });
+        });
 
-    await productsStore.updateProducts({
-        action: "update",
-        productData: { id: editedProd.id },
-        newProData: stockData
-    });
+        await productsStore.updateProducts({
+            action: "update",
+            productData: { id: formData.id },
+            newProData: stockData
+        });
 
-    if (editedProd.image) {
-    const formData = new FormData();
-    formData.append('image', editedProd.image);
+        if (formData.image) {
+            const imgData = new FormData();
+            imgData.append('image', formData.image);
 
-    await productsStore.updateProducts({
-        action: "update",
-        productData: { id: editedProd.id },
-        newProData: formData
-    });
+            await productsStore.updateProducts({
+            action: "update",
+            productData: { id: formData.id },
+            newProData: imgData
+        });
+    }
+
+    toast.success('Produto atualizado com sucesso');
+    resetForm();
+    closeModal();
+  } catch (error) {
+    console.error("Erro ao editar produto:", error);
+    toast.error('Erro ao editar produto');
+  }
 }
 
-    isEditing.value = false;
-    toast.success('Dados Atualizados');
-    resetForm();
-
-    } catch (error) {
-        console.error("Erro ao salvar produto:", error);
+function handleFormSubmit() {
+    if (isEditing.value) {
+      saveNewData();
+    } else {
+      addNewProduct();
     }
 }
 

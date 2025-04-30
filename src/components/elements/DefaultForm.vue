@@ -46,9 +46,6 @@ import InputComponent from './InputComponent.vue';
 import SelectComponent from './SelectComponent.vue';
 import ImageInput from './ImageInput.vue';
 import { defineProps, defineEmits } from 'vue';
-import { useToast } from 'vue-toastification';
-
-const toast = useToast();
 
 const props = defineProps({
   title: String,

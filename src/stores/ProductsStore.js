@@ -73,7 +73,7 @@ export const useProductsStore = defineStore('products', ()=>{
         try{
             switch (action){
                 case 'create':
-                    await postProduct(productData);
+                    await postProduct(productData); 
                     console.log('PRODUCTS STORE Produto adicionado');
                     break;
 
