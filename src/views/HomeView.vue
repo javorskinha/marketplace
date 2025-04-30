@@ -1,7 +1,7 @@
 <template>
     <BannerComponent />
-    <CategoriesComponent :categoryId="140"/>
-    <CategoriesComponent :categoryId="141"/>
+    <CategoriesComponent :categoryId="202"/>
+    <CategoriesComponent :categoryId="201"/>
     <EnphasisComponent 
     title="Produtos em destaque"
     button="VEJA TODOS OS PRODUTOS"

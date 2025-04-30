@@ -25,7 +25,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-else>
+                <div v-else class="d-flex flex-column justify-content-center align-items-center text-center mt-5">
                     <p class="fs-5 fw-light m-0">Sacola vazia</p>
                     <p class="text-info fs-5"><a class="nav-link" href="/products">Ver produtos <i class="pi pi-arrow-right"></i></a></p>
                 </div>
@@ -88,7 +88,7 @@
                             <p class="text-danger">Por favor, defina um endereço padrão.</p>
                         </div>
                         <p class="d-flex justify-content-end"><button class="btn text-info"><router-link to="/dashboard/enderecos">{{ sendAddress.id? 'Trocar Endereço' : 'Definir Endereço'}}</router-link></button></p>
-                        <ButtonComponent text="Enviar Pedido" class="btn btn-primary" icon="pi pi-arrow-right" @click="sendOrder(sendAddress.id)" :disabled="intItem.length === 0"/>
+                        <ButtonComponent text="Enviar Pedido" class="btn btn-primary" icon="pi pi-arrow-right" @click="sendOrder()" :disabled="intItem.length === 0"/>
                     </div>
                 </div>
             </div>
@@ -123,6 +123,7 @@ const isCouponValid = ref(false);
 const couponId = ref(null);
 const couponDiscount = ref(0);
 const sendAddress = computed(() => userStore.defaultAddress);
+const addressId = sendAddress.id;
 
 const frete = computed(() => {
     if (totalAmount.value > 150) {
@@ -172,7 +173,7 @@ function selectPayment(type){
     payment.value = type;
 }
 
-async function sendOrder(addressId) {
+async function sendOrder() {
     const orderData = {
         "address_id": addressId,
         "coupon_id": couponId.value

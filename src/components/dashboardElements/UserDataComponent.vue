@@ -29,6 +29,7 @@
                             <ButtonComponent type="submit" text="Enviar" class="btn btn-primary h-50 rounded-1 ms-2 d-flex text-black" @click="updateImage"></ButtonComponent>
                         </div>
                     </div>
+                    <label for="InputComponent">Editar Dados do Perfil:</label>
                     <div class="position-relative">
                         <InputComponent v-model="name" type="text" placeholder="Username" required class="input"/>
                         <i class="pi pi-pen-to-square position-absolute end-0 top-50 translate-middle"></i>
@@ -37,7 +38,7 @@
                         <InputComponent v-model="email" type="email" placeholder="Email" required class="input"/>
                         <i class="pi pi-pen-to-square position-absolute end-0 top-50 translate-middle"></i>
                     </div>
-                    <ButtonComponent type="submit" text="ALTERAR" class=""></ButtonComponent>
+                    <ButtonComponent type="submit" text="ALTERAR" class="btn btn-outline-info"></ButtonComponent>
                 </form>
             </div>
         </div>

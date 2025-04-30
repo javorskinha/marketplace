@@ -90,7 +90,7 @@ async function showUserAddresses() {
 }
 
 function scrollToForm(){
-    if(formSection.value) {
+    if(window.innerWidth < 768 && formSection.value) {
         formSection.value.scrollIntoView({ behavior:'smooth', block: 'start'})
     }
 }
