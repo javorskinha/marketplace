@@ -1,4 +1,4 @@
-# 🛒 Ecobuy - Front-End vom Vue.js
+# 🛒 Ecobuy - Front-End com Vue.js
 
 Esse projeto é o front-end de um e-commerce de produtos orgânicos, desenvolvido com **Vue.js**, criado para a conclusão do curso **Code Academy Front-end T4** oferecido pela 3C Plus - empresa de tecnologia na cidade de Guarapuava-PR onde atualmente resido.
 O projeto consome uma **API REST** criada pelo meu professor, e esse curso é parte do meu processo de transição de carreira para a área de tecnologia.
